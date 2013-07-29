@@ -1,0 +1,686 @@
+/**********************************************************
+Made by : AS Amiens - Bovin Antoine/Bensaid Borhane/Villain Benoit
+Last Update : 12/07/2013
+Name : Index.css => Plug-it
+**********************************************************/
+
+/*######ENTETE######*/
+
+.Banniere
+	{
+	height: 137px;
+    position: relative;
+	background-color:#333333;
+	min-width: 1350px;
+	}
+	
+.menu td
+{
+	width:100px;
+	text-align:center;
+	cursor: pointer;
+	font-weight:bold; 
+	text-transform:uppercase;
+	font-size: 12px;
+}
+
+.menu_selected 
+{
+	background-color:#565656;
+	border-color:#696969 #DCDCDC #DCDCDC #696969;
+	color:white;
+}
+
+.menu td:link
+{
+	text-decoration:none;
+	color: #c0c0c0;
+}
+
+.menu td:visited
+{
+	text-decoration:none;
+	color: #c0c0c0;
+}
+
+.menu_unselected:hover
+{
+	background-color:#3e3e3e;
+	border-color:#696969 #DCDCDC #DCDCDC #696969;
+	color:white;
+}
+	/**je laisse ?**/
+.menu td:active
+{
+	background-color:#D3D3D3;
+	border-color:#696969 #DCDCDC #DCDCDC #696969;
+	color:white;
+}
+
+/*#########CORPS#########*/
+	
+.Corps
+	{
+	position:relative;
+	min-height:550px;
+	background-color:#FEFEFE;
+	}
+	
+	
+/*######PIED######*/
+
+.Pied
+	{
+	position:relative;
+	margin-top:8%;
+	background-color:#333333;
+	min-width: 1350px;
+	height: 40px; 
+	text-transform:uppercase;
+	font-size:10px;
+	color:#afafaf;
+	}
+	
+.boutbout
+	{
+	cursor: pointer;
+	width:150px;
+	text-align:center;
+	}
+
+.boutbout:hover
+	{
+	background-color:#f9bd1a;
+	border-color:#696969 #DCDCDC #DCDCDC #696969;
+	color:white;
+	}
+	
+	
+.Pied a, .Pied a:visited	
+	{
+	text-decoration:none;
+	color:#585141;
+	}
+	
+.Pied a:active, .Pied a:hover	
+	{
+	text-decoration:none;
+	color:#8f8369;
+	}
+/*##########ADMIN#########*/
+
+.menuverti
+	{
+	display:block;
+	width:200px;
+	background-color:#333333;
+	color:white;
+	text-decoration:none;
+	text-align:center;
+	padding:5px;
+	border:2px solid;
+	cursor: pointer;
+	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	}
+.menuverti:hover
+	{
+	 background-color:#f9bd1a;
+	 color:black;
+	 border-color:#696969 #DCDCDC #DCDCDC #696969;
+	}
+	
+.croixred
+	{
+	display:block;
+	width:30px;
+	background-color:#e30e0e;
+	color:white;
+	text-decoration:none;
+	text-align:center;
+	padding:5px;
+	border:2px solid;
+	cursor: pointer;
+	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	}
+.croixred:hover
+	{
+	 background-color:#ff0000;
+	 color:white;
+	 border-color:#696969 #DCDCDC #DCDCDC #696969;
+	}
+	
+.bt
+	{
+	text-decoration:none;
+	font-weight:bold;
+	color:#555555;
+	}
+
+.bt:hover
+	{
+	text-decoration:none;
+	color:red;
+	}
+	
+/*####FORMULAIRE PAIEMENT####*/
+	
+/*#######PARAMETRES#######*/
+
+.separation
+	{
+	position: absolute;
+	height: 100%;
+	width : 2px;
+	background: black;
+	}
+	
+.mail
+	{
+	text-decoration:none;
+	color:#555555;
+	}
+
+.mail:hover
+	{
+	text-decoration:none;
+	color:#F9BD1A;
+	}
+
+.red
+	{
+	color:red;
+	}
+
+.table_accueil
+	{
+	margin:auto;
+	width:80%;
+	min-width: 800px;
+	}
+
+.table_accueil td
+	{
+	width: 10%;
+	text-align: justify;
+	}
+
+.bouton
+	{
+	display:block;
+	color:white;
+	border:0px solid;
+	text-decoration:none;
+	text-align:center;
+	background-color:#f9bd1a;
+	border-color:#f9bd1a;
+	width:50%;
+	}
+	
+.bouton:hover
+	{
+	display:block;
+	color:white;
+	border:0px solid;
+	text-decoration:none;
+	text-align:center;
+	background-color:#333333;
+	border-color:#333333;
+	}
+	
+#div_carte {
+	height : 250px;
+	width : 250px;
+	margin : auto;
+	border : 1px solid #888;
+	}
+
+/*##########SOLUTIONS#########*/
+.blocksolution
+{
+	width:285px;
+	height: 280px;
+	background-color:#e0e0e0;
+	cursor: pointer;
+	padding:10px;
+}
+
+.blocksolution:hover
+{
+	background-color:#f9bd1a;
+}
+
+
+/*##########SERVICES#########*/
+.blockservice
+{
+	width:285px;
+	height: 280px;
+	background-color:#e0e0e0;
+	cursor: pointer;
+}
+
+.blockservice:hover
+{
+	background-color:#f9bd1a;
+}
+
+/*##########PANIER#########*/
+
+.boutpanier
+	{
+	display:block;
+	width:180px;
+	height:19px;
+	background-color:#333333;
+	color:white;
+	text-decoration:none;
+	text-align:center;
+	padding:5px;
+	border:2px solid;
+	cursor: pointer;
+	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	}
+.boutpanier:hover
+	{
+	 background-color:#f9bd1a;
+	 color:black;
+	 border-color:#696969 #DCDCDC #DCDCDC #696969;
+	}
+
+/*##########PRODUITS#########*/
+
+.blockproduit
+{
+	width:330px;
+	height: 230px;
+	background-color:#e0e0e0;
+	cursor: pointer;
+	padding-top:15px;
+}
+
+.blockproduit:hover
+{
+	background-color:#f9bd1a;
+}
+
+.boutprod
+	{
+	display:block;
+	width:206px;
+	height:19px;
+	background-color:#333333;
+	color:white;
+	text-decoration:none;
+	text-align:center;
+	padding:5px;
+	border:2px solid;
+	cursor: pointer;
+	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	}
+.boutprod:hover
+	{
+	 background-color:#f9bd1a;
+	 color:black;
+	 border-color:#696969 #DCDCDC #DCDCDC #696969;
+	}
+
+.boutprod2
+	{
+	display:block;
+	width:66px;
+	height:19px;
+	background-color:#333333;
+	color:white;
+	text-decoration:none;
+	text-align:center;
+	padding:5px;
+	border:2px solid;
+	cursor: pointer;
+	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	}
+.boutprod2:hover
+	{
+	 background-color:#f9bd1a;
+	 color:black;
+	 border-color:#696969 #DCDCDC #DCDCDC #696969;
+	}
+/*##########MENU DEROULANT###########*/	
+
+#menuder
+	{
+		border-radius:5px;
+		background-color:#f9bd1a;
+		width:250px;
+		float:right;
+		margin-right:14%;
+	}
+	
+	#menuder h3
+	{
+		border-radius:5px;
+		font-size:10pt;
+		background-color:#333333;
+		color: white;
+		width:250px;
+		text-align: center;
+	}
+	#menuder div p a
+	{
+		text-decoration: none;
+		color:black;
+	}
+	#menuder div p a:visited
+	{
+		text-decoration: none;
+		color:black;
+	}
+	#menuder div p a:hover
+	{
+		text-decoration: none;
+		color:white;
+	}
+	#menuder div p
+	{
+		text-align: center;
+	}
+
+/*##########MENU ACCORDEON###########*/	
+
+.droph
+{
+	width:700px;
+	height: 280px;
+	border-style:solid;
+	border-width:5px;
+	position:relative;	
+	margin-left:20%;
+	margin-top:-2%;
+}
+
+.dropv
+{
+	position: relative;
+	margin-top: 1%;
+	margin-left:20%;
+	width:150px;
+	height:500px;
+	border-style:solid;
+	border-width:5px;
+}
+
+#accordeon
+	{
+		border-radius:5px;
+		background-color:#f9bd1a;
+		width:250px;
+		float:right;
+	}
+	
+	#accordeon h3
+	{
+		border-radius:5px;
+		font-size:10pt;
+		background-color:#333333;
+		color: white;
+		width:250px;
+		text-align: center;
+	}
+	#accordeon div p a
+	{
+		text-decoration: none;
+		color:black;
+	}
+	#accordeon div p a:visited
+	{
+		text-decoration: none;
+		color:black;
+	}
+	#accordeon div p a:hover
+	{
+		text-decoration: none;
+		color:white;
+	}
+	#accordeon div p
+	{
+		text-align: center;
+	}
+	
+/*##########PANIER###########*/
+	
+#panier{
+        width: 150px;
+		float:right;
+        margin: 0;
+		margin-right:100px;
+        padding: 5px 0 5px 0;
+        list-style: none;
+        background: #111;
+        background: -moz-linear-gradient(#444, #111);
+        background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+        background: -webkit-linear-gradient(#444, #111);
+        background: -o-linear-gradient(#444, #111);
+        background: -ms-linear-gradient(#444, #111);
+        background: linear-gradient(#444, #111);
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        -moz-box-shadow: 0 2px 1px #9c9c9c;
+        -webkit-box-shadow: 0 2px 1px #9c9c9c;
+        box-shadow: 0 2px 1px #9c9c9c;
+}
+
+#panier li{
+        float: left;
+        padding: 0 0 10px 0;
+        position: relative;
+}
+
+#panier .paniersuite{
+        float: left;
+        height: 25px;
+        padding: 0 55px;
+        color: #999;
+        text-transform: uppercase;
+        font: bold 12px/25px Arial, Helvetica;
+        text-decoration: none;
+        text-shadow: 0 1px 0 #000;
+}
+
+#panier li:hover > .paniersuite{
+        color: #f9bd1a;
+}
+
+*html #panier li .paniersuite:hover{ /* IE6 */
+        color: #fafafa;
+}
+
+#panier li:hover > ul{
+        display: block;
+}
+
+/* Sous-panier */
+
+#panier ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 14px;
+    z-index: 99999;
+    background: #444;
+    background: -moz-linear-gradient(#444, #111);
+    background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+    background: -webkit-linear-gradient(#444, #111);
+    background: -o-linear-gradient(#444, #111);
+    background: -ms-linear-gradient(#444, #111);
+    background: linear-gradient(#444, #111);
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#panier ul li{
+    float: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    -moz-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+    -webkit-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+    box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+}
+
+#panier ul li:last-child{
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#panier ul .paniersuite{
+    padding: 10px;
+    height: auto;
+    line-height: 1;
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+}
+
+*html #panier ul .paniersuite{ /* IE6 */
+        height: 10px;
+        width: 150px;
+}
+
+*:first-child+html #panier ul .paniersuite{ /* IE7 */
+        height: 10px;
+        width: 150px;
+}
+
+#panier ul .paniersuite:hover{
+        background: #f9bd1a;
+        background: -moz-linear-gradient(#f9bd1a,  #f9bd1a);
+        background: -webkit-gradient(linear, left top, left bottom, from(#f9bd1a), to(#f9bd1a));
+        background: -webkit-linear-gradient(#f9bd1a,  #f9bd1a);
+        background: -o-linear-gradient(#f9bd1a,  #f9bd1a);
+        background: -ms-linear-gradient(#f9bd1a, #f9bd1a);
+        background: linear-gradient(#f9bd1a,  #f9bd1a);
+}
+
+#panier ul li:first-child .paniersuite{
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+#panier ul li:first-child .paniersuite:after{
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid #444;
+}
+
+#panier ul li:first-child .paniersuite:hover:after{
+    border-bottom-color: #04acec;
+}
+
+#panier ul li:last-child .paniersuite{
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+}
+
+/* Rétablissement du flottement */
+#panier:after{
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+}
+
+* html #panier            { zoom: 1; } /* IE6 */
+*:first-child+html #panier { zoom: 1; } /* IE7 */
+	
+/*##########REFERENCE#########*/
+.blockref
+{
+	width:200px;
+	height: 250px;
+}
+
+.blocklink
+{
+	width:200px;
+	height: 50px;
+	background-color:#e0e0e0;
+	cursor: pointer;
+}
+	
+.blocklink:hover
+{
+	background-color:#f9bd1a;
+	color: white;
+}
+
+.titre
+	{
+	font-size:120%;
+	font-weight:bold;
+	}
+
+
+/*###########MENU_ADMIN######*/
+
+.block_ma
+{
+	width:110%;
+	height: 40px;
+	background-color:#333333;
+	cursor: pointer;
+	padding-top:15px;
+	text-align:center;
+	cursor: pointer;
+	font-weight:bold; 
+	text-transform:uppercase;
+}
+
+.block_ma:hover
+{
+	background-color:#3e3e3e;
+	color:white;
+}
+
+.menu_change{
+	width:110%;
+	height: 40px;
+	border: solid 4px #333333;
+}
+
+/*###########COMMON##########*/	
+
+h2,h3
+	{
+	text-align: center;
+	font-weight: normal;
+	font-size:21px;
+	line-height:21px;
+	text-transform:uppercase;
+	}
+	
+body
+	{
+	color:#555555;
+	font-size:10pt;
+	font-family: Arial,Helvetica,sans-serif;
+	padding:0;
+	margin: 0;
+	}
+html
+{
+	margin:0;
+}
