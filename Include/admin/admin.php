@@ -11,8 +11,7 @@ include("function/connect_f.php");
 $error_co = connect();
 
 ?>
-
-<h2>Administration</h2>
+<h2 class="grdtitre">Administration</h2>
 <br/>
 <?php
 if(!isset($_SESSION['id']))

@@ -9,7 +9,7 @@ Name : Corps.php => Plug-it
 		$_GET['page'] = 'accueil';
 	}
 ?>	
-<div style="background-color:#f9bd1a;">
+
 <?php	
 
 	function checkUp($nom){
@@ -204,4 +204,3 @@ Name : Corps.php => Plug-it
 	}
 
 ?>
-</div>

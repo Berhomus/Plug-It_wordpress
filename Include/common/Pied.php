@@ -4,9 +4,10 @@ Last Update : 12/07/2013
 Name : Pied.php => Plug-it
 *********************************************************-->
 
+
 <!--<span style="position:absolute;top:40%;left:10%;">Plug-It &copy; 2013 <!-- AddThis Follow BEGIN</span> -->
 <div style="min-width:1350px;">
-<table style="float:left; height:44px; margin-left:13px; margin-right:50px;">
+<table style="float:left; height:40px; margin-left:13px; margin-right:50px;">
 	<tr>
 		<td>
 		Plug-It &copy; 2013

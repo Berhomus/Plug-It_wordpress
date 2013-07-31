@@ -1,4 +1,4 @@
-<h2>Boutique en Ligne</h2>
+<h2 class="grdtitre">Boutique en Ligne</h2>
 
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -222,7 +222,7 @@
 				}
 
 			
-				echo '<h4>'.strtoupper($_GET['categ']).'</h4>'
+				echo '<p class="grdtitre" style="margin-bottom:10px;"><span style="margin-left:20px;font:bold 12px;color:#f9bd1a;">'.strtoupper($_GET['categ']).'</span></p>'
 
 			?>
 				

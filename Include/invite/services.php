@@ -126,7 +126,7 @@ Name : services.php => Plug-it
 								</div></td>';
 								
 								$i++;
-								if($i > 4)
+								if($i > 3)
 								{
 									$i=1;
 									$j++;

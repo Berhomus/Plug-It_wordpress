@@ -63,7 +63,7 @@ Name : Index.css => Plug-it
 .Corps
 	{
 	position:relative;
-	min-height:550px;
+	min-height:570px;
 	background-color:#FEFEFE;
 	}
 	
@@ -73,7 +73,7 @@ Name : Index.css => Plug-it
 .Pied
 	{
 	position:relative;
-	margin-top:8%;
+	/*margin-top:8%;*/
 	background-color:#333333;
 	min-width: 1350px;
 	height: 40px; 
@@ -118,16 +118,36 @@ Name : Index.css => Plug-it
 	color:white;
 	text-decoration:none;
 	text-align:center;
+	border-radius:25px;
 	padding:5px;
 	border:2px solid;
 	cursor: pointer;
 	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	list-style: none;
+	background: #111;
+	background: -moz-linear-gradient(#444, #111);
+	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+	background: -webkit-linear-gradient(#444, #111);
+	background: -o-linear-gradient(#444, #111);
+	background: -ms-linear-gradient(#444, #111);
+	background: linear-gradient(#444, #111);
+	-moz-border-radius: 50px;
+	-moz-box-shadow: 0 2px 1px #9c9c9c;
+	-webkit-box-shadow: 0 2px 1px #9c9c9c;
+	box-shadow: 0 2px 1px #9c9c9c;
 	}
 .menuverti:hover
 	{
 	 background-color:#f9bd1a;
 	 color:black;
 	 border-color:#696969 #DCDCDC #DCDCDC #696969;
+	 background: #0186ba;
+	background: -moz-linear-gradient(#f9bd1a,  #f9bd1a);
+	background: -webkit-gradient(linear, left top, left bottom, from(#f9bd1a), to(#f9bd1a));
+	background: -webkit-linear-gradient(#f9bd1a,  #f9bd1a);
+	background: -o-linear-gradient(#f9bd1a,  #f9bd1a);
+	background: -ms-linear-gradient(#f9bd1a,  #f9bd1a);
+	background: linear-gradient(#f9bd1a,  #f9bd1a);
 	}
 	
 .croixred
@@ -235,12 +255,35 @@ Name : Index.css => Plug-it
 	border : 1px solid #888;
 	}
 
+/*###########TITRE############*/
+
+.grdtitre
+{
+	border:4px solid;
+	border-radius:15px;
+	border-color:#DCDCDC #696969 #696969 #DCDCDC;
+	color:white;
+	list-style: none; 
+	background: #111;
+	background: -moz-linear-gradient(#444, #111);
+	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
+	background: -webkit-linear-gradient(#444, #111);
+	background: -o-linear-gradient(#444, #111);
+	background: -ms-linear-gradient(#444, #111);
+	background: linear-gradient(#444, #111);
+	-moz-border-radius: 50px;
+	-moz-box-shadow: 0 2px 1px #9c9c9c;
+	-webkit-box-shadow: 0 2px 1px #9c9c9c;
+	box-shadow: 0 2px 1px #9c9c9c;
+}
+	
 /*##########SOLUTIONS#########*/
 .blocksolution
 {
 	width:285px;
 	height: 280px;
 	background-color:#e0e0e0;
+	border-radius:20px;
 	cursor: pointer;
 	padding:10px;
 }
@@ -257,6 +300,7 @@ Name : Index.css => Plug-it
 	width:285px;
 	height: 280px;
 	background-color:#e0e0e0;
+	border-radius:20px;
 	cursor: pointer;
 }
 
