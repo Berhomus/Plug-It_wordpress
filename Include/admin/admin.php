@@ -75,6 +75,7 @@ else
 		<!--<li class="menuverti" onclick="location.href='index.php?page=admin_menu'">Edition Menu</li>-->
 		<li class="menuverti" onclick="location.href='index.php?page=admin_gest_menu'">Référencement</li>
 		<!--<li class="menuverti" onclick="location.href='index.php?page=backup'">Gestionnaire de backup</li>-->
+		<li class="menuverti" onclick="location.href='index.php?page=admin_article'">Nouvel Article</li>
 	</ul>
 </center>
 <?php

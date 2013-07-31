@@ -12,7 +12,7 @@ class connexionbddplugit
 		{
 			try
 			{
-				$connexion = new PDO('mysql:host=localhost;dbname=plugit','root','');
+				$connexion = new PDO('mysql:host=localhost;dbname=plugit2','root','');
 			} catch ( Exception $e ) 
 			{
 			echo "Connection à MySQL impossible : ", $e->getMessage();

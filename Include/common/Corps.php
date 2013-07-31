@@ -3,15 +3,13 @@ Made by : AS Amiens - Bovin Antoine/Bensaid Borhane/Villain Benoit
 Last Update : 12/07/2013
 Name : Corps.php => Plug-it
 *********************************************************-->
-
-
 <?php
 	if(!isset($_GET['page']))
 	{
 		$_GET['page'] = 'accueil';
 	}
 ?>	
-
+<div style="background-color:#f9bd1a;">
 <?php	
 
 	function checkUp($nom){
@@ -44,17 +42,11 @@ Name : Corps.php => Plug-it
 		break;
 		
 		case 'references':
-		if(checkUp('references'))
 			INCLUDE("include/invite/references.php");
-		else
-			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'contact':
-		if(checkUp('contact'))
 			INCLUDE("include/invite/contact.php");
-		else
-			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'support':
@@ -70,12 +62,31 @@ Name : Corps.php => Plug-it
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
-
-		
 		
 		case 'boutique':
 		if(checkUp('boutique'))
 			INCLUDE("include/invite/boutique.php");
+		else
+			echo '<h2>Page Inaccessible</h2>';
+		break;
+		
+		case 'cloud':
+		if(checkUp('cloud'))
+			INCLUDE("include/invite/cloud.php");
+		else
+			echo '<h2>Page Inaccessible</h2>';
+		break;
+		
+		case 'webapps':
+		if(checkUp('webapps'))
+			INCLUDE("include/invite/webapps.php");
+		else
+			echo '<h2>Page Inaccessible</h2>';
+		break;
+		
+		case 'telephonie':
+		if(checkUp('telephonie'))
+			INCLUDE("include/invite/telephonie.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
@@ -193,3 +204,4 @@ Name : Corps.php => Plug-it
 	}
 
 ?>
+</div>

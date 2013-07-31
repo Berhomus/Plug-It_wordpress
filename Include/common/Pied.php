@@ -5,8 +5,8 @@ Name : Pied.php => Plug-it
 *********************************************************-->
 
 <!--<span style="position:absolute;top:40%;left:10%;">Plug-It &copy; 2013 <!-- AddThis Follow BEGIN</span> -->
-<div style="margin-left:auto; width:950px; margin-right:auto">
-<table style="position:absolute; top:40%;">
+<div style="min-width:1350px;">
+<table style="float:left; height:44px; margin-left:13px; margin-right:50px;">
 	<tr>
 		<td>
 		Plug-It &copy; 2013
@@ -23,7 +23,7 @@ Name : Pied.php => Plug-it
 		</td>
 	</tr>
 </table>
-<table style="position:relative; float:right; top:0px; height:40px" cellspacing="0">
+<table style="height:40px; float:right; margin-right:20px;" cellspacing="0">
 	<tr>
 		<?php
 		if(isset($_SESSION['id']))
@@ -46,8 +46,12 @@ Name : Pied.php => Plug-it
 			MENTIONS LEGALES
 		</td>
 		
-		<td class="boutbout" onclick="location.href='http://www.rhinocerose.fr/'" >
-			Design - Rhinoc&eacuterose
+		<td class="boutbout" onclick="location.href='index.php?page=contact'" >
+			Contact
+		</td>
+		
+		<td class="boutbout" onclick="location.href='index.php?page=references'" >
+			Références
 		</td>
 	</tr>
 

@@ -15,7 +15,7 @@ Name : accueil.php => Plug-it
 		case 'main':
 		
 ?>
-			<div style="background-color:#f9bd1a; height:475px; width:100%; padding-top:1%;">
+			<div style="height:475px; width:100%; padding-top:1%;">
 				<div id="iview">
 				<?php
 				
@@ -64,74 +64,6 @@ Name : accueil.php => Plug-it
 				</div>
 			</div>
 
-			<div style="margin-top:40px; margin-left:auto; margin-right:auto; width:1200px;">
-				<table class="table_accueil" border="0" cellspacing="10" cellpadding="10">
-					<tr>
-						<td>
-							<h2>L'écoute, le conseil</h2>
-							<hr style="color:#dedede"/>
-						</td>
-						
-						<td>
-							<h2>Les solutions dédiées</h2>
-							<hr style="color:#dedede"/>
-						</td>
-						
-						<td>
-							<h2>Nos services</h2>
-							<hr style="color:#dedede"/>
-						</td>
-					</tr>
-					
-					<tr>
-						<td>
-							Depuis 15 ans au service des entreprises,
-							notre équipe commerciale est principalement
-							issue du milieu technique et rompue aux
-							nouvelles technologies de l'informatique.
-						</td>
-						
-						<td>
-							Première et unique solution de Cloud Computing locale,
-							nos solutions sont différenciées en packs d'abonnement mensuel ou annuel.
-						</td>
-						
-						<td>
-						
-						<?php
-							require_once('./connexionbddplugit.class.php');
-							
-							connexionbddplugit::getInstance()->query("UPDATE services SET corps = replace(corps, '<br/>', '')");
-							$retour = connexionbddplugit::getInstance()->query('SELECT * FROM services ORDER BY ordre');
-							echo '<table style="margin-left:auto; margin-right:auto; width:80%;">';
-							while ($donnees = $retour->fetch())
-							{
-								echo'<tr>
-									<td><img style="margin-right:10px;" src="images/fleche.png" /><a class="mail" href="index.php?page=services&mode=viewone&id='.$donnees['id'].'">'.$donnees['subtitre'].'</a></td>
-								</tr>';
-							}
-							echo '</table>';
-							
-						?>
-							
-						</td>
-					</tr>
-					
-					<tr>
-						<td onclick="location.href='index.php?page=accueil&sub=conseil'" style="cursor:pointer;">
-							<p class="bouton">Lire la suite</p>
-						</td>
-							
-						<td onclick="location.href='index.php?page=accueil&sub=sol'" style="cursor:pointer;">
-							<p class="bouton">Lire la suite</p>
-						</td>
-						
-						<td>
-							
-						</td>
-					</tr>
-				</table>
-			</div>
 <?php
 		break;
 	

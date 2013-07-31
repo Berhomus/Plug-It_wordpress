@@ -164,9 +164,10 @@ if(isset($_POST['DATA']))
 				mail('shop@plug-it.com' , $Sujet, $Msg, 'From: shop@plug-it.com');
 				
 				//ajout BDD
+				$bdd = connexionbddplugit::getInstance();
 				
-				connexionbddplugit::getInstance()->query("INSERT INTO transaction VALUES ('','$transaction_id','".$arrayCaddie[0]."','$customer_email','$amount','".$arrayCaddie[1]."','".$arrayCaddie[5]."','".$arrayCaddie[3]."','$payment_date',$bank_response_code)")or die("Erreur SQL");
-
+				$rq=$bdd->prepare("INSERT INTO transaction VALUES ('',?,?,?,?,?,?,?,?,?)");
+				$rq->execute(array($transaction_id,$arrayCaddie[0],$customer_email,$amount,$arrayCaddie[1],$arrayCaddie[5],$arrayCaddie[3],$payment_date,$bank_response_code));
 			}
 		
 			fwrite( $fp, "#======================== Le : " . date("d/m/Y H:i:s") . " ====================#\n");
