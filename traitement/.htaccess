@@ -1,0 +1,4 @@
+AuthName "Page d'administration"
+AuthType Basic
+AuthUserFile "C:/wamp/www/Plug-It/traitement/.htpasswd"
+Require valid-user
