@@ -11,33 +11,30 @@ Name : Banniere.php => Plug-it
 	header( 'content-type: text/html; charset=utf-8' );
 
 ?>
-
-<script>
-
-function display_menu(id,pos){
-	 var menu = document.getElementById("menu_der_"+id);
-	 menu.style.display = "block";
-	 menu.style.position = "absolute";
-	 var w = document.body.clientWidth;
-	 var taille = (w-950+window.pageXOffset)/2+(7-pos)*100;
-	 menu.style.right=taille+"px";
-	 document.getElementById("menu_"+id).className = "menu_unselected_hover";
-}
-
-function undisplay_menu(id){
-	 var menu = document.getElementById("menu_der_"+id);
-	 menu.style.display = "none";
-	 document.getElementById("menu_"+id).className = "menu_unselected";
-}
+<script type="text/javascript">		
+		function patate(id,position)
+		{
+			var ssmenu = document.getElementById('li_sousmenu'+id);
+			ssmenu.style.marginLeft=40+position*60+window.pageYOffset+"px";
+			ssmenu.style.marginTop=40+window.pageXOffset+"px";
+			if(ssmenu.style.display != 'block')
+			{
+				ssmenu.style.display = 'block';
+			}
+			else
+			{
+				ssmenu.style.display = 'none';
+			}
+		}
 </script>
 
+
 <div>
-	<div style="margin-left:auto; width:950px; margin-right:auto"><a style="text-decoration:none;border:none;" href="index.php?page=accueil"><img src="images/logotype_plug_it.png" style="position:absolute; float:left; bottom:25%; "/></a>
-	<table style="position:relative; float:right; margin-left:10px;" height="137px" class="menu" cellspacing="0">
-		<tr>
+	<div style="min-width:1350px;"><a href="index.php?page=accueil"><img src="images/logotype_plug_it(transparence).png" style="float:left; margin:13px 50px 13px 13px;"/></a>
+	<ul id="menu">
 		<?php
 		require_once('./connexionbddplugit.class.php');
-
+		$position=1;
 		try
 		{
 			$rq = connexionbddplugit::getInstance()->query("SELECT * FROM menu ORDER BY position");
@@ -45,62 +42,35 @@ function undisplay_menu(id){
 			while($ar=$rq->fetch())
 			{
 				if($ar['active'] == true)
-				{ 
-					echo '<td onclick="location.href=\''.$ar['lien'].'\'"';
+				{
+					echo '
+					<li id="li" onmouseout="patate('.$ar['id'].')" onmouseover="patate('.$ar['id'].','.$position.')"><a href="'.$ar['lien'].'"';
+					echo '>'.$ar['nom'].'</a></li>';
 					
-					$bdd = connexionbddplugit::getInstance();
-					$rq2 = $bdd->prepare("SELECT count(id) as nbr FROM sousmenu WHERE menu=?");
-					$rq2->execute(array($ar['id']));
-				
-					$ar2=$rq2->fetch();
-					if($ar2['nbr'] > 0)
+					$sm = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar['id']."' ORDER BY position");
+					
+					echo '<ul onmouseout="patate('.$ar['id'].')" onmouseover="patate('.$ar['id'].','.$position.')" id="li_sousmenu'.$ar['id'].'">';
+					
+					while($sm1=$sm->fetch())
 					{
-						echo 'onmouseover="display_menu('.$ar['id'].','.$ar['position'].');" onmouseout="undisplay_menu('.$ar['id'].');"';
+						if($sm1['active'] == true)
+						{
+							echo '
+							<li id="li"><a href="'.$sm1['lien'].'"';
+							echo '>'.$sm1['nom'].'</a></li>';
+						}
 					}
 					
-						if($ar['interne'] and $_GET['page'] == $ar['baseName'])
-							echo 'class="menu_selected"';
-						else
-							echo 'class="menu_unselected"';
-					echo ' id="menu_'.$ar['id'].'" >'.$ar['nom'].'</td>';
+					echo '</ul>';
 				}
+			$position++;
 			}
-			
 		} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
 		}
 		
 		?>
-		</tr>
-	</table></div>
+	</ul>
+	</div>
 </div>
-
-<?php
-$rq = connexionbddplugit::getInstance()->query("SELECT * FROM menu ORDER BY position");
-				
-		while($ar=$rq->fetch())
-		{
-			$bdd = connexionbddplugit::getInstance();
-			$rq2 = $bdd->prepare("SELECT count(id) as nbr FROM sousmenu WHERE menu=?");
-			$rq2->execute(array($ar['id']));
-					
-				$ar2=$rq2->fetch();
-				if($ar2['nbr'] > 0)
-				{
-					$bdd = connexionbddplugit::getInstance();
-					$rq2 = $bdd->prepare("SELECT * FROM sousmenu WHERE menu=? ORDER BY position");
-					$rq2->execute(array($ar['id']));
-					
-					echo '<div onmouseover="display_menu('.$ar['id'].','.$ar['position'].')" onmouseout="undisplay_menu('.$ar['id'].')" style="display:none;" id="menu_der_'.$ar['id'].'">
-							<ul class="sousmenu">';
-					while($ar2=$rq2->fetch())
-					{
-						echo '<li class="sousmenu_elem" onclick="location.href=\''.$ar2['lien'].'\'">'.$ar2['nom'].'</li>';
-					}
-					echo '</ul>
-					</div>';
-				}
-		}
-
-?>
 

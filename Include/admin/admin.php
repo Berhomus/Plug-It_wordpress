@@ -11,8 +11,7 @@ include("function/connect_f.php");
 $error_co = connect();
 
 ?>
-
-<h2>Administration</h2>
+<h2 class="grdtitre">Administration</h2>
 <br/>
 <?php
 if(!isset($_SESSION['id']))
@@ -69,13 +68,13 @@ else
 		<li class="menuverti" onclick="location.href='index.php?page=admin_services'">Nouveau Service</li>
 		<li class="menuverti" onclick="location.href='index.php?page=admin_solutions'">Nouvelle Solution</li>
 		<li class="menuverti" onclick="location.href='index.php?page=admin_ref'">Nouvelle Référence</li>
-		<li class="menuverti" onclick="location.href='index.php?page=admin_boutique'">Nouveau Produit</li>
-		<li class="menuverti" onclick="location.href='index.php?page=admin_report'">Bug Report</li>
+		<!--<li class="menuverti" onclick="location.href='index.php?page=admin_boutique'">Nouveau Produit</li>-->
 		<!--<li class="menuverti" onclick="location.href='index.php?page=gestionnaire_img'">Gestionnaire d'images</li>-->
 		<!--<li class="menuverti" onclick="location.href='index.php?page=mass_mailing'">E-Mail de Masse</li>-->
 		<!--<li class="menuverti" onclick="location.href='index.php?page=admin_menu'">Edition Menu</li>-->
 		<li class="menuverti" onclick="location.href='index.php?page=admin_gest_menu'">Référencement</li>
 		<!--<li class="menuverti" onclick="location.href='index.php?page=backup'">Gestionnaire de backup</li>-->
+		<li class="menuverti" onclick="location.href='index.php?page=admin_article'">Nouvel Article</li>
 	</ul>
 </center>
 <?php

@@ -1,4 +1,4 @@
-<h2>Boutique en Ligne</h2>
+<h2 class="grdtitre">Boutique en Ligne</h2>
 
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -194,57 +194,7 @@
 	switch($_GET['mode'])
 	{	
 		case 'view' :
-		?>
 		
-		<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
-			<h3><img src="./images/e_commerce_caddie.gif" style="width:20px; height:20px; vertical-align:-18%;"/>Panier</h3>
-			<div id="contenu">
-				<div id="top_panier"><table style="width:100%"><tr><td colspan="2">Nom</td><td style="float:left; margin-left:60px;">Qté</td><td style="float:right; margin-right:30px;">Prix Unitaire</td></tr></table></div>
-				<div id="div_panier"><hr/></div>
-				<?php
-				
-				if(isset($_SESSION['caddie']))
-				{
-					foreach($_SESSION['caddie'] as $article)
-					{
-						echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.$article['nom'].'</td><td style="float:left; margin-left:30px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:15px;" id="panier_elem_prix_'.$article['id'].'">'.(round($article['prix']*100)/100).'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
-					}
-				}	
-				
-				?>
-				<div id="foot_panier"><span style="float:left; margin-left:5px;">Montant total : 
-					<span id="prix_tt_panier">
-						<?php
-							echo (isset($_SESSION['caddieTot'])) ? $_SESSION['caddieTot']:'0.00';		
-						?>
-						</span>
-					€</span>
-					
-					<div style="float:right; margin-right:5px;">
-						<span class="bt" onclick="viderPanier();" style="cursor:pointer;">Vider</span>
-						-
-						<a class="bt" href="index.php?page=paiement_final">Payer</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		 <script>
-			//calTotal();
-			$(function(){
-				$('#accordeon').accordion(); // appel du plugin	
-				$('#accordeon').accordion({
-					event : 'click',
-					collapsible : true,
-					active : 1
-				});
-			});
-
-			window.onscroll = scroll;
-		 </script>
-		
-		
-		<?php
 			if(!isset($_GET['categ']))
 			{
 				$rq = connexionbddplugit::getInstance()->query("SELECT nom FROM categorie");
@@ -255,9 +205,7 @@
 			$nomcateg = $_GET['categ'];
 
 			try{
-				$bdd = connexionbddplugit::getInstance();
-				$rq = $bdd->prepare("SELECT COUNT(nom) AS nombre FROM categorie WHERE nom = ?");
-				$rq->execute(array($nomcateg));
+				$rq = connexionbddplugit::getInstance()->query("SELECT COUNT(nom) AS nombre FROM categorie WHERE nom = '$nomcateg'");
 				$rq = $rq->fetch();
 			} catch ( Exception $e ) {
 				echo "Une erreur est survenue : ".$e->getMessage();
@@ -266,9 +214,7 @@
 			if($rq['nombre'] >= 1)
 			{
 				try{
-					$bdd = connexionbddplugit::getInstance();
-					$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
-					$rq->execute(array($nomcateg));
+					$rq = connexionbddplugit::getInstance()->query("SELECT * FROM produit WHERE categorie = '$nomcateg' ORDER BY priorite DESC");
 					$ar=$rq->fetch();
 				} catch ( Exception $e ) 
 				{
@@ -276,12 +222,57 @@
 				}
 
 			
-				echo '<h4>'.strtoupper($_GET['categ']).'</h4>'
+				echo '<p class="grdtitre" style="margin-bottom:10px;"><span style="margin-left:20px;font:bold 12px;color:#f9bd1a;">'.strtoupper($_GET['categ']).'</span></p>'
 
 			?>
 				
 				
+				<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
+					<h3><img src="./images/e_commerce_caddie.gif" style="width:20px; height:20px; vertical-align:-18%;"/>Panier</h3>
+					<div id="contenu">
+						<div id="top_panier"><table style="width:100%"><tr><td colspan="2">Nom</td><td style="float:left; margin-left:60px;">Qté</td><td style="float:right; margin-right:30px;">Prix Unitaire</td></tr></table></div>
+						<div id="div_panier"><hr/></div>
+						<?php
+						
+						if(isset($_SESSION['caddie']))
+						{
+							foreach($_SESSION['caddie'] as $article)
+							{
+								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.$article['nom'].'</td><td style="float:left; margin-left:30px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:15px;" id="panier_elem_prix_'.$article['id'].'">'.$article['prix'].'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+							}
+						}	
+						
+						?>
+						<div id="foot_panier"><span style="float:left; margin-left:5px;">Montant total : 
+							<span id="prix_tt_panier">
+								<?php
+									echo (isset($_SESSION['caddieTot'])) ? $_SESSION['caddieTot']:'0.00';		
+								?>
+								</span>
+							€</span>
+							
+							<div style="float:right; margin-right:5px;">
+								<span class="bt" onclick="viderPanier();" style="cursor:pointer;">Vider</span>
+								-
+								<a class="bt" href="index.php?page=paiement_final">Payer</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				
+				 <script>
+					//calTotal();
+					$(function(){
+						$('#accordeon').accordion(); // appel du plugin	
+						$('#accordeon').accordion({
+							event : 'click',
+							collapsible : true,
+							active : 1
+						});
+					});
+		
+					window.onscroll = scroll;
+				 </script>
 			<?php
 				
 				$i=1; //délimite les colonnes
@@ -298,9 +289,7 @@
 				{
 					try
 					{
-						$bdd = connexionbddplugit::getInstance();
-						$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
-						$rq->execute(array($nomcateg));
+						$rq = connexionbddplugit::getInstance()->query("SELECT * FROM produit WHERE categorie = '$nomcateg' ORDER BY priorite DESC");
 
 						echo '<table cellspacing="20">';
 						while($ar=$rq->fetch())
@@ -321,9 +310,7 @@
 								
 								echo'
 									<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
-									<p style="margin-top:10px;text-transform:uppercase;font-weight:bold;font-size:13px;"><span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><span style="margin-right:18px;float:right;">'.(round($ar['prix']*100)/100).'€</span></p>
-								</div>
-								<span id="'.$ar['id'].'" class="boutprod" style="float:left;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span><span class="boutprod2" style="float:left;"><select name="qte'.$ar['id'].'" id="qte'.$ar['id'].'">';
+								</div><span id="'.$ar['id'].'" class="boutprod" style="float:left;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span><span class="boutprod2" style="float:left;"><select name="qte'.$ar['id'].'" id="qte'.$ar['id'].'">';
 								
 								for($k=1;$k<=10;$k++)
 								{
@@ -333,7 +320,7 @@
 								
 								echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
 								<input type="hidden" id="qte_h'.$ar['id'].'" value="0"/>
-								<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*100)/100).'"/>';
+								<input type="hidden" id="prix'.$ar['id'].'" value="'.$ar['prix'].'"/>';
 								
 								echo '</td>';
 								
@@ -369,9 +356,7 @@
 		if(isset($_GET['id']))
 			{
 				try{
-					$bdd = connexionbddplugit::getInstance();
-					$retour = $bdd->prepare("SELECT count(id) as cpt FROM produit WHERE id=?");
-					$retour->execute(array($_GET['id']));
+					$retour = connexionbddplugit::getInstance()->query("SELECT count(id) as cpt FROM produit WHERE id='".$_GET["id"]."'");
 					$donnees = $retour->fetch();
 				} catch ( Exception $e ) {
 					echo "Une erreur est survenue : ".$e->getMessage();
@@ -380,9 +365,7 @@
 				{
 					//affichage
 					try{
-						$bdd = connexionbddplugit::getInstance();
-						$retour = $bdd->prepare("SELECT * FROM produit WHERE id=?");
-						$retour->execute(array($_GET['id']));
+						$retour = connexionbddplugit::getInstance()->query("SELECT * FROM produit WHERE id='".$_GET['id']."'") ;
 						$donnees = $retour->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -392,9 +375,9 @@
 							<h2>'.$donnees['nom'].'</h2>
 							<hr/>
 							<img src="'.$donnees['images'].'" style="float:right;" width="280" height="170" />
-							'.nl2br($donnees['description']);
+							'.nl2br($donnees['desc']);
 							
-					$j=mb_substr_count(nl2br($donnees['description']),'<br />');
+					$j=mb_substr_count(nl2br($donnees['desc']),'<br />');
 
 					for($i=15-$j;$i>0;$i--)
 					{
