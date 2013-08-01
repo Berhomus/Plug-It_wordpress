@@ -37,7 +37,7 @@ Name : Contact.php => Plug-it
 
 <div style="overflow:hidden;">
 
-<div style="width:60%;float:left;">
+<div style="width:62%;float:left;">
 
 <h2 class="titre">Contactez-nous</h2>
 
@@ -80,7 +80,7 @@ Name : Contact.php => Plug-it
 				
 				<tr>
 					<td><label for="message"><b>Message <span class="red">*</span></b></label></td>
-					<td><textarea name="message" id="message" rows="15" cols="40" style="resize:none" required></textarea></td>
+					<td><textarea name="message" id="message" rows="15" cols="40" style="resize:none;" required></textarea></td>
 				</tr>
 				
 				<tr>

@@ -1,4 +1,4 @@
-<h2>Boutique en Ligne</h2>
+<h2 class="grdtitre">Boutique en Ligne</h2>
 
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -190,6 +190,7 @@
 	}
 
 	require_once('./connexionbddplugit.class.php');
+	$bdd=connexionbddplugit::getInstance();
 	
 	switch($_GET['mode'])
 	{	
@@ -205,7 +206,8 @@
 			$nomcateg = $_GET['categ'];
 
 			try{
-				$rq = connexionbddplugit::getInstance()->query("SELECT COUNT(nom) AS nombre FROM categorie WHERE nom = '$nomcateg'");
+				$rq = $bdd->prepare("SELECT COUNT(nom) AS nombre FROM categorie WHERE nom = ?");
+				$rq->execute(array($nomcateg));
 				$rq = $rq->fetch();
 			} catch ( Exception $e ) {
 				echo "Une erreur est survenue : ".$e->getMessage();
@@ -214,7 +216,8 @@
 			if($rq['nombre'] >= 1)
 			{
 				try{
-					$rq = connexionbddplugit::getInstance()->query("SELECT * FROM produit WHERE categorie = '$nomcateg' ORDER BY priorite DESC");
+					$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
+					$rq->execute(array($nomcateg));
 					$ar=$rq->fetch();
 				} catch ( Exception $e ) 
 				{
@@ -222,11 +225,9 @@
 				}
 
 			
-				echo '<h4>'.strtoupper($_GET['categ']).'</h4>'
+				echo '<p class="grdtitre" style="margin-bottom:10px;"><marquee><span style="margin-left:20px;font:bold 12px;color:white;">'.strtoupper($_GET['categ']).'</span></marquee></p>'
 
 			?>
-				
-				
 				<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
 					<h3><img src="./images/e_commerce_caddie.gif" style="width:20px; height:20px; vertical-align:-18%;"/>Panier</h3>
 					<div id="contenu">
@@ -238,7 +239,7 @@
 						{
 							foreach($_SESSION['caddie'] as $article)
 							{
-								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.$article['nom'].'</td><td style="float:left; margin-left:30px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:15px;" id="panier_elem_prix_'.$article['id'].'">'.$article['prix'].'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.$article['nom'].'</td><td style="float:left; margin-left:60px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:30px;" id="panier_elem_prix_'.$article['id'].'">'.$article['prix'].'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
 							}
 						}	
 						
@@ -277,8 +278,7 @@
 				
 				$i=1; //délimite les colonnes
 				$j=1; //délimite les lignes
-				
-				echo'<div style="margin:auto;width:1000px;">';
+				echo'<div style="margin:auto;width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">';
 					
 				if(isset($_SESSION['id']))
 				{
@@ -289,7 +289,8 @@
 				{
 					try
 					{
-						$rq = connexionbddplugit::getInstance()->query("SELECT * FROM produit WHERE categorie = '$nomcateg' ORDER BY priorite DESC");
+						$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
+						$rq->execute(array($nomcateg));
 
 						echo '<table cellspacing="20">';
 						while($ar=$rq->fetch())
@@ -342,7 +343,7 @@
 				}
 				else
 				{
-					echo '<br/><span style="font-weight:bold; font-size:20px; width:300px; margin:auto;">Aucun produit existant</span>';
+					echo '<br/><span style="font-weight:bold; font-size:20px; width:300px; margin-left:50px;">Aucun produit existant</span>';
 				}
 				echo '</div>';
 			}
@@ -356,7 +357,8 @@
 		if(isset($_GET['id']))
 			{
 				try{
-					$retour = connexionbddplugit::getInstance()->query("SELECT count(id) as cpt FROM produit WHERE id='".$_GET["id"]."'");
+					$retour = $bdd->prepare("SELECT count(id) as cpt FROM produit WHERE id=?");
+					$bdd->execute(array($_GET['id']));
 					$donnees = $retour->fetch();
 				} catch ( Exception $e ) {
 					echo "Une erreur est survenue : ".$e->getMessage();
@@ -365,7 +367,8 @@
 				{
 					//affichage
 					try{
-						$retour = connexionbddplugit::getInstance()->query("SELECT * FROM produit WHERE id='".$_GET['id']."'") ;
+						$retour = $bdd->prepare("SELECT * FROM produit WHERE id=?");
+						$retour->execute(array($_GET['id']));
 						$donnees = $retour->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();

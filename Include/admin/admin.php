@@ -11,15 +11,14 @@ include("function/connect_f.php");
 $error_co = connect();
 
 ?>
-
-<h2>Administration</h2>
+<h2 class="grdtitre">Administration</h2>
 <br/>
 <?php
 if(!isset($_SESSION['id']))
 {
 	$_GET['dc']=0;
 ?>
-
+<div style="margin:auto;width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; padding-bottom:15px;">
 	<form action="#" method="POST" style="text-align:left;"> 
 		<table style="margin:auto;">
 			<tr>
@@ -59,6 +58,7 @@ if(!isset($_SESSION['id']))
 			</tr>
 		</table>
 	</form>
+</div>
 <?php
 }
 else
@@ -76,6 +76,7 @@ else
 		<li class="menuverti" onclick="location.href='index.php?page=admin_gest_menu'">Référencement</li>
 		<!--<li class="menuverti" onclick="location.href='index.php?page=backup'">Gestionnaire de backup</li>-->
 		<li class="menuverti" onclick="location.href='index.php?page=admin_article'">Nouvel Article</li>
+		<li class="menuverti" onclick="location.href='index.php?page=admin_categ_tva'">Catégorie Boutique & TVA</li>
 	</ul>
 </center>
 <?php

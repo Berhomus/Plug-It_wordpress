@@ -11,17 +11,12 @@ function connect()
 	{
 		require_once('./connexionbddplugit.class.php');
 
-		
-		$_POST['login'] = htmlspecialchars($_POST['login']);
-		$_POST['pass'] = htmlspecialchars($_POST['pass']); 
-		//securité
-		$_POST['login'] = mysql_real_escape_string($_POST['login']);
-		$_POST['pass'] = mysql_real_escape_string($_POST['pass']); 
-		
+		$bdd= connexionbddplugit::getInstance();
 		
 		$login = $_POST["login"];
 		try{
-			$rq = connexionbddplugit::getInstance()->query("SELECT COUNT(login) AS cpt FROM admin WHERE login ='$login'");//selection données
+			$rq = $bdd->prepare("SELECT COUNT(login) AS cpt FROM admin WHERE login =?");//selection données
+			$rq->execute(array($login));
 			$array = $rq->fetch();
 		} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
@@ -34,7 +29,8 @@ function connect()
 		else
 		{
 			try{
-				$rq = connexionbddplugit::getInstance()->query("SELECT * FROM admin WHERE login ='$login'");
+				$rq = $bdd->prepare("SELECT * FROM admin WHERE login =?");//selection données
+				$rq->execute(array($login));
 				$array = $rq->fetch();
 			} catch ( Exception $e ) {
 				echo "Une erreur est survenue : ".$e->getMessage();

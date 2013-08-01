@@ -22,8 +22,10 @@ Name : solutions.php => Plug-it
 			echo'
 				<h2>Découvrez toutes nos solutions innovantes pour vous satisfaire</h2>';
 					try{
-						$retour = connexionbddplugit::getInstance()->query('SELECT * FROM solutions ORDER BY ordre');
-
+						$bdd = connexionbddplugit::getInstance();
+						$rq = $bdd->prepare('SELECT * FROM solutions ORDER BY ordre');
+						$rq->execute();
+						
 						if(isset($_SESSION['id']))
 						{
 							echo '<br/><div style="margin-left:415px;" class="menuverti" onclick="location.href=\'index.php?page=admin_solutions\'">Ajouter une solution</div>';
@@ -33,7 +35,7 @@ Name : solutions.php => Plug-it
 						$j=1; //délimite les lignes
 						
 						echo '<table cellspacing="20">';
-						while ($donnees = $retour->fetch())
+						while ($donnees = $rq->fetch())
 							{
 							
 								if($i == 1)
@@ -73,7 +75,9 @@ Name : solutions.php => Plug-it
 			if(isset($_GET['id']))
 			{
 				try{
-					$retour = connexionbddplugit::getInstance()->query("SELECT count(id) as cpt FROM solutions WHERE id='".$_GET["id"]."'");
+					$bdd = connexionbddplugit::getInstance();
+					$retour = $bdd->prepare("SELECT count(id) as cpt FROM solutions WHERE id=?");
+					$retour->execute(array($_GET["id"]));
 					$donnees = $retour->fetch();
 				} catch ( Exception $e ) {
 					echo "Une erreur est survenue : ".$e->getMessage();
@@ -83,7 +87,9 @@ Name : solutions.php => Plug-it
 				{
 					//affichage 
 					try{
-						$retour = connexionbddplugit::getInstance()->query("SELECT * FROM solutions WHERE id='".$_GET['id']."'"); 
+						$bdd = connexionbddplugit::getInstance();
+						$retour = $bdd->prepare("SELECT * FROM solutions WHERE id=?"); 
+						$retour->execute(array($_GET['id']));
 						$donnees = $retour->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -105,8 +111,10 @@ Name : solutions.php => Plug-it
 						
 					
 					//affichage autres liens
-					try{					
-						$retour = connexionbddplugit::getInstance()->query("SELECT * FROM solutions WHERE id<>'".$_GET['id']."' ORDER BY ordre LIMIT 10"); 
+					try{	
+						$bdd = connexionbddplugit::getInstance();
+						$retour = $bdd->prepare("SELECT * FROM solutions WHERE id<>? ORDER BY ordre LIMIT 10"); 
+						$retour->execute(array($_GET['id']));
 						
 						$i=1; //délimite les colonnes
 						$j=1; //délimite les lignes

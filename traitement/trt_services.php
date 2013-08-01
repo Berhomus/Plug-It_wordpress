@@ -10,8 +10,9 @@ Name : trt_services.php => Plug-it
 	include("../function/upload.php");
 	include("../function/update_ordre.php");
 	
-	require_once('./connexionbddplugit.class.php');
+	require_once('../connexionbddplugit.class.php');
 
+	$bdd=connexionbddplugit::getInstance();
 
 	if(isset($_GET['mode']))
 	{
@@ -22,7 +23,8 @@ Name : trt_services.php => Plug-it
 				if(isset($_GET['id']))
 				{
 					try{
-						$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM services WHERE id='".$_GET['id']."'");
+						$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM services WHERE id=?");
+						$rq->execute(array($_GET['id']));
 						$array=$rq->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -31,7 +33,8 @@ Name : trt_services.php => Plug-it
 					if($array['cpt'])
 					{
 						try{
-							$rq = connexionbddplugit::getInstance()->query("SELECT ordre FROM services WHERE id='".$_GET['id']."'");
+							$rq=$bdd->prepare("SELECT ordre FROM services WHERE id=?");
+							$rq->execute(array($_GET['id']));
 							$ar = $rq->fetch();
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
@@ -39,7 +42,8 @@ Name : trt_services.php => Plug-it
 						
 						update_ordre($ar['ordre'],0,-1,'services');
 						try{
-							connexionbddplugit::getInstance()->query("DELETE FROM services WHERE id='".$_GET['id']."'");
+							$rq=$bdd->prepare("DELETE FROM services WHERE id=?");
+							$rq->execute(array($_GET['id']));
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
@@ -61,7 +65,8 @@ Name : trt_services.php => Plug-it
 				if(isset($_GET['id']))
 				{
 					try{
-						$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM services WHERE id='".$_GET['id']."'");
+						$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM services WHERE id=?");
+						$rq->execute(array($_GET['id']));
 						$array=$rq->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -72,7 +77,8 @@ Name : trt_services.php => Plug-it
 						if(empty($_FILES['logoserv']['name']) or ($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logoserv')) != '')
 						{
 							try{
-								$rq=connexionbddplugit::getInstance()->query("SELECT * FROM services WHERE id='".$_GET['id']."'");
+								$rq=$bdd->prepare("SELECT * FROM services WHERE id=?");
+								$rq->execute(array($_GET['id']));
 								$array=$rq->fetch();
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
@@ -82,15 +88,7 @@ Name : trt_services.php => Plug-it
 							$soustitre = (!empty($_POST['soustitre'])) ? $_POST['soustitre']:$array['subtitre'];
 							$corps = (!empty($_POST['corps'])) ? $_POST['corps']:$array['corps'];
 							$path = (isset($path)) ? $path:$array['image'];
-							$ordre = $_POST['ordre'];
-							
-							$titre = htmlspecialchars($titre);
-							$soustitre = htmlspecialchars($soustitre);
-							
-							$titre = mysql_real_escape_string($titre);
-							$soustitre = mysql_real_escape_string($soustitre);
-							$corps = mysql_real_escape_string($corps);
-							
+							$ordre = $_POST['ordre'];					
 
 							if($ordre>$array['ordre'])
 							{
@@ -103,8 +101,9 @@ Name : trt_services.php => Plug-it
 							
 							if($ordre!=$array['ordre'])
 								update_ordre($array['ordre']-$pas,$ordre,$pas,'services');
-							try{
-								connexionbddplugit::getInstance()->query("UPDATE services SET ordre='$ordre', image='$path', titre='$titre', subtitre='$soustitre', corps='$corps' WHERE id='".$_GET['id']."'");
+							try{);
+								$rq = $bdd->prepare("UPDATE services SET ordre=?, image=?, titre=?, subtitre=?, corps=? WHERE id=?");
+								$rq->execute(array($ordre,$path,$titre,$soustitre,$corps,$_GET['id']));
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
 							}
@@ -141,17 +140,16 @@ Name : trt_services.php => Plug-it
 					
 					if(($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logoserv')) != '')
 					{
-						$titre = htmlspecialchars($_POST['nomserv']);
-						$soustitre = htmlspecialchars($_POST['soustitre']);
+						$titre = $_POST['nomserv'];
+						$soustitre = $_POST['soustitre'];
 						
-						$titre = mysql_real_escape_string($titre);
-						$soustitre = mysql_real_escape_string($soustitre);
-						$corps = mysql_real_escape_string($_POST['corps']);
+						$corps = $_POST['corps'];
 						$ordre = $_POST['ordre'];
 						
 						update_ordre($ordre,0,1,'services');
 						try{
-							connexionbddplugit::getInstance()->query("INSERT INTO services VALUES (Null,'$titre','$corps','$path','$soustitre',Null,'$ordre')");
+							$rq = $bdd->prepare("INSERT INTO services VALUES (Null,?,?,?,?,Null,?)");
+							$rq->execute(array($titre,$corps,$$path,$soustitre,$ordre));
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}

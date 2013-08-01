@@ -1,19 +1,21 @@
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <?php
 
-	require_once('./connexionbddplugit.class.php');
+	require_once('../connexionbddplugit.class.php');
 
+	$bdd = connexionbddplugit::getInstance();
 	
 	if(isset($_POST)&& !empty($_POST))
 	{
 		$i=1;
 		foreach($_POST AS $meta)
 		{
-			$meta = htmlspecialchars($meta);
-			$meta = mysql_real_escape_string($meta);
+			
 			try{
-				connexionbddplugit::getInstance()->query("UPDATE menu SET meta='$meta' WHERE position='$i'");
+				$rq = $bdd->prepare("UPDATE menu SET meta=? WHERE position=?");
+				$rq->execute(array($meta,$i));
 			} catch ( Exception $e ) {
-				echo "Une erreur est survenue : ".$e->getMessage();
+				echo "Une erreur est survenue : ".$e->getMessage()."<br/>";
 			}
 			$i++;
 		}

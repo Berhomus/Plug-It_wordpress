@@ -4,7 +4,9 @@
 		require_once('../../connexionbddplugit.class.php');
 		
 		try{
-			connexionbddplugit::getInstance()->query("INSERT INTO categorie VALUE ('','".$_POST['categ']."','1')");
+			$bdd = connexionbddplugit::getInstance();
+			$rq = $bdd->prepare("INSERT INTO categorie VALUE ('',?,'1')");
+			$rq->execute(array($_POST['categ']));
 			echo 'success';
 		}catch(Exception $e){
 				echo 'Erreur SQL :'.$e->getMessage();

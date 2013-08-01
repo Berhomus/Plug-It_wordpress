@@ -3,7 +3,7 @@ Made by : AS Amiens - Bovin Antoine/Bensaid Borhane/Villain Benoit
 Last Update : 12/07/2013
 Name : trt_solutions.php => Plug-it
 *********************************************************-->
-
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <div style="margin:auto;width:400px;">
 <?php
 	
@@ -11,7 +11,9 @@ Name : trt_solutions.php => Plug-it
 	include("../function/update_ordre.php");
 	include("../function/trt_image.php");
 	
-	require_once('./connexionbddplugit.class.php');
+	require_once('../connexionbddplugit.class.php');
+	
+	$bdd = connexionbddplugit::getInstance();
 	
 	if(isset($_GET['mode']))
 	{
@@ -22,7 +24,8 @@ Name : trt_solutions.php => Plug-it
 				if(isset($_GET['id']))
 				{
 					try{
-						$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM solutions WHERE id='".$_GET['id']."'");
+						$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM solutions WHERE id=?");
+						$rq->execute(array($_GET['id']));
 						$array=$rq->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -31,14 +34,16 @@ Name : trt_solutions.php => Plug-it
 					if($array['cpt'])
 					{
 						try{
-							$rq = connexionbddplugit::getInstance()->query("SELECT ordre FROM solutions WHERE id='".$_GET['id']."'");
+							$rq = $bdd->prepare("SELECT ordre FROM solutions WHERE id=?");
+							$rq->execute(array($_GET['id']));
 							$ar = $rq->fetch();
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
 						update_ordre($ar['ordre'],0,-1,'solutions');
 						try{
-							connexionbddplugit::getInstance()->query("DELETE FROM solutions WHERE id='".$_GET['id']."'");
+							$rq = $bdd->prepare("DELETE FROM solutions WHERE id=?");
+							$rq->execute(array($_GET['id']));
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
@@ -60,7 +65,8 @@ Name : trt_solutions.php => Plug-it
 				if(isset($_GET['id']))
 				{
 					try{
-						$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM solutions WHERE id='".$_GET['id']."'");
+						$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM solutions WHERE id=?");
+						$rq->execute(array($_GET['id']));
 						$array=$rq->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -71,10 +77,11 @@ Name : trt_solutions.php => Plug-it
 						if(empty($_FILES['logosolu']['name'])or ($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logosolu')) != '')
 						{
 						
-							if(empty($_FILES['grandeimg']['name'])or ($path2 = upload('../images/',300*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp','.avi','.mp4'),'grandeimg')) != '')
+							if(empty($_FILES['grandeimg']['name'])or ($path2 = upload('../images/',300*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'grandeimg')) != '')
 							{
 								try{
-									$rq=connexionbddplugit::getInstance()->query("SELECT * FROM solutions WHERE id='".$_GET['id']."'");
+									$rq=$bdd->prepare("SELECT * FROM solutions WHERE id=?");
+									$rq->execute(array($_GET['id']));
 									$array=$rq->fetch();
 								} catch ( Exception $e ) {
 									echo "Une erreur est survenue : ".$e->getMessage();
@@ -85,13 +92,7 @@ Name : trt_solutions.php => Plug-it
 								$corps = (!empty($_POST['corps'])) ? $_POST['corps']:$array['corps'];
 								$path = (isset($path)) ? make_limg($path):$array['image_sol'];
 								$path2 = (isset($path2)) ? make_img($path2,$titre,$desc):$array['image_car'];
-								$ordre = $_POST['ordre'];
-								
-								$titre = htmlspecialchars($titre);
-								
-								$titre = mysql_real_escape_string($titre);
-								$desc = mysql_real_escape_string($desc);
-								$corps = mysql_real_escape_string($corps);							
+								$ordre = $_POST['ordre'];						
 								
 								if($ordre>$array['ordre'])
 								{
@@ -106,7 +107,8 @@ Name : trt_solutions.php => Plug-it
 									update_ordre($array['ordre']-$pas,$ordre,$pas,'solutions');
 								
 								try{
-									connexionbddplugit::getInstance()->query("UPDATE solutions SET ordre='$ordre', image_sol='$path', image_car='$path2', titre='$titre', description='$desc', corps='$corps' WHERE id='".$_GET['id']."'");
+									$rq = $bdd->prepare("UPDATE solutions SET ordre=?, image_sol=?, image_car=?, titre=?, description=?, corps=? WHERE id=?");
+									$rq->execute(array($ordre,$path,$path2,$titre,$desc,$corps,$_GET['id']));
 								} catch ( Exception $e ) {
 									echo "Une erreur est survenue : ".$e->getMessage();
 								}
@@ -160,20 +162,17 @@ Name : trt_solutions.php => Plug-it
 					{
 						if(($path2 = upload('../images/',300*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp','.avi','.mp4'),'grandeimg')) != '')
 						{
-							$titre = htmlspecialchars($_POST['nomsolu']);
-
-							
-							$titre = mysql_real_escape_string($titre);
-							$desc = mysql_real_escape_string($_POST['desc']);
-							$corps = mysql_real_escape_string($_POST['corps']);
 							$ordre = $_POST['ordre'];
-							
+							$titre = $_POST['nomsolu'];
+							$corps = $_POST['corps'];
+							$desc = $_POST['desc'];
 							update_ordre($ordre,0,1,'solutions');
 							$path2 = make_img($path2,$titre,$desc);
 							$path = make_limg($path);
 							
 							try{
-								connexionbddplugit::getInstance()->query("INSERT INTO solutions VALUES (Null,'$titre','$corps','$path2','$path','$desc',Null,'$ordre')");
+								$rq = $bdd->prepare("INSERT INTO solutions VALUES (Null,?,?,?,?,?,Null,?)");
+								$rq->execute(array($titre,$corps,$path2,$path,$desc,$ordre));
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
 							}

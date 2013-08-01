@@ -15,7 +15,7 @@ Name : accueil.php => Plug-it
 		case 'main':
 		
 ?>
-			<div style="height:475px; width:100%; padding-top:1%;">
+			<div style="background-color:#f9bd1a; height:556px; width:100%; padding-top:1%;">
 				<div id="iview">
 				<?php
 				
@@ -64,62 +64,6 @@ Name : accueil.php => Plug-it
 				</div>
 			</div>
 
-<?php
-		break;
-	
-		case 'sol':
-?>
-			<div style="margin-left:auto; margin-right:auto; width:80%;">	
-				<img src="images/solutions_dediees.png" style="float:left;"/>
-
-				<div style="float:left; margin-left:20px;">
-
-					<p style="text-align: justify;">
-							
-							<h4 style="text-transform:uppercase;"><img src="images/fleche.png"/>
-							Première et unique solution de Cloud Computing locale,nos solutions <br/>
-							sont différenciées en packs d'abonnement mensuel ou annuel.
-							</h4>
-							<br/>
-							On y trouve en premier lieu notre solution de bureau virtuel sous serveurs Microsoft© Windows 2008 et <br/>
-							suites Microsoft© Office Pro 2010 mais aussi des boites aux lettres Microsoft© Exchange avec toutes <br/>
-							ses fonctionnalités de partage, du filtrage antispam, de la sauvegarde en ligne,de la Gestion <br/>
-							commerciale, des logiciels de comptabilité, etc.
-							<br/>
-							<br/>
-							Le travail coopératif n'est pas en reste avec notre offre Wanashare où nous mettons en œuvre Microsoft© Sharepoint 2010.
-					</p>
-				</div>
-			</div>
-			
-<?php
-		break;
-		
-		case 'conseil':
-?>
-			<div style="margin-left:auto; margin-right:auto; width:80%;">	
-				<img src="images/ecoute_conseil.png" style="float:left;"/>
-
-				<div style="float:left; margin-left:20px;">
-
-					<p style="text-align: justify;">
-							
-							<h4 style="text-transform:uppercase;"><img src="images/fleche.png"/>
-							Depuis 15 ans au service des entreprises, notre équipe commerciale est <br/>
-							principalement issue du milieu technique et rompue aux nouvelles <br/>
-							technologies de l'informatique.
-							</h4>
-							<br/>
-							Cette particularité a pour avantage de mieux traduire les besoins exprimés par nos clients et ainsi de <br/>
-							naturellement d'effectuer une parfaite transmission des besoins à notre service technique.<br/>
-							Nous sommes à même de proposer notre expertise en matière d'audit et de conseils en informatique et <br/>
-							d'œvrer en tant que maître d'œuvre.
-							<br/>
-							<br/>
-							De la rédaction de vos cahiers des charges au suivi de la réalisation et à la recette de l'ensemble.
-					</p>
-				</div>
-			</div>
 <?php
 		break;
 		
@@ -187,7 +131,8 @@ Name : accueil.php => Plug-it
 				<p>
 					Toutes les informations présentes sur le site (textes, photographies, etc.) sont la propriété exclusive de Plug-It. 
 					Toute reproduction, même partielle, doit faire l'objet <br/>
-					d'une demande spécifique auprès de Plug-It.
+					d'une demande spécifique auprès de Plug-It.<br/>
+					<br/>
 				</p>
 			</div>
 <?php

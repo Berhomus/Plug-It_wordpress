@@ -9,14 +9,16 @@ Name : Corps.php => Plug-it
 		$_GET['page'] = 'accueil';
 	}
 ?>	
-<div style="background-color:#f9bd1a;">
+
 <?php	
 
 	function checkUp($nom){
 		require_once('./connexionbddplugit.class.php');
+		$bdd=connexionbddplugit::getInstance();
 
 		try{
-			$rq = connexionbddplugit::getInstance()->query("SELECT * FROM menu WHERE baseName = '$nom'");
+			$rq = $bdd->prepare("SELECT * FROM menu WHERE baseName = ?");
+			$rq->execute(array($nom));
 			$ar= $rq->fetch();
 		} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
@@ -171,6 +173,15 @@ Name : Corps.php => Plug-it
 			echo '<h2>Access Forbidden</h2>';
 		break;
 		
+		case 'admin_categ_tva':
+		if(isset($_SESSION['id']))
+		{
+			INCLUDE("include/admin/admin_categ_tva.php");
+		}
+		else
+			echo '<h2>Access Forbidden</h2>';
+		break;
+		
 		case 'gestionnaire_img':
 		if(isset($_SESSION['id']))
 		{
@@ -204,4 +215,3 @@ Name : Corps.php => Plug-it
 	}
 
 ?>
-</div>

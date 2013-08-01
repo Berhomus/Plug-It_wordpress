@@ -3,14 +3,16 @@ Made by : AS Amiens - Bovin Antoine/Bensaid Borhane/Villain Benoit
 Last Update : 12/07/2013
 Name : trt_ref.php => Plug-it
 *********************************************************-->
-
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <div style="margin:auto;width:80%;">
 <?php
 	
 	include("../function/upload.php");
 	include("../function/update_ordre.php");
 	
-	require_once('./connexionbddplugit.class.php');
+	require_once('../connexionbddplugit.class.php');
+	
+	$bdd = connexionbddplugit::getInstance();
 
 	if(isset($_GET['mode']))
 	{
@@ -22,7 +24,8 @@ Name : trt_ref.php => Plug-it
 				{
 					$ordre = $_POST['ordre'];
 					try{
-						$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM ref WHERE id='".$_GET['id']."'");
+						$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM ref WHERE id=?");
+						$rq->execute(array($_GET['id']));
 						$array=$rq->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -31,7 +34,8 @@ Name : trt_ref.php => Plug-it
 					if($array['cpt'])
 					{
 						try{
-							$rq = connexionbddplugit::getInstance()->query("SELECT ordre FROM ref WHERE id='".$_GET['id']."'");
+							$rq = $bdd->prepare("SELECT ordre FROM ref WHERE id=?");
+							$rq->execute(array($_GET['id']));
 							$ar = $rq->fetch();
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
@@ -39,7 +43,8 @@ Name : trt_ref.php => Plug-it
 							
 						update_ordre($ar['ordre'],0,-1,'ref');
 						try{
-							connexionbddplugit::getInstance()->query("DELETE FROM ref WHERE id='".$_GET['id']."'");
+							$rq = $bdd->prepare("DELETE FROM ref WHERE id=?");
+							$rq->execute(array($_GET['id']));
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
@@ -61,7 +66,8 @@ Name : trt_ref.php => Plug-it
 				if(isset($_GET['id']))
 				{
 					try{
-						$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM ref WHERE id='".$_GET['id']."'");
+						$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM ref WHERE id=?");
+						$rq->execute(array($_GET['id']));
 						$array=$rq->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -72,7 +78,8 @@ Name : trt_ref.php => Plug-it
 						if(empty($_FILES['logo']['name']) or ($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','bmp'),'logo')) != '')
 						{
 							try{
-								$rq=connexionbddplugit::getInstance()->query("SELECT * FROM ref WHERE id='".$_GET['id']."'");
+								$rq=$bdd->prepare("SELECT * FROM ref WHERE id=?");
+								$rq->execute(array($_GET['id']));
 								$array=$rq->fetch();
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
@@ -83,15 +90,6 @@ Name : trt_ref.php => Plug-it
 							$lien = (!empty($_POST['lien'])) ? $_POST['lien']:$array['lien'];
 							$path = (isset($path)) ? $path:$array['image'];
 							$ordre = $_POST['ordre'];
-							
-							
-							$titre = htmlspecialchars($titre);
-							$soustitre = htmlspecialchars($soustitre);
-							$lien = htmlspecialchars($lien);
-							
-							$titre = mysql_real_escape_string($titre);
-							$soustitre = mysql_real_escape_string($soustitre);
-							$lien = mysql_real_escape_string($lien);
 							
 							if($ordre>$array['ordre'])
 							{
@@ -106,7 +104,8 @@ Name : trt_ref.php => Plug-it
 								update_ordre($array['ordre']-$pas,$ordre,$pas,'ref');
 							
 							try{
-								connexionbddplugit::getInstance()->query("UPDATE ref SET ordre='$ordre', image='$path', titre='$titre', sous_titre='$soustitre', lien='$lien' WHERE id='".$_GET['id']."'");
+								$rq = $bdd->prepare("UPDATE ref SET ordre=?, image=?, titre=?, sous_titre=?, lien=? WHERE id=?");
+								$rq->execute(array($ordre,$path,$titre,$soustitre,$lien,$_GET['id']));
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
 							}	
@@ -146,15 +145,12 @@ Name : trt_ref.php => Plug-it
 						$titre = htmlspecialchars($_POST['nomcli']);
 						$soustitre = htmlspecialchars($_POST['soustitre']);
 						$lien = htmlspecialchars($_POST['lien']);
-						
-						$titre = mysql_real_escape_string($titre);
-						$soustitre = mysql_real_escape_string($soustitre);
-						$lien = mysql_real_escape_string($lien);
 						$ordre = $_POST['ordre'];
 						
 						update_ordre($ordre,0,1,'ref');
 						try{
-							connexionbddplugit::getInstance()->query("INSERT INTO ref VALUES (Null,'$path','$titre','$lien','$soustitre',Null,'$ordre')");
+							$rq = $bdd->prepare("INSERT INTO ref VALUES (Null,?,?,?,?,Null,?)");
+							$rq->execute(array($path,$titre,$lien,$soustitre,$ordre));
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}

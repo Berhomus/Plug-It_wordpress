@@ -74,7 +74,9 @@ Name : services.php => Plug-it
 			if(isset($_GET['id']))//verif existence id
 			{
 				try{
-					$retour = connexionbddplugit::getInstance()->query("SELECT count(id) as cpt FROM services WHERE id='".$_GET["id"]."'");
+					$bdd = connexionbddplugit::getInstance();
+					$retour = $bdd->prepare("SELECT count(id) as cpt FROM services WHERE id=?");
+					$retour->execute(array($_GET['id']));
 					$donnees = $retour->fetch();
 				} catch ( Exception $e ) {
 					echo "Une erreur est survenue : ".$e->getMessage();
@@ -84,7 +86,9 @@ Name : services.php => Plug-it
 				{
 					//affichage 
 					try{
-						$retour = connexionbddplugit::getInstance()->query("SELECT * FROM services WHERE id='".$_GET['id']."'"); 
+						$bdd = connexionbddplugit::getInstance();
+						$retour = $bdd->prepare("SELECT * FROM services WHERE id=?"); 
+						$retour->execute(array($_GET['id']));
 						$donnees = $retour->fetch();
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
@@ -105,7 +109,9 @@ Name : services.php => Plug-it
 					
 					//affichage autres liens					
 					try{
-						$retour = connexionbddplugit::getInstance()->query("SELECT * FROM services WHERE id<>'".$_GET['id']."' ORDER BY ordre LIMIT 10");
+						$bdd = connexionbddplugit::getInstance();
+						$retour = $bdd->prepare("SELECT * FROM services WHERE id<>? ORDER BY ordre LIMIT 10");
+						$retour->execute(array($_GET['id']));
 					
 						$i=1; //délimite les colonnes
 						$j=1; //délimite les lignes

@@ -26,29 +26,39 @@ Name : Index.php => Plug-it
 		<?php 
 			require_once('./connexionbddplugit.class.php');
 			
+			$bdd = connexionbddplugit::getInstance();
+			
 			if(!isset($_GET['page']))
 				$page = 'accueil';
 			else
 				$page=$_GET['page'];
 			
 			try{
-				$rq = connexionbddplugit::getInstance()->query("SELECT * FROM menu WHERE baseName = '$page'");
-				$rq = $rq->fetch();
+				$rq = $bdd->prepare("SELECT count(id) as nbr FROM menu WHERE baseName = ?");
+				$rq->execute(array($page));
+				$ar = $rq->fetch();
+				if($ar['nbr'] == 1)
+				{
+					$rq = $bdd->prepare("SELECT * FROM menu WHERE baseName = ?");
+					$rq->execute(array($page));
+					$ar = $rq->fetch();
+					$s = $ar['nom'];
+					$p = $ar['meta'];
+				}
 			}catch(Exception $e){
 				echo "Une erreur est survenue : ".$e->getMessage();
 			}
 		?>
 		
 		<title>Plug-it
-			<?php if(!empty($rq))
-				echo " - ".$rq['nom'];
+			<?php if(isset($s))
+				echo " - ".$s;
 			?>
 		</title>
-		
-		<meta name="description" content="<?php
-			echo $rq['meta'];
-		?>" />
-		
+		<?php
+			if(isset($s))
+				echo '<meta name="description" content="'.$p.'" />';
+		?>
 	
 		<link rel="stylesheet" href="css/iview.css" />
 		<link rel="stylesheet" href="css/skin 1/style.css" />

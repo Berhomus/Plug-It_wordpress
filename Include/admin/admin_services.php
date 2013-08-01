@@ -4,12 +4,16 @@
 <?phpif(isset($_SESSION['id'])){?><?php	$id=0;	$nomserv="";	$corps="";	$logoserv="";	$soustitre="";
 	$ordre=0;		if(isset($_POST) and !empty($_POST))	{		$id= (isset($_GET['id'])) ? $_GET['id']:0;		$nomserv=$_POST['nomserv'];		$soustitre=$_POST['soustitre'];		$corps=$_POST['corps'];
 		$ordre=$_POST['ordre'];	}	else if(isset($_GET['id']))	{		require_once('./connexionbddplugit.class.php');
-		try{			$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) as cpt FROM services WHERE id='".$_GET['id']."'");			$array=$rq->fetch();
+		$bdd = connexionbddplugit::getInstance();
+		
+		try{			$rq=$bdd->prepare("SELECT COUNT(id) as cpt FROM services WHERE id=?");
+			$rq->execute(array($_GET['id']));			$array=$rq->fetch();
 		} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
 		}		
 				if($array['cpt']==1)		{
-			try{				$rq=connexionbddplugit::getInstance()->query("SELECT * FROM services WHERE id='".$_GET['id']."'");				$array=$rq->fetch();
+			try{				$rq=$bdd->prepare("SELECT * FROM services WHERE id=?");
+				$rq->execute(array($_GET['id']));				$array=$rq->fetch();
 			} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
 			}						$id=$array['id'];			$nomserv=$array['titre'];			$corps=$array['corps'];			$logoserv=$array['image'];			$soustitre=$array['subtitre'];
