@@ -131,7 +131,8 @@ Name : accueil.php => Plug-it
 				<p>
 					Toutes les informations présentes sur le site (textes, photographies, etc.) sont la propriété exclusive de Plug-It. 
 					Toute reproduction, même partielle, doit faire l'objet <br/>
-					d'une demande spécifique auprès de Plug-It.
+					d'une demande spécifique auprès de Plug-It.<br/>
+					<br/>
 				</p>
 			</div>
 <?php
