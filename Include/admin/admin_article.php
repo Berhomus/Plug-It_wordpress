@@ -133,16 +133,24 @@
 			}
 		};
 		
+		
+		
 		var rq = "";
 		if(field.value != 'base')
-			rq = "SELECT nom FROM sousmenu WHERE menu='"+field.value+"'";
+		{
+			rq = "SELECT * FROM sousmenu WHERE menu=?";
+			var array = field.value;
+			
+		}
 		else
-			rq = "SELECT nom FROM menu";
-		
+		{
+			rq = "SELECT * FROM menu";
+			array = ""
+		}
 		
 		xhr.open("POST", "requete_article.php", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("rq="+rq+"&type=getposi");
+		xhr.send("rq="+rq+"&type=getposi&array="+array);
 	}
 	
 	function deleteBlock(){

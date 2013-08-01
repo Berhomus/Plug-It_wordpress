@@ -1,11 +1,17 @@
 <?php
 	require_once('../../connexionbddplugit.class.php');
-	
+	$bdd =connexionbddplugit::getInstance();
 	
 	if(isset($_POST["rq"]))
 	{
 		try{
-				$rq = connexionbddplugit::getInstance()->query($_POST["rq"]);
+				$param = array();
+				if(isset($_POST['array']) && !empty($_POST['array']))
+					$param = preg_split("/,/",$_POST['array']);
+					
+				$rq = $bdd->prepare($_POST["rq"]);
+				$rq->execute($param);
+
 				switch($_POST["type"])
 				{
 					case 'getposi':
