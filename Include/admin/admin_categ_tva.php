@@ -23,38 +23,172 @@
 		return xhr;
 	}
 
-	function addCategorie(field){
+	function ajoutmodifcateg(id){
+	
+		var select = document.getElementById(id);
+		var categ = document.getElementById('categ');
+		var cb = document.getElementById('visible');
+
 		xhr = getXMLHttpRequest();
 		
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
 				var success;
-				if(xhr.responseText == 'success')
+				var n = xhr.responseText.split("_");
+				if(n[0]=='reussit')
 				{
-					var option = document.createElement('option');
-					option.setAttribute("value",document.getElementById("new_categorie").value);
-					option.setAttribute("selected","");
-					option.innerHTML=document.getElementById("new_categorie").value;
-					document.getElementById("categorie").appendChild(option);
-					document.getElementById("new_categorie").value = "";
-					success = '<small style="color:green;">Ajout Réussi !</small>';
+					success = '<small style="color:green;">Opération Réussie !</small>';
+					
+					if(n[4]=='ajout')
+					{
+						var option = document.createElement('option');
+						option.setAttribute("id","opt_"+n[3]);
+						option.setAttribute("value",n[1]+'_'+n[2]);
+						option.innerHTML = n[1];
+						select.appendChild(option);
+						option.setAttribute("selected","");
+					}
+					else
+					{
+						document.getElementById('opt_'+n[3]).innerHTML = n[1];
+						document.getElementById('opt_'+n[3]).value = n[1]+'_'+n[2]+'_'+n[3];
+					}
+					
 				}
 				else
 				{
-					success = '<small style="color:red;">Ajout Echoué !</small>';
+					success = '<small style="color:red;">Opération Echouée !</small>';
 				}
-				document.getElementById("new_categ_td").innerHTML = '<label for="new_categorie"><b>Nouvelle Catégorie <span class="red">*</span></b><br/><small id="lim_new_categorie">(Max 50 caractères)</small><br/>'+success+'</label>';
+				document.getElementById("result_categ").innerHTML = success;
 			}
 		};
 		
-		var categ = field.value;
-		xhr.open("POST", "include/admin/ajoutcateg.php", true);
+		var n = select.value.split("_");
+		
+		if(select.value == '')
+		{
+			//Ajout
+			if(categ.value != '')
+			{
+				var rq = "INSERT INTO categorie VALUES (null,?,?)";
+				if(cb.checked)
+					var t = 1;
+				else
+					var t = 0;
+				var array = categ.value+','+t;
+				var type = 'ajout';
+			}
+		}
+		else
+		{
+			// Modif
+			if(categ.value != '' && (categ.value!=n[0] || cb.getAttribute("checked")!=n[1]))
+			{
+				var rq = "UPDATE categorie SET nom=?, visible=? WHERE id=?";
+				if(cb.checked)
+					var t = 1;
+				else
+					var t = 0;
+				var array = categ.value+','+t+','+n[2];
+				var type = 'modif';
+			}
+		}
+		
+		xhr.open("POST", "include/admin/requete_article.php", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("categ="+categ);
+		xhr.send("rq="+rq+"&type="+type+"&array="+array);
 	}
 	
-	function selection(field,nom){
+		function ajoutmodiftva(id){
+	
+		var select = document.getElementById(id);
+		var ref = document.getElementById('ref');
+		var tva = document.getElementById('tva');
+
+		xhr = getXMLHttpRequest();
 		
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				var success;
+				var n = xhr.responseText.split("_");
+				if(n[0]=='reussit')
+				{
+					success = '<small style="color:green;">Opération Réussie !</small>';
+					
+					if(n[4]=='ajout')
+					{
+						var option = document.createElement('option');
+						option.setAttribute("id","opt_"+n[3]);
+						option.setAttribute("value",n[1]+'_'+n[2]);
+						option.innerHTML = n[1];
+						select.appendChild(option);
+						option.setAttribute("selected","");
+					}
+					else
+					{
+						document.getElementById('opt_'+n[3]).innerHTML = n[1];
+						document.getElementById('opt_'+n[3]).value = n[1]+'_'+n[2]+'_'+n[3];
+					}
+					
+				}
+				else
+				{
+					success = '<small style="color:red;">Opération Echouée !</small>';
+				}
+				document.getElementById("result_tva").innerHTML = success;
+			}
+		};
+		
+		var n = select.value.split("_");
+		
+		if(select.value == '')
+		{
+			//Ajout tva
+			if(ref.value != '')
+			{
+				var rq = "INSERT INTO tva VALUES (null,?,?)";
+				var array = ref.value+','+tva.value;
+				var type = 'ajouttva';
+			}
+		}
+		else
+		{
+			// Modif tva
+			if(ref.value != '' && (ref.value!=n[0] || tva.value!=n[1]))
+			{
+				var rq = "UPDATE tva SET ref=?, tva=? WHERE id=?";
+				var array = ref.value+','+tva.value+','+n[2];
+				var type = 'modiftva';
+			}
+		}
+		
+		xhr.open("POST", "include/admin/requete_article.php", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.send("rq="+rq+"&type="+type+"&array="+array);
+	}
+	
+	function supprimcateg(id){
+		var select = document.getElementById(id);
+		var categ = document.getElementById('categ');
+		
+		
+	}
+	
+	function selection_update_tva(id,field1,field2){
+			var n = id.value.split("_");
+			document.getElementById(field1).value = Math.round(n[1]*100)/100;
+			document.getElementById(field2).value = n[0];
+	}
+	
+	function selection_update_categ(id,field1,field2){
+			var n = id.value.split("_");
+			document.getElementById(field1).value = n[0];
+			if(n[1]==1)
+			{
+				document.getElementById(field2).checked = true ;
+			}
+			else
+				document.getElementById(field2).checked = false ;
 	}
 </script>
 
@@ -66,36 +200,22 @@ if(isset($_SESSION['id']))
 <h2 class="grdtitre">Gestion des Catégories de la Boutique et des taux de TVA</h2>
 <?php
 
-require_once('./connexionbddplugit.class.php');
-
-	$bdd = connexionbddplugit::getInstance();
-	
-	$rq = $bdd->prepare("SELECT valeur FROM tva WHERE id='1'");
-	$rq->execute();
-	$ar = $rq->fetch();
-	$tva = $ar['valeur'];
-	
-	$require="";
-
+	require_once('./connexionbddplugit.class.php');
 ?>
 <!--Catégorie-->
 <div style="margin-top:5px;width:491px; height:250px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; float:left;">
-	<form method="post" enctype="multipart/form-data" action="#">
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-top:20px;">				
-		
 				<tr>
-					<td><label for="categorie"><b>Catégorie du produit </b><br/></label></td>
+					<td><label for="categorie"><b>Catégorie des produits </b></label></td>
 					<td>
-						<select name="categorie" id="categorie">
-							<option value="ajout_categ">Ajouter une catégorie</option>
+						<select name="categorie" id="categorie" onChange="selection_update_categ(this,'categ','visible')">
+							<option value="" selected>Ajouter une catégorie</option>
 								<?php
-									$rq = connexionbddplugit::getInstance()->query("SELECT nom FROM categorie");
-									$selected ="";
+									$rq = connexionbddplugit::getInstance()->query("SELECT * FROM categorie");
 									while($ar = $rq->fetch())
 									{
-										echo '<option value="'.$ar['nom'].'" '.$selected.'>'.$ar['nom'].'</option>';
+										echo '<option id="opt_'.$ar['id'].'" value="'.$ar['nom'].'_'.$ar['visible'].'_'.$ar['id'].'" >'.$ar['nom'].'</option>';
 									}
-
 								?>
 						</select>
 					</td>
@@ -103,32 +223,36 @@ require_once('./connexionbddplugit.class.php');
 				
 				<tr>
 					<td><label for="categ"><b>Nom de la catégorie</b><br/><small id="lim_desc">(Max 50 caractères)</small></label></td>
-					<td><input size="22" type="text" name="categ" id="categ" value="<?php echo $ar['nom']; ?>" <?php echo $require; ?> onblur="textLimit(this, 50,lim_desc);"/></td>
+					<td><input size="22" type="text" name="categ" id="categ"  onblur="textLimit(this, 50,lim_desc);"/></td>
 				</tr>
 				
 				<tr>
-					<td style="text-align:right;"><input type="submit" name="envoyer" value="Envoyer" /></td>
-				</tr>		
+					<td><label for="visible"><b>Visible</b></label></td>
+					<td><input type="checkbox" name="visible" id="visible"/></td>
+				</tr>
+				
+				<tr>
+					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodifcateg('categorie')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimcateg('categorie')"/></td>
+					<td id="result_categ"></td>
+				</tr>
 		</table>
-	</form>	
 </div>
 
 <!--TVA-->
 <div style="margin-top:5px;width:491px; height:250px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; float:left;">
-	<form method="post" enctype="multipart/form-data" action="#">
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-top:20px;">				
 		
 				<tr>
-					<td><label for="categorie"><b>Référence de la TVA</b><br/></label></td>
+					<td><label for="reftva"><b>Référence de la TVA</b><br/></label></td>
 					<td>
-						<select name="categorie" id="categorie">
-							<option value="ajout_categ">Ajouter une TVA</option>
+						<select name="reftva" id="reftva" onChange="selection_update_tva(this,'tva','ref');">
+							<option value="" selected>Ajouter une TVA</option>
 								<?php
-									$rq = connexionbddplugit::getInstance()->query("SELECT ref FROM tva");
-									$selected ="";
+									$rq = connexionbddplugit::getInstance()->query("SELECT * FROM tva");
 									while($ar = $rq->fetch())
 									{
-										echo '<option value="'.$ar['ref'].'" '.$selected.'>'.$ar['ref'].'</option>';
+										echo '<option id="opt_'.$ar['id'].'" value="'.$ar['ref'].'_'.$ar['valeur'].'_'.$ar['id'].'" >'.$ar['ref'].'</option>';
+
 									}
 
 								?>
@@ -138,20 +262,20 @@ require_once('./connexionbddplugit.class.php');
 				
 				<tr>
 					<td><label for="ref"><b>Nom de la référence TVA</b><br/><small id="lim_desc">(Max 50 caractères)</small></label></td>
-					<td><input size="22" type="text" name="ref" id="ref" value="<?php echo $ar['ref']; ?>" <?php echo $require; ?> onblur="textLimit(this, 50,lim_desc);"/></td>
+					<td><input size="22" type="text" name="ref" id="ref"  onblur="textLimit(this, 50,lim_desc);"/></td>
 				</tr>
 				
 				<tr>
 					<td><label for="tva"><b>Taux de la TVA (en %)</b><br/><small id="lim_desc">(Exemple : 19.6)</small></label></td>
-					<td><input size="22" type="text" name="tva" id="tva" value="<?php echo $ar['valeur']; ?>" <?php echo $require; ?> onblur="isNumber(this,tva);"/></td>
+					<td><input size="22" type="text" name="tva" id="tva" onblur="isNumber(this,tva);"/></td>
 				</tr>
 				
 				
 				<tr>
-					<td style="text-align:right;"><input type="submit" name="envoyer" value="Envoyer" /></td>
+					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodiftva('reftva')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimcateg('reftva')"/></td>
+					<td id="result_tva"></td>
 				</tr>		
 		</table>
-	</form>	
 </div>
 
 <?php
