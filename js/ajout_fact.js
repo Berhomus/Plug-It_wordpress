@@ -12,14 +12,13 @@ var nbr_fac = 0;
 		  var label_num = document.createElement('label');
 		  label_num.setAttribute('for', 'num'+ID);
 		  label_num.setAttribute('id', 'label_num'+ID);
-		  label_num.innerHTML = '<b>Numéro de facture <span class="red">*</span></b><br/><small id="lim_num'+ID+'">(10 caractères)</small>';
+		  label_num.innerHTML = '<b>Numéro de facture <span class="red">*</span></small>';
 		  
 		  var td2 = document.createElement('td')
 		  var Input_num = document.createElement('input');
 		  Input_num.setAttribute('type', 'text');
 		  Input_num.setAttribute('name', 'num' + ID);
 		  Input_num.setAttribute('id', 'num' + ID);
-		  Input_num.setAttribute('onblur', 'textLimit2(this,10, lim_num'+ID+');');
 		  Input_num.setAttribute('required', '');
 		  Input_num.style.textAlign = "right";
 

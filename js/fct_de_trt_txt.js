@@ -112,7 +112,7 @@ function img()
 
 /*####SERT A ACTIVER LES BALISES HTML POUR LA BDD####*/
 
-try {
+/*try {
 	Editor.execCommand("styleWithCSS", 0, false);
 } catch (e) {
 	try {
@@ -124,7 +124,7 @@ try {
 		catch (e) {
 		}
 	}
-}
+}*/
 
 /*####FONCTION VERIF MAIL####*/
 

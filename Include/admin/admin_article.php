@@ -3,23 +3,30 @@
  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>-->
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link type="text/css" rel="stylesheet" href="./styles/index.css"/>
+
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
  
-<script type="text/javascript" src="../../js/jscolor/jscolor.js"></script>
+<script type="text/javascript" src="./js/fct_de_trt_txt.js"></script>
+<script type="text/javascript" src="./js/ajout_fact.js"></script>
+<script type="text/javascript" src="./js/jscolor/jscolor.js"></script>
  
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
  
  <?php
-	require_once('../../connexionbddplugit.class.php');
+if(isset($_SESSION['id']))
+{
+	require_once('./connexionbddplugit.class.php');
+	//TO DO
+	//Ecart quand ouverture menu
+	//pb deslection ap drop
 ?>
  
 <style>
 
 	/*global*/
 	#contain{
-		width: 100%;
-		height: 100%;
 		border: black solid 2px;
 	}
 	
@@ -66,41 +73,74 @@
 	var just_selected = -1;
 	var just_dropped = -1;
 	
+	
 	function selection(){
 		if(current_selection != -1)
 		{
 			document.getElementById(current_selection).style.border = "none";
 		}
-		this.style.border= "red inset 5px";
+		this.style.border= "red inset 2px";
 		current_selection = this.id;
 		just_selected = 1;
-		if(just_dropped)
+		/*if(just_dropped)
 		{
-			document.click();
+			just_selected = -1;
 			just_dropped = -1;
-		}		
+		}	*/	
 	}
 	
-	function addBlock(color,plan){
+	function addBlock(color,plan,contenu,transp,type,img){
 		var contain = document.getElementById("contain");
 		var block = document.createElement( "dir" );
 		nb_block++;
-		block.setAttribute("id","block_"+nb_block);
-		block.style.width="150px";
-		block.style.height="150px";
-		block.style.backgroundColor=color;
-		block.style.zIndex=plan;
-		block.addEventListener("click", selection, false);
+		if(type == 'texte')
+		{
+			if(transp)
+				var t = 0;
+			else
+				var t = 1;
+			
+			block.setAttribute("id","block_"+nb_block);
+			block.style.width="150px";
+			block.style.height="150px";
+			block.style.padding="0px";
+			block.style.backgroundColor="rgba("+hexToRgb(color).r+","+hexToRgb(color).g+","+hexToRgb(color).b+","+t+")";
+			block.style.zIndex=plan;
+			block.style.overflow="hidden";
+			block.addEventListener("click", selection, false);
+			block.innerHTML = contenu.innerHTML;
+		}
+		else
+		{
+			block.setAttribute("id","block_"+nb_block);
+			block.style.width="150px";
+			block.style.height="150px";
+			block.style.padding="0px";
+			block.style.zIndex=plan;
+			block.style.overflow="hidden";
+			block.addEventListener("click", selection, false);
+			block.innerHTML = '<img src='+img+' width="100%" height="100%"/>';
+			alert(block.innerHTML);
+		}
+		
 		contain.appendChild(block);
 		
 		$( "#block_"+nb_block ).draggable({
 			revert : 'invalid'
 		});
 		$( "#block_"+nb_block ).resizable({
-		});
-
+		});	
 	}
-
+	
+	function hexToRgb(hex) {
+		var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+		return result ? {
+			r: parseInt(result[1], 16),
+			g: parseInt(result[2], 16),
+			b: parseInt(result[3], 16)
+		} : null;
+	}
+	
 	function getXMLHttpRequest() {
 		var xhr = null;
 		 
@@ -224,7 +264,8 @@
 			modal: true,
 			buttons: {
 				"Valider": function() {
-						 $("#contain").css("background-color",$("#color").val());
+						var col = $("#color").val();
+						 $("#contain").css("background-color","#"+col);
 						$( this ).dialog( "close" );
 					},
 				"Annuler": function() {
@@ -234,14 +275,16 @@
 		});
 		
 		$('#ajout_elem_dialog').dialog({
-			minWidth:360,
+			minWidth:600,
 			minHeight:510,
 			autoOpen: false,
-			width: 360,
+			width: 600,
 			modal: true,
 			buttons: {
 				"Valider": function() {
-						addBlock($("#color_elem").val(),$("#spinner").spinner( "value") );
+						addBlock($("#color_elem").val(),$("#spinner").spinner( "value"),
+						document.getElementById('ortf'),document.getElementById('transp').checked,
+						document.getElementById('type').value,document.getElementById('l_image').value);
 						$( this ).dialog( "close" );
 					},
 				"Annuler": function() {
@@ -263,6 +306,30 @@
 		}
 		just_selected = -1;
 	},false);
+	
+	function changecontent(id){
+		var img = document.getElementById("img_new_elem");
+		var txt = document.getElementById("texte_new_elem");
+		var plan = document.getElementById("plan_new_elem");
+		var color = document.getElementById("color_new_elem");
+		var trs = document.getElementById("trs_new_elem");
+		if(id.value == 'texte')
+		{
+			txt.style.display = "block";
+			img.style.display = "none";
+			trs.style.display = "block";
+			color.style.display = "block";
+		}
+		else
+		{
+			txt.style.display = "none";
+			trs.style.display = "none";
+			color.style.display = "none";
+			img.style.display = "block";
+		}
+		plan.style.display="block";
+	}
+	
 </script>
 
 <div id="info_artc" title="Information Article">
@@ -313,23 +380,89 @@
 </div>
 
 <div id="ajout_elem_dialog" title="Ajout Elément">
-	<p class="tips">Choisissez votre élément !</p>
-	<form>
-		<table style="margin:auto;" cellspacing="10">
+	<p class="tips"><center>Choisissez votre élément !</center></p>
+		<table style="margin:auto;width:100%;" cellspacing="10">
 			<tr>
-				<td><label for="type">Type </label></td>
-				<td></td>
+				<td><label for="type">Contenu </label></td>
+				<td> 
+					<select name="type" id="type" onchange="changecontent(this);">
+						<option value="texte" selected>Texte</option>
+						<option value="image">Image</option>
+					</select>
+				</td>
 			</tr>
-			<tr>
-				<td><label for="spinner">Plan </label></td>
-				<td><input id="spinner" name="value" /></td>
+			<tr id="img_new_elem" style="display:none;">
+				<td><label for="image">Image </label></td>
+				<td> 
+					<input type="file" name="image" id="image"/>
+					<input type="text" name="l_image" id="l_image" value="http://"/>
+				</td>
 			</tr>
-			<tr>
+			<tr id="texte_new_elem">
+				<td colspan="2">
+					<p>Texte</p>
+					<div style="margin-bottom:5px;">
+						<p>
+							<input type="button" value="G" onclick="document.getElementById('ortf').focus(); document.execCommand('bold', false, '');" />
+							<input type="button" value="I" onclick="document.getElementById('ortf').focus(); document.execCommand('italic', false, '');" />
+							<input type="button" value="S" onclick="document.getElementById('ortf').focus(); document.execCommand('underline', false, '');" />
+							<input type="button" value="Lien" onclick="document.getElementById('ortf').focus(); lien();" />
+							<input type="button" value="Image" onclick="document.getElementById('ortf').focus(); img();" />
+							<input type="button" value="Titre" onclick="document.getElementById('ortf').focus(); titre();" />
+							<img src="./images/fleche.png" alt="fleche" onclick="document.getElementById('ortf').focus(); document.execCommand('insertImage', false, './images/fleche.png');" />
+						</p>		
+					</div>
+					
+					<select name="cmbpolice" onchange="document.getElementById('ortf').focus(); document.execCommand('FontName', false ,this.value)">
+						<option selected="" value="Arial">Police par défaut</option>
+						<option value="Arial">Arial</option>
+						<option value="Verdana">Verdana</option>
+						<option value="Courier New">Courier New</option>
+						<option value="Time New Roman">Time New Roman</option>
+						<option value="Comic Sans MS">Comic Sans MS</option>
+					</select>
+
+					<select name="cmbtaille" onchange="document.getElementById('ortf').focus(); document.execCommand('FontSize',false,this.value)">
+						<option selected="" value="3">Taille par défaut</option>
+						<option value="1">1 (petite)</option>
+						<option value="2">2</option>
+						<option value="3">3 (normale)</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7 (grande)</option>
+					</select>
+								
+					<select name="cmbcouleur" onchange="document.getElementById('ortf').focus(); document.execCommand('ForeColor',false,this.value)">
+						<option selected="" value="555555">Couleur par défaut</option>
+						<option value="ff0000">Rouge</option>
+						<option value="0000ff">Bleu</option>
+						<option value="00ff00">Vert</option>
+						<option value="000000">Noir</option>
+						<option value="FFFF00">Jaune</option>
+						<option value="666666">Gris</option>
+						<option value="FF6600">Orange</option>
+					</select>
+					
+					<div style="height: 200px; width:500px; overflow:scroll; margin-top:20px;" id="ortf" contenteditable="true">
+					</div>
+
+				</td>
+			</tr>
+			
+			<tr id="color_new_elem">
 				<td><label for="color">Couleur </label></td>
 				<td><input type="text" class="color" id="color_elem" name="color"/></td>
 			</tr>
+			<tr id="trs_new_elem">
+				<td><label for="color">Transparence </label></td>
+				<td><input type="Checkbox" id="transp" name="transp"/></td>
+			</tr>
+			<tr id="plan_new_elem">
+				<td><label for="spinner">Plan </label></td>
+				<td><input id="spinner" name="value" /></td>
+			</tr>
 		</table>
-	</form>
 </div>
 
 
@@ -343,6 +476,7 @@
 		</div>
 		<ul>
 			<li><a onClick="$('#ajout_elem_dialog').dialog('open');">Ajouter</a></li>
+			<li><a onClick="$('#ajout_elem_dialog').dialog('open');">Modifier</a></li>
 			<li><a onClick="deleteBlock();">Supprimer</a></li>
 			<li><a>Valider</a></li>
 		</ul>
@@ -350,3 +484,19 @@
 
 </div>
 
+<script>
+//set contain size at page
+	document.getElementById("contain").style.width = (document.body.clientWidth-2)+"px";
+	document.getElementById("contain").style.height = (document.body.clientHeight-137)+"px";
+//set margin corps
+	document.getElementById("content").style.margin = "0px";
+	document.getElementById("content").style.padding = "0px";
+</script>
+
+<?php
+}
+else
+{
+	echo '<h2>Access Forbidden</h2>';
+}
+?>
