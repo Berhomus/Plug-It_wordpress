@@ -22,7 +22,9 @@
 		 
 		return xhr;
 	}
-
+	
+	//NOM 0 ACTIVE 1 ID 2
+	//Retour 
 	function ajoutmodifcateg(id){
 	
 		var select = document.getElementById(id);
@@ -41,12 +43,16 @@
 					
 					if(n[4]=='ajout')
 					{
+						//ajout select
 						var option = document.createElement('option');
 						option.setAttribute("id","opt_"+n[3]);
 						option.setAttribute("value",n[1]+'_'+n[2]+'_'+n[3]);
 						option.innerHTML = n[1];
 						select.appendChild(option);
 						option.setAttribute("selected","");
+						
+						//set position max
+						document.getElementById("nbr_postion_categ").value += 1;
 					}
 					else
 					{
@@ -70,12 +76,15 @@
 			//Ajout
 			if(categ.value != '')
 			{
-				var rq = "INSERT INTO categorie VALUES (null,?,?)";
+				var rq = "INSERT INTO sousmenu VALUES (null,?,?,?,?,?)";
 				if(cb.checked)
 					var t = 1;
 				else
 					var t = 0;
-				var array = categ.value+','+t;
+					
+				var id_boutique = 	document.getElementById("id_boutique").value;
+				var position = document.getElementById("nbr_postion_categ").value; 
+				var array = categ.value+','+t+',index.php?page=boutique↓categ='+categ.value.toLowerCase()+','+position+','+id_boutique;
 				var type = 'ajout';
 			}
 		}
@@ -84,13 +93,21 @@
 			// Modif
 			if(categ.value != '' && (categ.value!=n[0] || cb.getAttribute("checked")!=n[1]))
 			{
-				var rq = "UPDATE categorie SET nom=?, visible=? WHERE id=?";
+				if(confirm("Voulez-vous changer de catégorie les produits affiliés ?"))
+				{
+					var type = 'modif_produit';
+				}
+				else
+				{
+					var type = 'modif_default';
+				}
+				
+				var rq = "UPDATE sousmenu SET nom=?, active=?,lien=? WHERE id=?";
 				if(cb.checked)
 					var t = 1;
 				else
 					var t = 0;
-				var array = categ.value+','+t+','+n[2];
-				var type = 'modif';
+				var array = categ.value+','+t+',index.php?page=boutique↓categ='+categ.value.toLowerCase()+','+n[2];
 			}
 		}
 		
@@ -99,7 +116,7 @@
 		xhr.send("rq="+rq+"&type="+type+"&array="+array);
 	}
 	
-		function ajoutmodiftva(id){
+	function ajoutmodiftva(id){
 	
 		var select = document.getElementById(id);
 		var ref = document.getElementById('ref');
@@ -111,11 +128,12 @@
 			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
 				var success;
 				var n = xhr.responseText.split("_");
+				alert(xhr.responseText);
 				if(n[0]=='reussit')
 				{
 					success = '<small style="color:green;">Opération Réussie !</small>';
 					
-					if(n[4]=='ajout')
+					if(n[4]=='ajouttva')
 					{
 						var option = document.createElement('option');
 						option.setAttribute("id","opttva_"+n[3]);
@@ -158,7 +176,15 @@
 			{
 				var rq = "UPDATE tva SET ref=?, valeur=? WHERE id=?";
 				var array = ref.value+','+tva.value+','+n[2];
-				var type = 'modiftva';
+				
+				if(confirm("Voulez-vous changer de catégorie les produits affiliés ?"))
+				{
+					var type = 'modiftva_produit';
+				}
+				else
+				{
+					var type = 'modiftva_default';
+				}
 			}
 		}
 		
@@ -197,13 +223,24 @@
 		
 		if(select.value!="")
 		{
-			var rq = "DELETE FROM categorie WHERE id=?";
-			var array = n[2];
-			var type = 'suppcateg';
-			
-			xhr.open("POST", "include/admin/requete_article.php", true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send("rq="+rq+"&type="+type+"&array="+array);
+			if(confirm("Etes-vous sûre ?\nSupression : "+n[0]))
+			{
+				var rq = "DELETE FROM sousmenu WHERE id=?";
+				var array = n[2];
+				
+				if(confirm("Voulez-vous supprimer les produits affiliés ?"))
+				{
+					var type = 'suppcateg_produit';
+				}
+				else
+				{
+					var type = 'suppcateg_default';
+				}
+				
+				xhr.open("POST", "include/admin/requete_article.php", true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.send("rq="+rq+"&type="+type+"&array="+array);
+			}
 		}
 		else
 		{
@@ -211,6 +248,62 @@
 		}
 		
 		
+	}
+	
+	
+	function supprimetva(id){
+		var select = document.getElementById(id);
+		var n = select.value.split("_");
+		var ref = document.getElementById('ref');
+		var tva = document.getElementById('tva');
+		
+		xhr = getXMLHttpRequest();
+		
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				var success;
+				var x = xhr.responseText.split("_");
+				if(x[0]=='reussit')
+				{
+					success = '<small style="color:green;">Opération Réussie !</small>';
+					
+					document.getElementById('reftva').removeChild(document.getElementById('opttva_'+x[1]));
+					tva.value = "";
+					ref.value = "";
+				}
+				else
+				{
+					success = '<small style="color:red;">Opération Echouée !</small>';
+				}
+				document.getElementById("result_tva").innerHTML = success;
+			}
+		};
+		
+		if(select.value!="")
+		{
+			if(confirm("Etes-vous sûre ?\nSupression : "+n[0]))
+			{
+				var rq = "DELETE FROM tva WHERE id=?";
+				var array = n[2];
+				
+				if(confirm("Voulez-vous supprimer les produits affiliés ?"))
+				{
+					var type = 'supptva_produit';
+				}
+				else
+				{
+					var type = 'supptva_default';
+				}
+				
+				xhr.open("POST", "include/admin/requete_article.php", true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.send("rq="+rq+"&type="+type+"&array="+array);
+			}
+		}
+		else
+		{
+			alert("Selectionner une TVA");
+		}	
 	}
 	
 	function selection_update_tva(id,field1,field2){
@@ -252,13 +345,20 @@ if(isset($_SESSION['id']))
 						<select name="categorie" id="categorie" onChange="selection_update_categ(this,'categ','visible')">
 							<option value="" selected>Ajouter une catégorie</option>
 								<?php
-									$rq = connexionbddplugit::getInstance()->query("SELECT * FROM categorie");
+									$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
+									$ar1 = $rq1->fetch();
+									
+									$rq = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar1['id']."'");
+									$i = 1;
 									while($ar = $rq->fetch())
 									{
-										echo '<option id="opt_'.$ar['id'].'" value="'.$ar['nom'].'_'.$ar['visible'].'_'.$ar['id'].'" >'.$ar['nom'].'</option>';
+										echo '<option id="opt_'.$ar['id'].'" value="'.$ar['nom'].'_'.$ar['active'].'_'.$ar['id'].'" >'.$ar['nom'].'</option>';
+										$i++;
 									}
 								?>
 						</select>
+						<input type="hidden" name="nbr_postion_categ" id="nbr_postion_categ" value="<?php echo $i; ?>"/>
+						<input type="hidden" name="id_boutique" id="id_boutique" value="<?php echo $ar1['id']; ?>"/>
 					</td>
 				</tr>
 				

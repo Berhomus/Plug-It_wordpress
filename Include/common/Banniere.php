@@ -36,6 +36,7 @@ Name : Banniere.php => Plug-it
 			}
 			
 			ssmenu.style.marginLeft=40+position*60+window.pageYOffset+"px";
+
 			ssmenu.style.marginTop=40+window.pageXOffset+"px";
 			if(ssmenu.style.display != 'block')
 			{
