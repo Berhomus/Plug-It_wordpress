@@ -42,6 +42,10 @@
 					case 'modiftva' :
 						echo 'reussit_'.$param[0].'_'.$param[1].'_'.$param[2].'_'.$_POST["type"];
 					break;
+					
+					case 'suppcateg' :
+						echo 'reussit_'.$param[0];
+					break;
 				}
 				
 			}catch(Exception $e){

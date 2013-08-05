@@ -43,7 +43,7 @@
 					{
 						var option = document.createElement('option');
 						option.setAttribute("id","opt_"+n[3]);
-						option.setAttribute("value",n[1]+'_'+n[2]);
+						option.setAttribute("value",n[1]+'_'+n[2]+'_'+n[3]);
 						option.innerHTML = n[1];
 						select.appendChild(option);
 						option.setAttribute("selected","");
@@ -104,7 +104,7 @@
 		var select = document.getElementById(id);
 		var ref = document.getElementById('ref');
 		var tva = document.getElementById('tva');
-
+		
 		xhr = getXMLHttpRequest();
 		
 		xhr.onreadystatechange = function() {
@@ -167,20 +167,51 @@
 		xhr.send("rq="+rq+"&type="+type+"&array="+array);
 	}
 	
-	/*function supprimecateg(id){
+	function supprimecateg(id){
 		var select = document.getElementById(id);
 		var categ = document.getElementById('categ');
+		var n = select.value.split("_");
+		var cb = document.getElementById('visible');
+		
+		xhr = getXMLHttpRequest();
+		
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+				var success;
+				var x = xhr.responseText.split("_");
+				if(x[0]=='reussit')
+				{
+					success = '<small style="color:green;">Opération Réussie !</small>';
+					
+					document.getElementById('categorie').removeChild(document.getElementById('opt_'+x[1]));
+					cb.checked = false;
+					categ.value = "";
+				}
+				else
+				{
+					success = '<small style="color:red;">Opération Echouée !</small>';
+				}
+				document.getElementById("result_categ").innerHTML = success;
+			}
+		};
 		
 		if(select.value!="")
 		{
-			var req = "DELETE * FROM categorie WHERE id=?";
-			var array = 
+			var rq = "DELETE FROM categorie WHERE id=?";
+			var array = n[2];
+			var type = 'suppcateg';
+			
+			xhr.open("POST", "include/admin/requete_article.php", true);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr.send("rq="+rq+"&type="+type+"&array="+array);
 		}
 		else
 		{
 			alert("Selectionner une catégorie");
 		}
-	}*/
+		
+		
+	}
 	
 	function selection_update_tva(id,field1,field2){
 			var n = id.value.split("_");
