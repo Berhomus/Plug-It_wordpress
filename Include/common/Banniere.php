@@ -15,6 +15,26 @@ Name : Banniere.php => Plug-it
 		function patate(id,position)
 		{
 			var ssmenu = document.getElementById('li_sousmenu'+id);
+			
+			var uls = document.getElementsByTagName('ul');
+			
+			for(var i=0;i<uls.length;i++)
+			{
+				if(uls[i].getAttribute('class')=='level2')
+				{
+					var lis = uls[i].getElementsByTagName('li');
+					var max = lis[0].innerHTML.length;
+					for(var j=1;j<lis.length;j++)
+					{
+						if(lis[i].innerHTML.length>lis[i-1].innerHTML.length)
+							max=lis[i].innerHTML.length;
+					}
+					max = 9*max;
+					uls[i].style.width=max+'px';
+				}
+				break;
+			}
+			
 			ssmenu.style.marginLeft=40+position*60+window.pageYOffset+"px";
 			ssmenu.style.marginTop=40+window.pageXOffset+"px";
 			if(ssmenu.style.display != 'block')

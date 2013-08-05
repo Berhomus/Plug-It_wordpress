@@ -239,7 +239,7 @@
 						{
 							foreach($_SESSION['caddie'] as $article)
 							{
-								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.$article['nom'].'</td><td style="float:left; margin-left:60px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:30px;" id="panier_elem_prix_'.$article['id'].'">'.$article['prix'].'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; margin-left:60px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:30px;" id="panier_elem_prix_'.$article['id'].'">'.$article['prix'].'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
 							}
 						}	
 						
@@ -278,6 +278,7 @@
 				
 				$i=1; //délimite les colonnes
 				$j=1; //délimite les lignes
+				
 				echo'<div style="margin:auto;width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">';
 					
 				if(isset($_SESSION['id']))
@@ -311,7 +312,13 @@
 								
 								echo'
 									<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
-								</div><span id="'.$ar['id'].'" class="boutprod" style="float:left;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span><span class="boutprod2" style="float:left;"><select name="qte'.$ar['id'].'" id="qte'.$ar['id'].'">';
+								<p style="margin-top:10px;font-weight:bold;font-size:13px;">
+								<span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><br/>
+								<span style="margin-right:18px;float:right;">HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($ar['tva']*100)/100 .'%) : '.(round($ar['prix']*($ar['tva']/100)*100)/100).' € | TTC : '.(round($ar['prix']*(($ar['tva']/100)+1)*100)/100).' €</span>
+								</p>
+								</div>
+								<span id="'.$ar['id'].'" class="style" style="float:left; width:226px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
+								<span class="style" style="float:left; width:66px; border-radius: 0px 0px 50px 0px;"><select name="qte'.$ar['id'].'" id="qte'.$ar['id'].'">';
 								
 								for($k=1;$k<=10;$k++)
 								{
@@ -358,7 +365,7 @@
 			{
 				try{
 					$retour = $bdd->prepare("SELECT count(id) as cpt FROM produit WHERE id=?");
-					$bdd->execute(array($_GET['id']));
+					$retour->execute(array($_GET['id']));
 					$donnees = $retour->fetch();
 				} catch ( Exception $e ) {
 					echo "Une erreur est survenue : ".$e->getMessage();
@@ -374,21 +381,22 @@
 						echo "Une erreur est survenue : ".$e->getMessage();
 					}
 			
-					echo '<div style="margin:auto;width:70%;">
-							<h2>'.$donnees['nom'].'</h2>
-							<hr/>
-							<img src="'.$donnees['images'].'" style="float:right;" width="280" height="170" />
-							'.nl2br($donnees['desc']);
+					echo '<h2 class="grdtitre" style="margin-bottom:20px;">'.$donnees['nom'].'</h2>
+							<div style="margin:auto; padding-top:15px; padding-bottom:15px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; padding-bottom:15px;">
+								<div style="margin:auto;width:70%;">
+								<img src="'.$donnees['images'].'" style="float:right;" width="280" height="170" />
+								'.nl2br($donnees['desc']);
 							
-					$j=mb_substr_count(nl2br($donnees['desc']),'<br />');
+								$j=mb_substr_count(nl2br($donnees['desc']),'<br />');
 
-					for($i=15-$j;$i>0;$i--)
-					{
-						echo '<br/>';
-					}
+								for($i=15-$j;$i>0;$i--)
+								{
+									echo '<br/>';
+								}
 					
 					
-					echo '</div>';
+							echo '</div>
+							</div>';
 					
 				}
 				else
