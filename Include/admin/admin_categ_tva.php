@@ -167,12 +167,20 @@
 		xhr.send("rq="+rq+"&type="+type+"&array="+array);
 	}
 	
-	function supprimcateg(id){
+	/*function supprimecateg(id){
 		var select = document.getElementById(id);
 		var categ = document.getElementById('categ');
 		
-		
-	}
+		if(select.value!="")
+		{
+			var req = "DELETE * FROM categorie WHERE id=?";
+			var array = 
+		}
+		else
+		{
+			alert("Selectionner une catégorie");
+		}
+	}*/
 	
 	function selection_update_tva(id,field1,field2){
 			var n = id.value.split("_");
@@ -234,7 +242,7 @@ if(isset($_SESSION['id']))
 				</tr>
 				
 				<tr>
-					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodifcateg('categorie')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimcateg('categorie')"/></td>
+					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodifcateg('categorie')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimecateg('categorie')"/></td>
 					<td id="result_categ"></td>
 				</tr>
 		</table>
@@ -274,7 +282,7 @@ if(isset($_SESSION['id']))
 				
 				
 				<tr>
-					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodiftva('reftva')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimcateg('reftva')"/></td>
+					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodiftva('reftva')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimetva('reftva')"/></td>
 					<td id="result_tva"></td>
 				</tr>		
 		</table>

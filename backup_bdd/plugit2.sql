@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mer 31 Juillet 2013 à 09:13
+-- Généré le: Lun 05 Août 2013 à 07:56
 -- Version du serveur: 5.5.24-log
 -- Version de PHP: 5.3.13
 
@@ -262,6 +262,27 @@ CREATE TABLE IF NOT EXISTS `transaction` (
   `code_retour` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tva`
+--
+
+CREATE TABLE IF NOT EXISTS `tva` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ref` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `valeur` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `tva`
+--
+
+INSERT INTO `tva` (`id`, `ref`, `valeur`) VALUES
+(1, 'Normal', 19.6),
+(2, 'luxe', 22.5);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
