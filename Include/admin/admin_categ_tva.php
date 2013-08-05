@@ -118,7 +118,7 @@
 					if(n[4]=='ajout')
 					{
 						var option = document.createElement('option');
-						option.setAttribute("id","opt_"+n[3]);
+						option.setAttribute("id","opttva_"+n[3]);
 						option.setAttribute("value",n[1]+'_'+n[2]);
 						option.innerHTML = n[1];
 						select.appendChild(option);
@@ -126,8 +126,8 @@
 					}
 					else
 					{
-						document.getElementById('opt_'+n[3]).innerHTML = n[1];
-						document.getElementById('opt_'+n[3]).value = n[1]+'_'+n[2]+'_'+n[3];
+						document.getElementById('opttva_'+n[3]).innerHTML = n[1];
+						document.getElementById('opttva_'+n[3]).value = n[1]+'_'+n[2]+'_'+n[3];
 					}
 					
 				}
@@ -156,7 +156,7 @@
 			// Modif tva
 			if(ref.value != '' && (ref.value!=n[0] || tva.value!=n[1]))
 			{
-				var rq = "UPDATE tva SET ref=?, tva=? WHERE id=?";
+				var rq = "UPDATE tva SET ref=?, valeur=? WHERE id=?";
 				var array = ref.value+','+tva.value+','+n[2];
 				var type = 'modiftva';
 			}
@@ -188,7 +188,9 @@
 				document.getElementById(field2).checked = true ;
 			}
 			else
+			{
 				document.getElementById(field2).checked = false ;
+			}
 	}
 </script>
 
@@ -251,7 +253,7 @@ if(isset($_SESSION['id']))
 									$rq = connexionbddplugit::getInstance()->query("SELECT * FROM tva");
 									while($ar = $rq->fetch())
 									{
-										echo '<option id="opt_'.$ar['id'].'" value="'.$ar['ref'].'_'.$ar['valeur'].'_'.$ar['id'].'" >'.$ar['ref'].'</option>';
+										echo '<option id="opttva_'.$ar['id'].'" value="'.$ar['ref'].'_'.$ar['valeur'].'_'.$ar['id'].'" >'.$ar['ref'].'</option>';
 
 									}
 
@@ -266,8 +268,8 @@ if(isset($_SESSION['id']))
 				</tr>
 				
 				<tr>
-					<td><label for="tva"><b>Taux de la TVA (en %)</b><br/><small id="lim_desc">(Exemple : 19.6)</small></label></td>
-					<td><input size="22" type="text" name="tva" id="tva" onblur="isNumber(this,tva);"/></td>
+					<td><label for="tva"><b>Taux de la TVA (en %)</b><br/><small id="lim_desctva">(Exemple : 19.6)</small></label></td>
+					<td><input size="22" type="text" name="tva" id="tva" onblur="isNumber(this,lim_desctva);"/></td>
 				</tr>
 				
 				
