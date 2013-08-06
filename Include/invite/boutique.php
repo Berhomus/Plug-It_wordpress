@@ -108,7 +108,7 @@
 				document.getElementById('qte'+idprod).value = qte;
 				
 				nouvelem.setAttribute('id','panier_elem_'+idprod);
-				nouvelem.innerHTML = '<table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+				nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 				
 				cont.appendChild(nouvelem);
 				
@@ -122,7 +122,7 @@
 				var nom= document.getElementById('panier_elem_nom_'+idprod).innerHTML;
 
 				document.getElementById('qte_h'+idprod).value = qte;
-				elem.innerHTML = '<table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'+idprod+'">'+nom+'</td><td style="float:left; margin-left:30px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; margin-right:15px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+				elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 			}
 			
 			calTotal();
@@ -250,7 +250,8 @@
 						<div id="foot_panier"><span style="float:left; margin-left:5px;">Montant total : 
 							<span id="prix_tt_panier">
 								<?php
-									echo (isset($_SESSION['caddieTot'])) ? $_SESSION['caddieTot']:'0.00';		
+									$tot = (isset($_SESSION['caddieTot'])) ? $_SESSION['caddieTot']:'0.00';	
+									echo round($tot*100)/100;
 								?>
 								</span>
 							€</span>
