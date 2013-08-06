@@ -266,7 +266,7 @@
 				<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
 					<h3><img src="./images/e_commerce_caddie.gif" style="width:20px; height:20px; vertical-align:-18%;"/>Panier</h3>
 					<div id="contenu">
-						<div id="top_panier"><table style="width:100%"><tr><td colspan="2" style="width:75px;">Nom</td><td style="float:left;">Qté</td><td style="float:right;">Prix Unitaire</td></tr></table></div>
+						<div id="top_panier"><table style="width:100%"><tr><td style="width:110px;">Nom</td><td style="float:left; width:40px;">Qté</td><td style="float:right; width:90px;">Prix Unitaire</td></tr></table></div>
 						<div id="div_panier"><hr/></div>
 						<?php
 						
@@ -274,7 +274,7 @@
 						{
 							foreach($_SESSION['caddie'] as $article)
 							{
-								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" style="width:75px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'">'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'">'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
 							}
 						}	
 						
@@ -314,7 +314,7 @@
 				$i=1; //délimite les colonnes
 				$j=1; //délimite les lignes
 				
-				echo'<div style="margin:auto;width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">';
+				echo'<div style="margin:auto; margin-bottom:20px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">';
 					
 				if(isset($_SESSION['id']))
 				{
@@ -419,9 +419,9 @@
 							<div style="margin:auto; padding-top:15px; padding-bottom:15px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; padding-bottom:15px;">
 								<div style="margin:auto;width:70%;">
 								<img src="'.$donnees['images'].'" style="float:right;" width="280" height="170" />
-								'.nl2br($donnees['desc']);
+								'.nl2br($donnees['description']);
 							
-								$j=mb_substr_count(nl2br($donnees['desc']),'<br />');
+								$j=mb_substr_count(nl2br($donnees['description']),'<br />');
 
 								for($i=15-$j;$i>0;$i--)
 								{
