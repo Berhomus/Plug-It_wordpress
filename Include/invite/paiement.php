@@ -72,11 +72,13 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 ';
 					}
 				}
+				
+				$_POST['montanttot'] = (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot'];
 			?>
 			<tr>
 				<td><b>Montant Total</b></td>
 				<td></td>
-				<td><?php echo (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot']; ?>€</td>
+				<td><?php echo $_POST['montanttot']; ?>€</td>
 			</tr>
 			
 			<tr>	
@@ -87,7 +89,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 		</table>
 	
 <?php
-		$total = (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:str_replace('.',"",$_POST['montanttot']);
+		$total = (isset($_POST['type_paiement'])) ? ($_SESSION['caddieTot']*100):str_replace('.',"",$_POST['montanttot']);
 		include("include/webaffaires/call_request.php");
 	}
 	else

@@ -111,34 +111,54 @@
 				var nom = document.getElementById('name'+idprod).value;
 				var qte = document.getElementById('qte'+idprod).value;
 				
-				document.getElementById('qte'+idprod).value = qte;
-				
-				nouvelem.setAttribute('id','panier_elem_'+idprod);
-				nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
-				
-				cont.appendChild(nouvelem);
-				
-				cont.appendChild(foot);
+				if(!isNaN(qte))
+				{
+					document.getElementById('qte'+idprod).value = qte;
+					
+					nouvelem.setAttribute('id','panier_elem_'+idprod);
+					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+					
+					cont.appendChild(nouvelem);
+					
+					cont.appendChild(foot);
+				}
+				else
+				{
+					document.getElementById('qte'+idprod).value = 1;
+					var error =1;
+				}
 			}
 			else//elem deja existant
 			{
 				var elem = cont.childNodes[isIn];
-				var qte = parseInt(document.getElementById('panier_elem_qte_'+idprod).innerHTML.replace("x","")) + parseInt(document.getElementById('qte'+idprod).value);
-				var prix = parseFloat(document.getElementById('panier_elem_prix_'+idprod).innerHTML.replace("€",""));
-				var nom= document.getElementById('panier_elem_nom_'+idprod).innerHTML;
-
-				document.getElementById('qte_h'+idprod).value = qte;
-				elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+				var qte_toadd = parseInt(document.getElementById('qte'+idprod).value);
+				if(!isNaN(qte_toadd))
+				{
+					var qte_act = parseInt(document.getElementById('panier_elem_qte_'+idprod).innerHTML.replace("x",""));
+					var prix = parseFloat(document.getElementById('panier_elem_prix_'+idprod).innerHTML.replace("€",""));
+					var nom= document.getElementById('panier_elem_nom_'+idprod).innerHTML;
+					var qte = (qte_act + qte_toadd);
+					document.getElementById('qte_h'+idprod).value = qte;
+					elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+				}
+				else
+				{
+					document.getElementById('qte'+idprod).value = 1;
+					var error =1;
+				}
 			}
 			
-			calTotal();
-			$( "#accordeon" ).accordion( "option", "active", 0 );
-			
-			xhr = getXMLHttpRequest();
-			
-			xhr.open("POST", "include/invite/modifpanier.php", true);
-			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send("id="+idprod+"&nom="+nom+"&prix="+prix+"&qte="+qte);
+			if(error != 1)
+			{
+				calTotal();
+				$( "#accordeon" ).accordion( "option", "active", 0 );
+				
+				xhr = getXMLHttpRequest();
+				
+				xhr.open("POST", "include/invite/modifpanier.php", true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				xhr.send("id="+idprod+"&nom="+nom+"&prix="+prix+"&qte="+qte);
+			}
 		}
 		
 		function getXMLHttpRequest() {
@@ -189,6 +209,18 @@
 			document.getElementById('prix_tt_panier').innerHTML = '0.00';
 		}
 		
+		function checkpanier(link){
+			if(parseFloat(document.getElementById('prix_tt_panier').innerHTML) <= 0.009)
+			{
+				alert("Panier Vide !");
+				link.href="#";
+			}
+			else
+			{
+				link.href="index.php?page=paiement_final";
+			}
+		}
+		
 		$(function() {
 
 		  var elementID, elementNo;
@@ -201,7 +233,7 @@
 				elementNo = parseInt(elementID.replace(elementPattern, '$1'));
 				if(!isNaN(elementNo))
 				{
-					$( "#qte"+elementNo ).spinner();
+					$( "#qte"+elementNo ).spinner({ min: 1 });
 				}
 			}
 		  }
@@ -283,7 +315,7 @@
 							<div style="float:right; margin-right:5px;">
 								<span class="bt" onclick="viderPanier();" style="cursor:pointer;">Vider</span>
 								-
-								<a class="bt" href="index.php?page=paiement_final">Payer</a>
+								<a class="bt" onclick="checkpanier(this);" href="index.php?page=paiement_final">Payer</a>
 							</div>
 						</div>
 					</div>
@@ -351,7 +383,7 @@
 								</p>
 								</div>
 								<span id="'.$ar['id'].'" class="style" style="float:left; width:231px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
-								<span class="style" style="float:left; width:66px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" />';
+								<span class="style" style="float:left; width:66px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
 								
 								echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
 								<input type="hidden" id="qte_h'.$ar['id'].'" value="0"/>
