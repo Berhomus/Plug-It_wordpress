@@ -191,29 +191,30 @@
 
 	require_once('./connexionbddplugit.class.php');
 	$bdd=connexionbddplugit::getInstance();
-	
 	switch($_GET['mode'])
 	{	
 		case 'view' :
 		
 			if(!isset($_GET['categ']))
-			{
-				$rq = connexionbddplugit::getInstance()->query("SELECT nom FROM categorie");
-				$rq = $rq->fetch();
-				$_GET['categ'] = $rq['nom'];
+			{	
+				$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
+				$ar1 = $rq1->fetch();
+				$rq2 = connexionbddplugit::getInstance()->query("SELECT nom FROM sousmenu WHERE menu='".$ar1['id']."' ORDER BY position DESC LIMIT 0,1");
+				$ar2 = $rq2->fetch();
+				$_GET['categ'] = $ar2['nom'];
 			}
 			
-			$nomcateg = $_GET['categ'];
+			$nomcateg = strtoupper($_GET['categ']);
 
 			try{
-				$rq = $bdd->prepare("SELECT COUNT(nom) AS nombre FROM categorie WHERE nom = ?");
-				$rq->execute(array($nomcateg));
-				$rq = $rq->fetch();
+				$rq3 = $bdd->prepare("SELECT COUNT(nom) AS nombre FROM sousmenu WHERE upper(nom) = ? AND menu=?");
+				$rq3->execute(array($nomcateg,$ar1['id']));
+				$ar3 = $rq3->fetch();
 			} catch ( Exception $e ) {
 				echo "Une erreur est survenue : ".$e->getMessage();
 			}
 
-			if($rq['nombre'] >= 1)
+			if($ar3['nombre'] >= 1)
 			{
 				try{
 					$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
