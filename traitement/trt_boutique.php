@@ -69,12 +69,13 @@ Name : trt_Produit.php => Plug-it
 								$categorie = $_POST['categorie'];
 								$titre = (!empty($_POST['titre'])) ? $_POST['titre']:$array['nom'];
 								$corps = (!empty($_POST['corps'])) ? $_POST['corps']:$array['description'];
+								$tva = $_POST['tva'];
 								$path = (isset($path)) ? make_img_prod($path):$array['images'];
 								$ordre = $_POST['ordre'];					
 								
 								try{
-									$rq=$bdd->prepare("UPDATE produit SET priorite=?, categorie=?, prix=?, images=?, nom=?, description=? WHERE id=?");
-									$rq->execute(array($ordre,$categorie,$prix,$path,$titre,$corps,$_GET['id']));
+									$rq=$bdd->prepare("UPDATE produit SET priorite=?, categorie=?, prix=?, images=?, nom=?, description=?, tva=? WHERE id=?");
+									$rq->execute(array($ordre,$categorie,$prix,$path,$titre,$corps,$tva,$_GET['id']));
 								} catch ( Exception $e ) {
 									echo "Une erreur est survenue : ".$e->getMessage();
 								}
@@ -90,6 +91,7 @@ Name : trt_Produit.php => Plug-it
 										<input type="hidden" name="ordre" value="<?php echo $_POST['ordre'];?>"/>
 										<input type="hidden" name="categorie" value="<?php echo $_POST['categorie'];?>"/>
 										<input type="hidden" name="prix" value="<?php echo $_POST['prix'];?>"/>
+										<input type="hidden" name="tva" value="<?php echo $_POST['tva'];?>"/>
 										<input type="submit" value="Retour Formulaire"/>
 									</form>
 							<?php
@@ -119,11 +121,12 @@ Name : trt_Produit.php => Plug-it
 		
 							$corps = $_POST['corps'];
 							$ordre = $_POST['ordre'];
+							$tva = $_POST['tva'];
 							
 							//$path = make_img_prod($path);
 							try{
-								$rq=$bdd->prepare("INSERT INTO produit VALUES (Null,?,?,?,Null,?,?,?)");
-								$rq->execute(array($titre,$path,$corps,$prix,$categorie,$ordre));
+								$rq=$bdd->prepare("INSERT INTO produit VALUES (Null,?,?,?,Null,?,?,?,?)");
+								$rq->execute(array($titre,$path,$corps,$prix,$categorie,$tva,$ordre));
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
 							}
@@ -138,6 +141,7 @@ Name : trt_Produit.php => Plug-it
 									<input type="hidden" name="ordre" value="<?php echo $_POST['ordre'];?>"/>
 									<input type="hidden" name="categorie" value="<?php echo $_POST['categorie'];?>"/>
 									<input type="hidden" name="prix" value="<?php echo $_POST['prix'];?>"/>
+									<input type="hidden" name="tva" value="<?php echo $_POST['tva'];?>"/>
 									<input type="submit" value="Retour Formulaire"/>
 								</form>
 							<?php

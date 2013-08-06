@@ -195,10 +195,11 @@
 	{	
 		case 'view' :
 		
+			$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
+			$ar1 = $rq1->fetch();
+			
 			if(!isset($_GET['categ']))
 			{	
-				$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
-				$ar1 = $rq1->fetch();
 				$rq2 = connexionbddplugit::getInstance()->query("SELECT nom FROM sousmenu WHERE menu='".$ar1['id']."' ORDER BY position DESC LIMIT 0,1");
 				$ar2 = $rq2->fetch();
 				$_GET['categ'] = $ar2['nom'];
@@ -207,18 +208,19 @@
 			$nomcateg = strtoupper($_GET['categ']);
 
 			try{
-				$rq3 = $bdd->prepare("SELECT COUNT(nom) AS nombre FROM sousmenu WHERE upper(nom) = ? AND menu=?");
+				$rq3 = $bdd->prepare("SELECT * FROM sousmenu WHERE upper(nom) = ? AND menu=?");
 				$rq3->execute(array($nomcateg,$ar1['id']));
 				$ar3 = $rq3->fetch();
+				$idcateg = $ar3['id'];
 			} catch ( Exception $e ) {
 				echo "Une erreur est survenue : ".$e->getMessage();
 			}
 
-			if($ar3['nombre'] >= 1)
+			if($rq3->rowCount() >= 1)
 			{
 				try{
 					$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
-					$rq->execute(array($nomcateg));
+					$rq->execute(array($idcateg));
 					$ar=$rq->fetch();
 				} catch ( Exception $e ) 
 				{
@@ -292,11 +294,16 @@
 					try
 					{
 						$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
-						$rq->execute(array($nomcateg));
-
+						$rq->execute(array($idcateg));
+						
+	
 						echo '<table cellspacing="20">';
 						while($ar=$rq->fetch())
 						{
+							
+							$rq2 = $bdd->prepare("SELECT valeur FROM tva WHERE id=?");
+							$rq2->execute(array($ar['tva']));
+							$tva = $rq2->fetch();
 							
 							if($i == 1)
 								echo '<tr>';
@@ -315,7 +322,7 @@
 									<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
 								<p style="margin-top:10px;font-weight:bold;font-size:13px;">
 								<span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><br/>
-								<span style="margin-right:18px;float:right;">HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($ar['tva']*100)/100 .'%) : '.(round($ar['prix']*($ar['tva']/100)*100)/100).' € | TTC : '.(round($ar['prix']*(($ar['tva']/100)+1)*100)/100).' €</span>
+								<span style="margin-right:18px;float:right;">HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($tva['valeur']*100)/100 .'%) : '.(round($ar['prix']*($tva['valeur']/100)*100)/100).' € | TTC : '.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).' €</span>
 								</p>
 								</div>
 								<span id="'.$ar['id'].'" class="style" style="float:left; width:226px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
@@ -329,7 +336,7 @@
 								
 								echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
 								<input type="hidden" id="qte_h'.$ar['id'].'" value="0"/>
-								<input type="hidden" id="prix'.$ar['id'].'" value="'.$ar['prix'].'"/>';
+								<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'"/>';
 								
 								echo '</td>';
 								
