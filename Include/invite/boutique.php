@@ -231,7 +231,7 @@
 				<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
 					<h3><img src="./images/e_commerce_caddie.gif" style="width:20px; height:20px; vertical-align:-18%;"/>Panier</h3>
 					<div id="contenu">
-						<div id="top_panier"><table style="width:100%"><tr><td colspan="2">Nom</td><td style="float:left; margin-left:60px;">Qté</td><td style="float:right; margin-right:30px;">Prix Unitaire</td></tr></table></div>
+						<div id="top_panier"><table style="width:100%"><tr><td colspan="2" style="width:75px;">Nom</td><td style="float:left;">Qté</td><td style="float:right;">Prix Unitaire</td></tr></table></div>
 						<div id="div_panier"><hr/></div>
 						<?php
 						
@@ -239,7 +239,7 @@
 						{
 							foreach($_SESSION['caddie'] as $article)
 							{
-								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; margin-left:60px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; margin-right:30px;" id="panier_elem_prix_'.$article['id'].'">'.$article['prix'].'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td colspan="2" style="width:75px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'">'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
 							}
 						}	
 						
@@ -312,12 +312,12 @@
 								
 								echo'
 									<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
-								<p style="margin-top:10px;font-weight:bold;font-size:13px;">
+								<p style="margin-top:10px;font-weight:bold;font-size:13px;position:relative;">
 								<span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><br/>
-								<span style="margin-right:18px;float:right;">HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($ar['tva']*100)/100 .'%) : '.(round($ar['prix']*($ar['tva']/100)*100)/100).' € | TTC : '.(round($ar['prix']*(($ar['tva']/100)+1)*100)/100).' €</span>
+								<span style="margin-right:18px;"><center style="bottom:1px;"><b>| HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($ar['tva']*100)/100 .'%) : '.(round($ar['prix']*($ar['tva']/100)*100)/100).' € |<br/>| TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($ar['tva']/100)+1)*100)/100).'</span> € |</b></center></span>
 								</p>
 								</div>
-								<span id="'.$ar['id'].'" class="style" style="float:left; width:226px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
+								<span id="'.$ar['id'].'" class="style" style="float:left; width:231px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
 								<span class="style" style="float:left; width:66px; border-radius: 0px 0px 50px 0px;"><select name="qte'.$ar['id'].'" id="qte'.$ar['id'].'">';
 								
 								for($k=1;$k<=10;$k++)
