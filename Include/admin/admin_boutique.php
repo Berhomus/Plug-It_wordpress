@@ -2,56 +2,12 @@
 <script type="text/javascript" src="js/ajout_fact.js"></script>
 
 <script>
-	function getXMLHttpRequest() {
-		var xhr = null;
-		 
-		if (window.XMLHttpRequest || window.ActiveXObject) {
-			if (window.ActiveXObject) {
-				try {
-					xhr = new ActiveXObject("Msxml2.XMLHTTP");
-				} catch(e) {
-					xhr = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-			} else {
-				xhr = new XMLHttpRequest();
-			}
-		} else {
-			alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
-			return null;
-		}
-		 
-		return xhr;
-	}
-
-	function addCategorie(field){
-		xhr = getXMLHttpRequest();
-		
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-				var success;
-				if(xhr.responseText == 'success')
-				{
-					var option = document.createElement('option');
-					option.setAttribute("value",document.getElementById("new_categorie").value);
-					option.setAttribute("selected","");
-					option.innerHTML=document.getElementById("new_categorie").value;
-					document.getElementById("categorie").appendChild(option);
-					document.getElementById("new_categorie").value = "";
-					success = '<small style="color:green;">Ajout Réussi !</small>';
-				}
-				else
-				{
-					success = '<small style="color:red;">Ajout Echoué !</small>';
-				}
-				document.getElementById("new_categ_td").innerHTML = '<label for="new_categorie"><b>Nouvelle Catégorie <span class="red">*</span></b><br/><small id="lim_new_categorie">(Max 50 caractères)</small><br/>'+success+'</label>';
-			}
-		};
-		
-		var categ = field.value;
-		xhr.open("POST", "include/admin/ajoutcateg.php", true);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send("categ="+categ);
-	}
+function titre()
+{	
+	document.execCommand('bold', false, '');
+	document.execCommand('FontSize', false, '3');
+	document.getElementById('ortf').focus(); 
+}
 </script>
 
 <?php
@@ -71,7 +27,8 @@ if(isset($_SESSION['id']))
 	$logoprod="";
 	$prix = 0.00;
 	$ordre=0;
-	$categorie = "";
+	$categorie = 0;
+	$tva = 0;
 	
 	$rq = $bdd->prepare("SELECT valeur FROM tva WHERE id='1'");
 	$rq->execute();
@@ -86,6 +43,7 @@ if(isset($_SESSION['id']))
 		$corps=$_POST['corps'];
 		$ordre=$_POST['ordre'];
 		$categorie = $_POST['categorie'];
+		$tva = $_POST['tva'];
 	}
 	else if(isset($_GET['id']))
 	{		
@@ -104,6 +62,7 @@ if(isset($_SESSION['id']))
 			$prix =$array['prix'];
 			$ordre=$array['priorite'];
 			$categorie = $array['categorie'];
+			$tva = $array['tva'];
 		}
 		else
 		{
@@ -164,20 +123,14 @@ if(isset($_SESSION['id']))
 			<tr>
 				<td><label for="tva" id="tva_label"><b>TVA <span class="red">*</span></b><br/><small id="lim_prix">(Chiffre en %)</small></label></td>
 				<td>
-				</td>
-			</tr>
-			
-			<tr>
-				<td><label for="categorie"><b>Catégorie du produit <span class="red">*</span></b><br/></label></td>
-				<td>
-					<select name="categorie" id="categorie">
+					<select name="tva" id="tva">
 							<?php
-								$rq = connexionbddplugit::getInstance()->query("SELECT nom FROM categorie");
+								$rq = connexionbddplugit::getInstance()->query("SELECT * FROM tva");
 								$selected ="";
 								while($ar = $rq->fetch())
 								{
-									$selected = ($ar['nom']==$categorie) ? "selected":"";
-									echo '<option value="'.$ar['nom'].'" '.$selected.'>'.$ar['nom'].'</option>';
+									$selected = ($ar['id']==$tva) ? "selected":"";
+									echo '<option value="'.$ar['id'].'" '.$selected.'>'.$ar['ref'].' - '.(round($ar['valeur']*100)/100).'%</option>';
 								}
 
 							?>
@@ -186,9 +139,24 @@ if(isset($_SESSION['id']))
 			</tr>
 			
 			<tr>
-				<td id="new_categ_td"><label for="new_categorie"><b>Nouvelle Catégorie <span class="red">*</span></b><br/><small id="lim_new_categorie">(Max 50 caractères)</small></label></td>
+				<td><label for="categorie"><b>Catégorie du produit <span class="red">*</span></b><br/></label></td>
 				<td>
-				<input size="30" type="text" name="new_categorie" id="new_categorie"  onblur="textLimit(this,50, lim_new_categorie);"/><input type="button" value="Ajouter" onclick="addCategorie(new_categorie);" /></td>
+					<select name="categorie" id="categorie">
+							<?php
+								$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
+								$ar1 = $rq1->fetch();
+							
+								$rq = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar1['id']."'");
+								$selected ="";
+								while($ar = $rq->fetch())
+								{
+									$selected = ($ar['id']==$categorie) ? "selected":"";
+									echo '<option value="'.$ar['id'].'" '.$selected.'>'.$ar['nom'].'</option>';
+								}
+
+							?>
+					</select>
+				</td>
 			</tr>
 			
 			<tr>
