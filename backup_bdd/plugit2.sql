@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.4.10.1
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 05 Août 2013 à 07:56
--- Version du serveur: 5.5.24-log
--- Version de PHP: 5.3.13
+-- Généré le : Mar 06 Août 2013 à 12:07
+-- Version du serveur: 5.5.20
+-- Version de PHP: 5.3.10
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `login` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `mdp_md5` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `admin`
@@ -39,29 +39,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 INSERT INTO `admin` (`id`, `login`, `mdp_md5`) VALUES
 (2, 'plugit', 'b04942b84582fc7f84712a538b7b8829'),
-(3, 'Boby', '2a0e48c59136f164b54e2eeb029e5ebb');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `categorie`
---
-
-CREATE TABLE IF NOT EXISTS `categorie` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `visible` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
--- Contenu de la table `categorie`
---
-
-INSERT INTO `categorie` (`id`, `nom`, `visible`) VALUES
-(1, 'destokage', 1),
-(2, 'telephonie', 1),
-(3, 'mobilite', 1);
+(3, 'Boby', '2a0e48c59136f164b54e2eeb029e5ebb'),
+(4, 'moi', '70b783251225354e883a5bef3c011843');
 
 -- --------------------------------------------------------
 
@@ -112,10 +91,18 @@ CREATE TABLE IF NOT EXISTS `produit` (
   `desc` text COLLATE utf8_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `prix` float NOT NULL,
-  `categorie` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `categorie` int(11) NOT NULL,
+  `tva` int(11) NOT NULL,
   `priorite` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `produit`
+--
+
+INSERT INTO `produit` (`id`, `nom`, `images`, `desc`, `date`, `prix`, `categorie`, `tva`, `priorite`) VALUES
+(1, 'Antoine bovino 3000', 'images/photo.jpg', '<img src="images/fleche.png">vfdgfgsdfg<img src="null">\r\n										', '2013-08-06 09:52:54', 12.5, 12, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `sousmenu` (
   `position` int(11) NOT NULL,
   `menu` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=13 ;
 
 --
 -- Contenu de la table `sousmenu`
@@ -242,7 +229,9 @@ INSERT INTO `sousmenu` (`id`, `nom`, `active`, `lien`, `position`, `menu`) VALUE
 (7, 'Maintenance', 1, 'index.php?page=services&mode=viewone&id=2', 3, 9),
 (8, 'Architecture réseau', 1, 'index.php?page=services&mode=viewone&id=5', 4, 9),
 (9, 'Virtualisation', 1, 'index.php?page=services&mode=viewone&id=6', 5, 9),
-(10, 'Mise à la norme des PCA', 1, 'index.php?page=services&mode=viewone&id=7', 6, 9);
+(10, 'Mise à la norme des PCA', 1, 'index.php?page=services&mode=viewone&id=7', 6, 9),
+(11, 'Tablette', 1, 'Index.php?page=boutique&categ=tablette', 1, 7),
+(12, 'NoteBook', 1, 'Index.php?page=boutique&categ=notebook', 2, 7);
 
 -- --------------------------------------------------------
 
