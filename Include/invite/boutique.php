@@ -1,11 +1,12 @@
 <h2 class="grdtitre">Boutique en Ligne</h2>
 
-<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<!--<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 
-
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />-->
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+ 
 
 <script type="text/javascript">
 
@@ -188,32 +189,23 @@
 			document.getElementById('prix_tt_panier').innerHTML = '0.00';
 		}
 		
-		 $(function() {
-			var Conteneur = document.getElementById('liste_article');
-			if(Conteneur)
-			  {
-				var elementID, elementNo;
-				
-				if(Conteneur.childNodes.length > 0)
+		$(function() {
+
+		  var elementID, elementNo;
+		  var liste = document.getElementsByTagName('input');
+		  for (var i = 0; i < liste.length; i++) { 
+			elementID = (liste[i].getAttribute) ? liste[i].getAttribute('id') : false;
+			if(elementID)
+			{
+				var elementPattern=new RegExp("qte([0-9]*)","g");
+				elementNo = parseInt(elementID.replace(elementPattern, '$1'));
+				if(!isNaN(elementNo))
 				{
-				  for(var i = 0; i < Conteneur.childNodes.length; i++)
-				  {
-					// Ici, on vérifie qu'on peut récupérer les attributs, si ce n'est pas possible, on renvoit false, sinon l'attribut
-					elementID = (Conteneur.childNodes[i].getAttribute) ? Conteneur.childNodes[i].getAttribute('id') : false;
-					if(elementID)
-					{
-						var elementPattern=new RegExp("qte([0-9]*)","g");
-						elementNo = parseInt(elementID.replace(elementPattern, '$1'));
-						if(!isNaN(elementNo))
-						{
-							$( "#qte"+elementNo ).spinner();
-						}
-					}
-				  }
+					$( "#qte"+elementNo ).spinner();
 				}
-			  }
-		}
-		
+			}
+		  }
+		});
 	</script>
 <?php
 	if(!isset($_GET['mode']))
@@ -358,7 +350,7 @@
 								</p>
 								</div>
 								<span id="'.$ar['id'].'" class="style" style="float:left; width:231px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
-								<span class="style" style="float:left; width:66px; border-radius: 0px 0px 50px 0px;"><input name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" />';
+								<span class="style" style="float:left; width:66px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" />';
 								
 								echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
 								<input type="hidden" id="qte_h'.$ar['id'].'" value="0"/>
@@ -446,3 +438,7 @@
 	}
 	
 ?>
+
+<script>
+	 
+</script>
