@@ -11,45 +11,6 @@ Name : Banniere.php => Plug-it
 	header( 'content-type: text/html; charset=utf-8' );
 
 ?>
-<script type="text/javascript">		
-		function patate(id,position)
-		{
-			var ssmenu = document.getElementById('li_sousmenu'+id);
-			
-			var uls = document.getElementsByTagName('ul');
-			
-			for(var i=0;i<uls.length;i++)
-			{
-				if(uls[i].getAttribute('class')=='level2')
-				{
-					var lis = uls[i].getElementsByTagName('li');
-					var max = lis[0].innerHTML.length;
-					for(var j=1;j<lis.length;j++)
-					{
-						if(lis[i].innerHTML.length>lis[i-1].innerHTML.length)
-							max=lis[i].innerHTML.length;
-					}
-					max = 9*max;
-					uls[i].style.width=max+'px';
-				}
-				break;
-			}
-			
-			ssmenu.style.marginLeft=40+position*60+window.pageYOffset+"px";
-
-			ssmenu.style.marginTop=40+window.pageXOffset+"px";
-			if(ssmenu.style.display != 'block')
-			{
-				ssmenu.style.display = 'block';
-			}
-			else
-			{
-				ssmenu.style.display = 'none';
-			}
-		}
-</script>
-
-
 <div>
 	<div style="min-width:1350px;"><a href="index.php?page=accueil"><img src="images/logotype_plug_it(transparence).png" style="float:left; margin:13px 50px 13px 13px;"/></a>
 	<ul id="menu">
@@ -65,13 +26,14 @@ Name : Banniere.php => Plug-it
 				if($ar['active'] == true)
 				{
 					echo '
-					<li id="li" onmouseout="patate('.$ar['id'].')" onmouseover="patate('.$ar['id'].','.$position.')"><a href="'.$ar['lien'].'"';
-					echo '>'.$ar['nom'].'</a></li>';
+					<li id="li_'.$ar['id'].'"><a href="'.$ar['lien'].'"';
+					echo '>'.$ar['nom'].'</a>';
 					
 					$sm = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar['id']."' ORDER BY position");
 					
-					echo '<ul onmouseout="patate('.$ar['id'].')" onmouseover="patate('.$ar['id'].','.$position.')" id="li_sousmenu'.$ar['id'].'">';
-					
+					/*sous menu*/
+					echo '<ul id="li_sousmenu'.$ar['id'].'">';
+
 					while($sm1=$sm->fetch())
 					{
 						if($sm1['active'] == true)
@@ -82,7 +44,7 @@ Name : Banniere.php => Plug-it
 						}
 					}
 					
-					echo '</ul>';
+					echo '</ul></li>';
 				}
 			$position++;
 			}
