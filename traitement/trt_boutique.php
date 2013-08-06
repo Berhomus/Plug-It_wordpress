@@ -163,6 +163,15 @@ Name : trt_Produit.php => Plug-it
 		echo ('<h2 style="color:red;">Mode Non spécifié !</h2>');
 	}
 	
-	echo ('<center><a href="../index.php?page=boutique">Retour Produit</a></center>');
+	if(isset($_GET['categ']))
+		$idcateg = $_GET['categ'];
+	else
+		$idcateg = $_POST['categorie'];
+		
+	$rq=$bdd->prepare("SELECT nom FROM sousmenu WHERE id=?");
+	$rq->execute(array($idcateg));
+	$ar = $rq->fetch();
+	
+	echo ('<center><a href="../index.php?page=boutique&categ='.$ar['nom'].'">Retour Produit</a></center>');
 ?>
 </div>
