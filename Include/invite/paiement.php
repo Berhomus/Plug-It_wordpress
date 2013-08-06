@@ -33,9 +33,10 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 				{
 					echo '<tr>	
 							<td><b>Reférence</b></td>
-							<td><b>Non</b></td>
+							<td><b>Nom</b></td>
 							<td><b>Quantité</b></td>
 							<td><b>Prix Unitaire</b></td>
+							<td><b>Prix Total</b></td>
 						</tr>';
 					foreach($_SESSION['caddie'] as $article)
 					{
@@ -44,11 +45,10 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 							<td>'.$article['id'].'</td>
 							<td>'.$article['nom'].'</td>
 							<td>x'.$article['qte'].'</td>
-							<td>'.$article['prix'].'€</td>
-						</tr>
-						';
-						$commande .= $article['id'].' : '.$article['nom'].' x.'.$article['qte'].' => '.$article['prix'].'€
-';
+							<td>'.round($article['prix']*100)/100 .'€</td>
+							<td>'.(round($article['prix']*100)/100)*$article['qte'].'€</td>
+						</tr>';
+						$commande .= $article['id'].' : '.$article['nom'].' x.'.$article['qte'].' => '.$article['prix'].'€';
 					}
 				}
 				else
@@ -74,9 +74,13 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 				}
 			?>
 			<tr>
-				<td><b>Montant Total</b></td>
+				<td colspan="3"><b>Montant Total</b></td>
 				<td></td>
-				<td><?php echo (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot']; ?>€</td>
+				<td>
+				<?php 
+				$tot = (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot']; 
+				echo round($tot*100)/100;
+				?>€</td>
 			</tr>
 			
 			<tr>	
