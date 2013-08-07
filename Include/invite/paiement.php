@@ -35,7 +35,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 							<td><b>Reférence</b></td>
 							<td><b>Nom</b></td>
 							<td><b>Quantité</b></td>
-							<td><b>Prix Unitaire</b></td>
+							<td><b>Prix Unitaire TTC</b></td>
 							<td><b>Prix Total</b></td>
 						</tr>';
 					foreach($_SESSION['caddie'] as $article)
@@ -72,15 +72,13 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 ';
 					}
 				}
+				
+				$_POST['montanttot'] = round(((isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot'])*100)/100;
 			?>
 			<tr>
 				<td colspan="3"><b>Montant Total</b></td>
 				<td></td>
-				<td>
-				<?php 
-				$tot = (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot']; 
-				echo round($tot*100)/100;
-				?>€</td>
+				<td><?php echo $_POST['montanttot']  ?>€</td>
 			</tr>
 			
 			<tr>	
@@ -91,7 +89,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 		</table>
 	
 <?php
-		$total = (isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:str_replace('.',"",$_POST['montanttot']);
+		$total = (isset($_POST['type_paiement'])) ? round($_SESSION['caddieTot']*100):str_replace('.',"",$_POST['montanttot']);
 		include("include/webaffaires/call_request.php");
 	}
 	else
