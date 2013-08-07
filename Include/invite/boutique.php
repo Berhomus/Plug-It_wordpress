@@ -99,6 +99,7 @@
 			var isIn = alreadyIn(idprod);
 			var cont = document.getElementById('contenu');
 			
+			
 			if(isIn == -1)
 			{
 				var nouvelem = document.createElement('div');
@@ -116,7 +117,7 @@
 					document.getElementById('qte'+idprod).value = qte;
 					
 					nouvelem.setAttribute('id','panier_elem_'+idprod);
-					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='+idprod+'">'+nom.substr(0,13)+'</a></td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 					
 					cont.appendChild(nouvelem);
 					
@@ -136,10 +137,9 @@
 				{
 					var qte_act = parseInt(document.getElementById('panier_elem_qte_'+idprod).innerHTML.replace("x",""));
 					var prix = parseFloat(document.getElementById('panier_elem_prix_'+idprod).innerHTML.replace("€",""));
-					var nom= document.getElementById('panier_elem_nom_'+idprod).innerHTML;
+					var nom = document.getElementById('name'+idprod).value;
 					var qte = (qte_act + qte_toadd);
-					document.getElementById('qte_h'+idprod).value = qte;
-					elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+					elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='+idprod+'">'+nom.substr(0,13)+'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 				}
 				else
 				{
@@ -296,9 +296,85 @@
 						
 						if(isset($_SESSION['caddie']))
 						{
+							$articlechange = 0;
 							foreach($_SESSION['caddie'] as $article)
 							{
-								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+							
+								try{
+									$rq = $bdd->prepare("SELECT * FROM produit WHERE id=?");
+									$rq->execute(array($article['id']));
+									$ar=$rq->fetch();
+									
+									
+									if($rq->rowCount() == 1)
+									{
+										if($ar['tva'] == -1 or $ar['categorie'] == -1)//si rebut
+										{
+											$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+											unset($_SESSION['caddie'][$article['id']]);
+											$articlechange = 2;
+										}
+										else
+										{
+											$rqtva = $bdd->prepare("SELECT * FROM tva WHERE id=?");
+											$rqtva->execute(array($ar['tva']));
+											$artva=$rqtva->fetch();
+											if(abs($article['prix']-(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100)) > 0.009)//si prix changé
+											{
+												echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='.$article['id'].'">'.substr($article['nom'],0,13).'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;color:red;font-weight:bold;" id="panier_elem_prix_'.$article['id'].'" >'.(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100) .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+												
+												//redef panier
+												$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+												$_SESSION['caddie'][$article['id']]['prix'] = (round($ar['prix']*(($artva['valeur']/100)+1)*100)/100);
+												$_SESSION['caddieTot'] += $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+												
+												
+												if($articlechange == 2)
+													$articlechange = 3;
+												else if($articlechange == 0)
+													$articlechange = 1;
+											}
+											else
+											{
+												echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='.$article['id'].'">'.substr($article['nom'],0,13).'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+											}
+										}
+									}	
+									else//si article inexistant
+									{
+										//enlever panier
+										$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+										unset($_SESSION['caddie'][$article['id']]);
+										
+										if($articlechange == 1)
+											$articlechange = 3;
+										else if($articlechange == 0)
+											$articlechange = 2;
+									}
+								} catch ( Exception $e ) 
+								{
+									echo "Une erreur est survenue : ".$e->getMessage();
+								}
+														
+							}
+							
+							if($articlechange == 1)
+							{
+								echo '<script>
+										alert("Attention le prix de certains articles ont changé !");
+									</script>';
+							}
+							else if($articlechange == 2)
+							{
+								echo '<script>
+										alert("Attention certains articles ne sont pas disponible !");
+									</script>';
+							}
+							else if($articlechange == 3)
+							{
+								echo '<script>
+										alert("Attention certains articles n\'existe plus et d\'autres ont changé de prix !");
+									</script>';
 							}
 						}	
 						
@@ -346,66 +422,65 @@
 					echo '<br/><div style="margin-left:auto; margin-right:auto;" class="menuverti" onclick="location.href=\'index.php?page=admin_boutique\'">Ajouter un produit</div>';
 				}
 				
-				if(!empty($ar))
+				try
 				{
-					try
-					{
-						$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? ORDER BY priorite DESC");
-						$rq->execute(array($idcateg));
+					$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie = ? AND tva <> ? ORDER BY priorite DESC");
+					$rq->execute(array($idcateg,-1));
+				} catch ( Exception $e ) {
+					echo "Une erreur est survenue : ".$e->getMessage();
+				}
+					
+				if($rq->rowCount()>0)
+				{
+					
 						
 	
-						echo '<table id="liste_article" cellspacing="20">';
-						while($ar=$rq->fetch())
-						{
-							
-							$rq2 = $bdd->prepare("SELECT valeur FROM tva WHERE id=?");
-							$rq2->execute(array($ar['tva']));
-							$tva = $rq2->fetch();
-							
-							if($i == 1)
-								echo '<tr>';
-								
-								echo '<td>
-								<div class="blockproduit" onclick="location.href=\'index.php?page=boutique&mode=viewone&id='.$ar['id'].'\'"> '; 
-								
-								if(isset($_SESSION['id']))
-								{
-									echo'
-									<span style="margin-left:10%;"><a class="bt" href="index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
-									<a class="bt" href="traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span>';
-								}
-								
-								echo'
-									<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
-								<p style="margin-top:10px;font-weight:bold;font-size:13px;position:relative;">
-								<span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><br/>
-								<span style="margin-right:18px;"><center style="bottom:1px;"><b>| HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($tva['valeur']*100)/100 .'%) : '.(round($ar['prix']*($tva['valeur']/100)*100)/100).' € |<br/>| TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'</span> € |</b></center></span>
-								</p>
-								</div>
-								<span id="'.$ar['id'].'" class="style" style="float:left; width:211px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
-								<span class="style" style="float:left; width:86px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
-								
-								echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
-								<input type="hidden" id="qte_h'.$ar['id'].'" value="0"/>
-								<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'"/>';
-								
-								echo '</td>';
-								
-								$i++;
-								if($i > 2)
-								{
-									$i=1;
-									$j++;
-									echo '</tr>';
-								}
-						}
-
-						echo '</table>';
+					echo '<table id="liste_article" cellspacing="20">';
+					while($ar=$rq->fetch())
+					{
 						
-					} 
-					catch ( Exception $e ) {
-						echo "Une erreur est survenue : ".$e->getMessage();
+						$rq2 = $bdd->prepare("SELECT valeur FROM tva WHERE id=?");
+						$rq2->execute(array($ar['tva']));
+						$tva = $rq2->fetch();
+						
+						if($i == 1)
+							echo '<tr>';
+							
+							echo '<td>
+							<div class="blockproduit" onclick="location.href=\'index.php?page=boutique&mode=viewone&id='.$ar['id'].'\'"> '; 
+							
+							if(isset($_SESSION['id']))
+							{
+								echo'
+								<span style="margin-left:10%;"><a class="bt" href="index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
+								<a class="bt" href="traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span>';
+							}
+							
+							echo'
+								<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
+							<p style="margin-top:10px;font-weight:bold;font-size:13px;position:relative;">
+							<span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><br/>
+							<span style="margin-right:18px;"><center style="bottom:1px;"><b>| HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($tva['valeur']*100)/100 .'%) : '.(round($ar['prix']*($tva['valeur']/100)*100)/100).' € |<br/>| TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'</span> € |</b></center></span>
+							</p>
+							</div>
+							<span id="'.$ar['id'].'" class="style" style="float:left; width:211px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
+							<span class="style" style="float:left; width:86px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
+							
+							echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
+							<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'"/>';
+							
+							echo '</td>';
+							
+							$i++;
+							if($i > 2)
+							{
+								$i=1;
+								$j++;
+								echo '</tr>';
+							}
 					}
+
+					echo '</table>';
 				}
 				else
 				{
@@ -423,8 +498,8 @@
 		if(isset($_GET['id']))
 			{
 				try{
-					$retour = $bdd->prepare("SELECT count(id) as cpt FROM produit WHERE id=?");
-					$retour->execute(array($_GET['id']));
+					$retour = $bdd->prepare("SELECT count(id) as cpt FROM produit WHERE id=? AND categorie <> ? AND tva <> ?");
+					$retour->execute(array($_GET['id'],-1,-1));
 					$donnees = $retour->fetch();
 				} catch ( Exception $e ) {
 					echo "Une erreur est survenue : ".$e->getMessage();
