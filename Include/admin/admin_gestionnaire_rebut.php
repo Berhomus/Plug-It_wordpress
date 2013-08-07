@@ -23,48 +23,49 @@
 	try{
 		$bdd = connexionbddplugit::getInstance();
 		
-		$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
-		$ar1 = $rq1->fetch();
-	
-		$rq = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar1['id']."'");
-		
-		echo '<table cellspacing="10" id="table_modif_rebut">
-			<tr>
-				<td>Catégorie </td>
-				<td><select name="categ">
-				<option value="-1" selected>Defaut</option>';
-					while($ar = $rq->fetch())
-					{
-						echo '<option value="'.$ar['id'].'">'.$ar['nom'].'</option>';
-					}
-			
-			echo '</select></td>
-			</tr>
-			<tr>
-				<td>TVA </td>
-				<td><select name="tva">
-				<option value="-1" selected>Defaut</option>';
-			
-			$rq = connexionbddplugit::getInstance()->query("SELECT * FROM tva");
-			while($ar = $rq->fetch())
-			{
-				echo '<option value="'.$ar['id'].'">'.$ar['ref'].' - '.(round($ar['valeur']*100)/100).'%</option>';
-			}
-			
-			echo '</select></td>
-			</tr>
-			<tr>
-				<td><input type="submit" value="Supprimer" onclick="document.getElementById(\'sup\').value=1;"/></td>
-				<td><input type="submit" value="Valider" /></td>
-			</tr>
-		</table>';
-		
-		echo '<input type="hidden" name="sup" id="sup" value="0"/>';
-		
 		$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie=? OR tva=?");
 		$rq->execute(array(-1,-1));
 		if($rq->rowCount()>0)
 		{
+		
+			$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
+			$ar1 = $rq1->fetch();
+		
+			$rq = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar1['id']."'");
+			
+			echo '<table cellspacing="10" id="table_modif_rebut">
+				<tr>
+					<td>Catégorie </td>
+					<td><select name="categ">
+					<option value="-1" selected>Defaut</option>';
+						while($ar = $rq->fetch())
+						{
+							echo '<option value="'.$ar['id'].'">'.$ar['nom'].'</option>';
+						}
+				
+				echo '</select></td>
+				</tr>
+				<tr>
+					<td>TVA </td>
+					<td><select name="tva">
+					<option value="-1" selected>Defaut</option>';
+				
+				$rq = connexionbddplugit::getInstance()->query("SELECT * FROM tva");
+				while($ar = $rq->fetch())
+				{
+					echo '<option value="'.$ar['id'].'">'.$ar['ref'].' - '.(round($ar['valeur']*100)/100).'%</option>';
+				}
+				
+				echo '</select></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Supprimer" onclick="document.getElementById(\'sup\').value=1;"/></td>
+					<td><input type="submit" value="Valider" /></td>
+				</tr>
+			</table>';
+			
+			echo '<input type="hidden" name="sup" id="sup" value="0"/>';
+		
 			echo '<table  cellpadding="10" cellspacing="5" id="table_rebut" style="border:1px solid black;">
 				<tr>
 					<td>Nom</td>
