@@ -128,6 +128,15 @@ Name : Corps.php => Plug-it
 			echo '<h2>Access Forbidden</h2>';
 		break;
 		
+		case 'admin_gestionnaire_rebut':
+		if(isset($_SESSION['id']))
+		{
+			INCLUDE("include/admin/admin_gestionnaire_rebut.php");
+		}
+		else
+			echo '<h2>Access Forbidden</h2>';
+		break;
+		
 		case 'admin_article':
 		if(isset($_SESSION['id']))
 		{

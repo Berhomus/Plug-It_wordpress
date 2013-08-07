@@ -63,17 +63,22 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 				<td><b>Courriel</b></td>
 				<td><?php echo $_POST['courriel']; ?></td>
 			</tr>
-			
-			<tr>	
-				<td><b>Adresse Facturation</b></td>
-				<td><?php echo $_POST['adressefacturation']; ?></td>
-			</tr>
-			
-			<tr>	
-				<td><b>Adresse de Livraison</b></td>
-				<td><?php echo $_POST['adresselivraison']; ?></td>
-			</tr>
-			
+			<?php
+			if(isset($_POST['type_paiement']))
+			{
+			?>
+				<tr>	
+					<td><b>Adresse Facturation</b></td>
+					<td><?php echo $_POST['adressefacturation']; ?></td>
+				</tr>
+				
+				<tr>	
+					<td><b>Adresse de Livraison</b></td>
+					<td><?php echo $_POST['adresselivraison']; ?></td>
+				</tr>
+			<?php
+			}
+			?>
 			<tr>	
 				<td><b>N° de Téléphone</b></td>
 				<td><?php echo $_POST['telephone']; ?></td>

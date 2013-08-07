@@ -130,7 +130,7 @@ if(isset($_POST['DATA']))
 				. substr($payment_time, 4, 2) ;
 
 				//Le reçu de la transaction que nous allons envoyer pour confirmation
-				$Sujet = "Confirmation de votre paiement en ligne [Plug-it.fr]";
+				$Sujet = "Confirmation de votre paiement en ligne [Plug-it.com]";
 
 				$Msg = "### CECI EST UN MESSAGE AUTOMATIQUE . MERCI DE NE PAS Y RÉPONDRE ###\n\n";
 				$Msg.= "Bonjour,\n";
@@ -142,7 +142,7 @@ if(isset($_POST['DATA']))
 				$Msg.= "------------------------------------------------------------\n\n";
 
 				$Msg.= "DATE DE LA TRANSACTION         = $DatePay à $HeurePay \n";
-				$Msg.= "ADRESSE WEB DU COMMERCANT      = WWW.PLUG-IT.FR \n";
+				$Msg.= "ADRESSE WEB DU COMMERCANT      = WWW.PLUG-IT.COM \n";
 				$Msg.= "IDENTIFIANT COMMERCANT         = $merchant_id \n";
 				$Msg.= "REFERENCE DE LA TRANSACTION    = $transaction_id \n";
 				$Msg.= "MONTANT DE LA TRANSACTION      = " . substr($amount,0,-2) . "," . substr($amount ,-2)
@@ -164,9 +164,11 @@ if(isset($_POST['DATA']))
 				mail('shop@plug-it.com' , $Sujet, $Msg, 'From: shop@plug-it.com');
 				
 				//ajout BDD
-				
-				connexionbddplugit::getInstance()->query("INSERT INTO transaction VALUES ('','$transaction_id','".$arrayCaddie[0]."','$customer_email','$amount','".$arrayCaddie[1]."','".$arrayCaddie[5]."','".$arrayCaddie[3]."','$payment_date',$bank_response_code)")or die("Erreur SQL");
+				require_once('../../connexionbddplugit.class.php');
+				$bdd =connexionbddplugit::getInstance();
 
+				$rq = $bdd->prepare("INSERT INTO transaction VALUES ('',?,?,?,?,?,?,?,?,?)")or die("Erreur SQL");
+				$rq->execute(array($transaction_id,$arrayCaddie[0],$customer_email,$amount,$arrayCaddie[1],$arrayCaddie[5],$arrayCaddie[3],$payment_date,$bank_response_code));
 			}
 		
 			fwrite( $fp, "#======================== Le : " . date("d/m/Y H:i:s") . " ====================#\n");
