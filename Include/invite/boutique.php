@@ -296,9 +296,65 @@
 						
 						if(isset($_SESSION['caddie']))
 						{
+							$articlechange = 0;
 							foreach($_SESSION['caddie'] as $article)
 							{
-								echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+							
+								try{
+									$rq = $bdd->prepare("SELECT * FROM produit WHERE id=?");
+									$rq->execute(array($article['id']));
+									$ar=$rq->fetch();
+									
+									if($rq->rowCount() == 1)
+									{
+										$rqtva = $bdd->prepare("SELECT * FROM tva WHERE id=?");
+										$rqtva->execute(array($ar['tva']));
+										$artva=$rqtva->fetch();
+										if(abs($article['prix']-(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100)) > 0.009)//si prix changé
+										{
+											echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;color:red;" id="panier_elem_prix_'.$article['id'].'" >'.(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100) .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+											
+											if($articlechange == 2)
+												$articlechange = 3;
+											else if($articlechange == 0)
+												$articlechange = 1;
+										}
+										else
+										{
+											echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+										}
+									}	
+									else//si article inexistant
+									{
+										if($articlechange == 1)
+											$articlechange = 3;
+										else if($articlechange == 0)
+											$articlechange = 2;
+									}
+								} catch ( Exception $e ) 
+								{
+									echo "Une erreur est survenue : ".$e->getMessage();
+								}
+														
+							}
+							
+							if($articlechange == 1)
+							{
+								echo '<script>
+										Alert("Attention le prix de certains articles ont changé !");
+									</script>';
+							}
+							else if($articlechange == 2)
+							{
+								echo '<script>
+										Alert("Attention certains articles n\'existe plus !");
+									</script>';
+							}
+							else if($articlechange == 3)
+							{
+								echo '<script>
+										Alert("Attention certains articles n\'existe plus et d\'autres ont changé de prix !");
+									</script>';
 							}
 						}	
 						

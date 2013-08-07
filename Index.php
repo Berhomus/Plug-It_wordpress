@@ -24,6 +24,14 @@ Name : Index.php => Plug-it
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 		
 		<?php 
+		
+			$protocol = "http://";
+			$protocol_safe = "https://";
+			$current_loc = "127.0.0.1/plug-it_wordpress/";
+			
+			$link_unsafe = $protocol.$current_loc;
+			$link_safe = $protocol_safe.$current_loc;
+		
 			require_once('./connexionbddplugit.class.php');
 			
 			$bdd = connexionbddplugit::getInstance();

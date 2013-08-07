@@ -1,6 +1,7 @@
 ﻿
 <h2>Paiement en Ligne</h2>
 <script type="text/javascript" src="js/fct_de_trt_txt.js"></script>
+ 
 
 <?php
 if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
@@ -11,6 +12,27 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 		$_POST['commentaire'] = (!empty($_POST['commentaire'])) ? $_POST['commentaire']:"/";
 		
 	?>		
+	
+	
+	<script>
+		$(function() {
+
+			  var elementID, elementNo;
+			  var liste = document.getElementsByTagName('input');
+			  for (var i = 0; i < liste.length; i++) { 
+				elementID = (liste[i].getAttribute) ? liste[i].getAttribute('id') : false;
+				if(elementID)
+				{
+					var elementPattern=new RegExp("qte([0-9]*)","g");
+					elementNo = parseInt(elementID.replace(elementPattern, '$1'));
+					if(!isNaN(elementNo))
+					{
+						$( "#qte"+elementNo ).spinner({ min: 1 });
+					}
+				}
+			  }
+			});
+		</script>
 		<h2 class="titre">Récapitulatif</h2>
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">
 			<tr>	
