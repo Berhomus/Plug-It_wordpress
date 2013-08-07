@@ -99,6 +99,7 @@
 			var isIn = alreadyIn(idprod);
 			var cont = document.getElementById('contenu');
 			
+			
 			if(isIn == -1)
 			{
 				var nouvelem = document.createElement('div');
@@ -116,7 +117,7 @@
 					document.getElementById('qte'+idprod).value = qte;
 					
 					nouvelem.setAttribute('id','panier_elem_'+idprod);
-					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='+idprod+'">'+nom.substr(0,13)+'</a></td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 					
 					cont.appendChild(nouvelem);
 					
@@ -136,10 +137,9 @@
 				{
 					var qte_act = parseInt(document.getElementById('panier_elem_qte_'+idprod).innerHTML.replace("x",""));
 					var prix = parseFloat(document.getElementById('panier_elem_prix_'+idprod).innerHTML.replace("€",""));
-					var nom= document.getElementById('panier_elem_nom_'+idprod).innerHTML;
+					var nom = document.getElementById('name'+idprod).value;
 					var qte = (qte_act + qte_toadd);
-					document.getElementById('qte_h'+idprod).value = qte;
-					elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'">'+nom.substr(0,13)+'</td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+					elem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='+idprod+'">'+nom.substr(0,13)+'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="float:right; width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 				}
 				else
 				{
@@ -312,7 +312,13 @@
 										$artva=$rqtva->fetch();
 										if(abs($article['prix']-(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100)) > 0.009)//si prix changé
 										{
-											echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;color:red;" id="panier_elem_prix_'.$article['id'].'" >'.(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100) .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+											echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='.$article['id'].'">'.substr($article['nom'],0,13).'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;color:red;font-weight:bold;" id="panier_elem_prix_'.$article['id'].'" >'.(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100) .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+											
+											//redef panier
+											$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+											$_SESSION['caddie'][$article['id']]['prix'] = (round($ar['prix']*(($artva['valeur']/100)+1)*100)/100);
+											$_SESSION['caddieTot'] += $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+											
 											
 											if($articlechange == 2)
 												$articlechange = 3;
@@ -321,11 +327,15 @@
 										}
 										else
 										{
-											echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'">'.substr($article['nom'],0,13).'</td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+											echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='.$article['id'].'">'.substr($article['nom'],0,13).'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
 										}
 									}	
 									else//si article inexistant
 									{
+										//enlever panier
+										$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+										unset($_SESSION['caddie'][$article['id']]);
+										
 										if($articlechange == 1)
 											$articlechange = 3;
 										else if($articlechange == 0)
@@ -341,19 +351,19 @@
 							if($articlechange == 1)
 							{
 								echo '<script>
-										Alert("Attention le prix de certains articles ont changé !");
+										alert("Attention le prix de certains articles ont changé !");
 									</script>';
 							}
 							else if($articlechange == 2)
 							{
 								echo '<script>
-										Alert("Attention certains articles n\'existe plus !");
+										alert("Attention certains articles n\'existe plus !");
 									</script>';
 							}
 							else if($articlechange == 3)
 							{
 								echo '<script>
-										Alert("Attention certains articles n\'existe plus et d\'autres ont changé de prix !");
+										alert("Attention certains articles n\'existe plus et d\'autres ont changé de prix !");
 									</script>';
 							}
 						}	
@@ -442,7 +452,6 @@
 								<span class="style" style="float:left; width:86px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
 								
 								echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
-								<input type="hidden" id="qte_h'.$ar['id'].'" value="0"/>
 								<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'"/>';
 								
 								echo '</td>';
