@@ -69,35 +69,6 @@ Name : Index.php => Plug-it
 		
 		<script type="text/javascript" src="js/raphael-min.js"></script>
 		<script type="text/javascript" src="js/jquery.easing.js"></script>
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript">
-			var pos = new google.maps.LatLng(49.8853893, 2.3037014);
-			function initCarte()
-			{
-				// création de la carte
-				var oMap = new google.maps.Map( document.getElementById( 'div_carte'),
-				{
-				'center' : pos,
-				'zoom' : 17,
-				'mapTypeId' : google.maps.MapTypeId.ROADMAP
-				});
-				
-				var myMarker = new google.maps.Marker({
-					// Coordonnées du cinéma
-					position: pos,
-					map: oMap,
-					title: "Plug-it"
-				});
-				
-				var myWindowOptions = {
-					content:
-					'<h6>Plug-it</h6>'
-				};
-				var myInfoWindow = new google.maps.InfoWindow(myWindowOptions);
-			}
-			// init lorsque la page est chargée
-			google.maps.event.addDomListener( window, 'load', initCarte);
-		</script>
 		
 		<script src="js/iview.js"></script>
 		

@@ -49,8 +49,18 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 			</tr>
 			
 			<tr>	
+				<td><b>Code Postal Facturation</b></td>
+				<td><?php echo $_POST['codepostalfacturation']; ?></td>
+			</tr>
+			
+			<tr>	
 				<td><b>Adresse de Livraison</b></td>
 				<td><?php echo $_POST['adresselivraison']; ?></td>
+			</tr>
+			
+			<tr>	
+				<td><b>Code Postal de Livraison</b></td>
+				<td><?php echo $_POST['codepostallivraison']; ?></td>
 			</tr>
 			
 			<tr>	
@@ -158,13 +168,13 @@ else // sinon il les remplis => boutique
 					<td><input class="lab" style="text-align:right;" type="text" name="courriel" id="courriel" onblur="isEmail(this,email);" required/>
 				</tr>
 				<tr>	
-					<td><label class="lab" for="adressefact" id="email"><b>Adresse Facturation <span class="red">* </span></b></label></td>
-					<td><input class="lab" style="text-align:right;" type="text" name="adressefact" id="adressefact" required/></td>
+					<td><label class="lab" for="adressefact" id="email"><b>Adresse Facturation <span class="red">* </span></b><br/><small>(N° - Voie - Code Postal - Ville)</small></label></td>
+					<td><input class="lab" style="text-align:right;" size="40" type="text" name="adressefact" id="adressefact" required/></td>
 				</tr>
 				
 				<tr>	
 					<td><label class="lab" for="adresselivr" id="email"><b>Adresse de Livraison <span class="red">* </span></b><br/><small>Uniquement en France Métropolitaine</small></label></td>
-					<td><input class="lab" style="text-align:right;" type="text" name="adresselivr" id="adresselivr" required/></td>
+					<td><input class="lab" style="text-align:right;" size="40" type="text" name="adresselivr" id="adresselivr" required/></td>
 				</tr>
 				
 				<tr>	
