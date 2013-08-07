@@ -1,7 +1,23 @@
 ﻿
 <h2>Paiement en Ligne</h2>
 <script type="text/javascript" src="js/fct_de_trt_txt.js"></script>
- 
+<script>
+	function isTel(field,id)
+	{
+		var regTel = new RegExp("^0[1-9]([-. ]?[0-9]{2}){4}$");
+
+		if(regTel.test(tel.value))
+		{
+		id.style.color='green';
+		}
+		else
+		{
+		id.style.color='red';
+		tel.value='';
+		alert('Téléphone Invalide');
+		}
+	}
+</script>
 
 <?php
 if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
@@ -46,6 +62,21 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 			<tr>	
 				<td><b>Courriel</b></td>
 				<td><?php echo $_POST['courriel']; ?></td>
+			</tr>
+			
+			<tr>	
+				<td><b>Adresse Facturation</b></td>
+				<td><?php echo $_POST['adressefacturation']; ?></td>
+			</tr>
+			
+			<tr>	
+				<td><b>Adresse de Livraison</b></td>
+				<td><?php echo $_POST['adresselivraison']; ?></td>
+			</tr>
+			
+			<tr>	
+				<td><b>N° de Téléphone</b></td>
+				<td><?php echo $_POST['telephone']; ?></td>
 			</tr>
 			
 			
@@ -147,6 +178,21 @@ else // sinon il les remplis => boutique
 					<td><label class="lab" for="courriel" id="email"><b>Courriel <span class="red">* </span></b></label>
 					<td><input class="lab" style="text-align:right;" type="text" name="courriel" id="courriel" onblur="isEmail(this,email);" required/>
 				</tr>
+				<tr>	
+					<td><label class="lab" for="adressefact" id="email"><b>Adresse Facturation <span class="red">* </span></b></label></td>
+					<td><input class="lab" style="text-align:right;" type="text" name="adressefact" id="adressefact" required/></td>
+				</tr>
+				
+				<tr>	
+					<td><label class="lab" for="adresselivr" id="email"><b>Adresse de Livraison <span class="red">* </span></b><br/><small>Uniquement en France Métropolitaine</small></label></td>
+					<td><input class="lab" style="text-align:right;" type="text" name="adresselivr" id="adresselivr" required/></td>
+				</tr>
+				
+				<tr>	
+					<td><label class="lab" for="tel" id="email"><b id="numtel">N° de Téléphone <span class="red">* </span></b></label></td>
+					<td><input class="lab" style="text-align:right;" type="text" name="tel" id="tel" onblur="isTel(this,numtel);" required/></td>
+				</tr>
+				
 				<tr>
 					<td><b>Commentaire </b><br/><small>(facultatif)</small></td>
 					<td><label class="lab" for="commentaire"><textarea class="lab" name="commentaire" id="commentaire" rows="10" cols="40" style="resize:none" ></textarea></label></td>

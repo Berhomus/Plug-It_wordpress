@@ -82,7 +82,7 @@
 				else
 					var t = 0;
 					
-				var id_boutique = 	document.getElementById("id_boutique").value;
+				var id_boutique = document.getElementById("id_boutique").value;
 				var position = document.getElementById("nbr_postion_categ").value; 
 				var array = categ.value+','+t+',index.php?page=boutique↓categ='+categ.value.toLowerCase()+','+position+','+id_boutique;
 				var type = 'ajout';
