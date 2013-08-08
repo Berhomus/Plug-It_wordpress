@@ -1,4 +1,4 @@
-<script type="text/javascript" src="js/fct_de_trt_txt.js"></script>
+﻿<script type="text/javascript" src="js/fct_de_trt_txt.js"></script>
 <script type="text/javascript" src="js/ajout_fact.js"></script>
 
 <script>
@@ -111,7 +111,7 @@
 			}
 		}
 		
-		xhr.open("POST", "include/admin/requete_article.php", true);
+		xhr.open("POST", "./include/admin/requete_article.php", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send("rq="+rq+"&type="+type+"&array="+array);
 	}
@@ -188,7 +188,7 @@
 			}
 		}
 		
-		xhr.open("POST", "include/admin/requete_article.php", true);
+		xhr.open("POST", "./include/admin/requete_article.php", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send("rq="+rq+"&type="+type+"&array="+array);
 	}
@@ -237,7 +237,7 @@
 					var type = 'suppcateg_default';
 				}
 				
-				xhr.open("POST", "include/admin/requete_article.php", true);
+				xhr.open("POST", "./include/admin/requete_article.php", true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhr.send("rq="+rq+"&type="+type+"&array="+array);
 			}
@@ -295,7 +295,7 @@
 					var type = 'supptva_default';
 				}
 				
-				xhr.open("POST", "include/admin/requete_article.php", true);
+				xhr.open("POST", "./include/admin/requete_article.php", true);
 				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 				xhr.send("rq="+rq+"&type="+type+"&array="+array);
 			}

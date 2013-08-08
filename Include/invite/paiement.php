@@ -5,12 +5,12 @@
 <?php
 if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 {
-	if((!isset($_POST['type_paiement'])) or ((isset($_SESSION['caddieTot'])) and $_SESSION['caddieTot'] > 0))//si pas boutique ou alors panier non vide
+	if(($_POST['type_paiement'] !='boutique') or ((isset($_SESSION['caddieTot'])) and $_SESSION['caddieTot'] > 0))//si pas boutique ou alors panier non vide
 	{
 		$_POST['societe'] = (!empty($_POST['societe'])) ? $_POST['societe']:"/";
 		$_POST['commentaire'] = (!empty($_POST['commentaire'])) ? $_POST['commentaire']:"/";
-		$_POST['adressefact'] = (isset($_POST['type_paiement'])) ? $_POST['adressefact']:'/';
-		$_POST['adresselivr'] = (isset($_POST['type_paiement'])) ? $_POST['adresselivr']:'/';
+		$_POST['adressefact'] = ($_POST['type_paiement'] == 'boutique') ? $_POST['adressefact']:'/';
+		$_POST['adresselivr'] = ($_POST['type_paiement'] == 'boutique') ? $_POST['adresselivr']:'/';
 	?>		
 	
 		<h2 class="titre">Récapitulatif</h2>
@@ -53,7 +53,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 			
 			<?php
 				$commande = '';
-				if(isset($_POST['type_paiement']))
+				if($_POST['type_paiement'] == 'boutique')
 				{
 					echo '<tr>	
 							<td><b>Reférence</b></td>
@@ -96,13 +96,12 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 ';
 					}
 				}
-				
-				$_POST['montanttot'] = round(((isset($_POST['type_paiement'])) ? $_SESSION['caddieTot']:$_POST['montanttot'])*100)/100;
+				$montant = round(($_POST['type_paiement'] == 'boutique') ? $_SESSION['caddieTot']:$_POST['montanttot']*100)/100;
 			?>
 			<tr>
 				<td colspan="3"><b>Montant Total</b></td>
 				<td></td>
-				<td><?php echo $_POST['montanttot']  ?>€</td>
+				<td><?php echo $montant  ?>€</td>
 			</tr>
 			
 			<tr>	
@@ -113,7 +112,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 		</table>
 	
 <?php
-		$total = (isset($_POST['type_paiement'])) ? round($_SESSION['caddieTot']*100):str_replace('.',"",$_POST['montanttot']);
+		$total = ($_POST['type_paiement'] == 'boutique') ? round($_SESSION['caddieTot']*100):str_replace('.',"",$_POST['montanttot']);
 		include("include/webaffaires/call_request.php");
 	}
 	else
