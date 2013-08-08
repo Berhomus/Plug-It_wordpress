@@ -11,7 +11,6 @@ Name : Index.php => Plug-it
 	
 	disconnect();
 	
-	
 ?>
 
 <!DOCTYPE html>

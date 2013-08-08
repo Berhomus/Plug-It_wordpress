@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Mar 06 Août 2013 à 12:07
--- Version du serveur: 5.5.20
--- Version de PHP: 5.3.10
+-- Généré le: Jeu 08 Août 2013 à 12:00
+-- Version du serveur: 5.5.24-log
+-- Version de PHP: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -41,6 +41,30 @@ INSERT INTO `admin` (`id`, `login`, `mdp_md5`) VALUES
 (2, 'plugit', 'b04942b84582fc7f84712a538b7b8829'),
 (3, 'Boby', '2a0e48c59136f164b54e2eeb029e5ebb'),
 (4, 'moi', '70b783251225354e883a5bef3c011843');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contact`
+--
+
+CREATE TABLE IF NOT EXISTS `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ville` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `courriel` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `coordonnees` text COLLATE utf8_unicode_ci NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `contact`
+--
+
+INSERT INTO `contact` (`id`, `ville`, `courriel`, `coordonnees`, `latitude`, `longitude`) VALUES
+(1, 'Amiens', 'contact@plug-it.com', 'Plug-It\n36 bis, rue Saint-Fuscien\n80000 Amiens\n\nTél. : 03 22 22 10 90\nFax : 03 22 80 76 52', 49.8853893, 2.3037014),
+(2, 'Ville', 'courriel@courriel.fr', 'Societe\r\nVille\r\nCourriel\r\nTel', 40, 2);
 
 -- --------------------------------------------------------
 
@@ -88,21 +112,25 @@ CREATE TABLE IF NOT EXISTS `produit` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `images` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `desc` text COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `prix` float NOT NULL,
   `categorie` int(11) NOT NULL,
   `tva` int(11) NOT NULL,
   `priorite` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `produit`
 --
 
-INSERT INTO `produit` (`id`, `nom`, `images`, `desc`, `date`, `prix`, `categorie`, `tva`, `priorite`) VALUES
-(1, 'Antoine bovino 3000', 'images/photo.jpg', '<img src="images/fleche.png">vfdgfgsdfg<img src="null">\r\n										', '2013-08-06 09:52:54', 12.5, 12, 2, 1);
+INSERT INTO `produit` (`id`, `nom`, `images`, `description`, `date`, `prix`, `categorie`, `tva`, `priorite`) VALUES
+(2, 'fuqfdgf qufgqd fqgudgf q qf ggfq f qfdqgdqfi', 'images/logo-plug-it.png', '<img src="images/fleche.png">\r\n										', '2013-08-06 13:23:13', 84460.2, 11, 2, 1),
+(4, 'Produit Ausu Pro 2004/NB Patate', 'images/cadena.jpg', '', '2013-08-06 12:18:32', 0, 11, 1, 1),
+(5, 'GNE AHSGDYEILDKCNBQKSHDBEVD fufhsudhfusfhsudf sdhf', 'images/ecoute-conseil.png', '<img src="images/fleche.png"> esfsfs\r\n										', '2013-08-06 12:23:22', 44884.1, 11, 1, 5),
+(6, 'fuqfdgf qufgqd fqgudgf q qf ggfq f qfdqgdqfi', 'images/about-img1.jpg', '', '2013-08-06 12:24:13', 50, 11, 2, 1),
+(7, 'Test', 'images/about-img1.jpg', '', '2013-08-06 12:24:33', 4884.15, 11, 1, 1);
 
 -- --------------------------------------------------------
 

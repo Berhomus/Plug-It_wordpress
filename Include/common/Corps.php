@@ -236,6 +236,15 @@ Name : Corps.php => Plug-it
 			echo '<h2>Access Forbidden</h2>';
 		break;
 		
+		case 'admin_contact':
+		if(isset($_SESSION['id']))
+		{
+			INCLUDE("include/admin/admin_contact.php");
+		}
+		else
+			echo '<h2>Access Forbidden</h2>';
+		break;
+		
 		default :
 		echo '<h2>Page Inexistante</h2>';
 		break;

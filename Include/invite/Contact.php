@@ -12,7 +12,8 @@ Name : Contact.php => Plug-it
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="./styles/contact.css" />
+
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 <?php
@@ -23,52 +24,63 @@ Name : Contact.php => Plug-it
 	
 	$rq = $bdd->prepare("SELECT * FROM contact");
 	$rq->execute(array());
+	
+	$error_contact = 0;
+	if(isset($_POST) && !empty($_POST))
+	{
+		if(preg_match("`[a-zA-Z1-9.-_]*@[a-zA-Z]*.[a-zA-Z]*`",$_POST['courriel']))
+		{
+			$message = "";
+			$societe = (isset($_POST['societe'])) ? $_POST['societe']:"";
+			$objet = (isset($_POST['objet'])) ? $_POST['objet']:"";
+			
+			$message = $_POST['liste'] ." ". $_POST['nom'] ." ". $_POST['prenom'] ."\n".$societe."-".$_POST['courriel']."\n".$_POST['message'];
+			
+			 if(mail($_POST['courriel'], $objet,$message))
+			 {
+				$error_contact = 2;
+			 }
+			 else
+			 {
+				$error_contact = 3;
+			 }
 		
+			$error_contact = 2;
+		}
+		else
+			$error_contact = 1;
+	}
+
+	echo '<div id="tabs">
+			<ul>';
+	
 	$i=1;	
 	while($ar = $rq->fetch())
 	{
-?>
-		<div id="tabs">
-			<ul>
-			<li><a href="#tabs-<?phpecho $i;?>"><?phpecho $ar['ville'];?></a></li>
-			</ul>
-			<div id="tabs-<?phpecho $i;?>">
-				<input type="hidden" id="lat" name="lat" value="<?phpecho $ar['latitude'];?>"/>
-				<input type="hidden" id="longi" name="longi" value="<?phpecho $ar['longitude'];?>"/>
-				<?php
+		echo '<li><a href="#tabs-'.$i.'">'.$ar['ville'].'</a></li>';
+		$i++;
+	}
+	echo '</ul>';
+	$i=1;
+	
+	$rq = $bdd->prepare("SELECT * FROM contact");
+	$rq->execute(array());
+	
+	while($ar = $rq->fetch())
+	{
+	echo '
+			<div id="tabs-'.$i.'">
+				<input type="hidden" id="mail" name="mail" value="'.$ar['courriel'].'"/>
+				<input type="hidden" id="lat" name="lat" value="'.$ar['latitude'].'"/>
+				<input type="hidden" id="longi" name="longi" value="'.$ar['longitude'].'"/>';
 
-				$error_contact = 0;
-				if(isset($_POST) && !empty($_POST))
-				{
-					if(preg_match("`[a-zA-Z1-9.-_]*@[a-zA-Z]*.[a-zA-Z]*`",$_POST['courriel']))
-					{
-						$message = "";
-						$societe = (isset($_POST['societe'])) ? $_POST['societe']:"";
-						$objet = (isset($_POST['objet'])) ? $_POST['objet']:"";
-						
-						$message = $_POST['liste'] ." ". $_POST['nom'] ." ". $_POST['prenom'] ."\n".$societe."-".$_POST['courriel']."\n".$_POST['message'];
-						
-						 if(mail($ar['courriel'], $objet,$message))
-						 {
-							$error_contact = 2;
-						 }
-						 else
-						 {
-							$error_contact = 3;
-						 }
-					
-						$error_contact = 2;
-					}
-					else
-						$error_contact = 1;
-				}
 				?>
 
 				<div style="overflow:hidden;">
 
 					<div style="width:62%;float:left;">
 
-						<h2 class="titre">Contactez-nous</h2>
+						<h2 class="titre" style="margin-top:40px;">Contactez-nous</h2>
 
 						<form method="post" action="#">
 							<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-right:150px;">
@@ -138,12 +150,12 @@ Name : Contact.php => Plug-it
 						</form>	
 					</div>
 
-					<div style="float:left;">
+					<div style="float:left; margin-top:40px;">
 					<hr class="separation" />
 					</div>
 
 					<?php
-					echo '<div style="float:left; margin-left:2%;">
+					echo '<div style="float:left; margin-left:2%; margin-top:40px;">
 						<h2>Notre agence</h2>
 						<br/>';
 							echo nl2br($ar['coordonnees']);	
@@ -163,11 +175,13 @@ Name : Contact.php => Plug-it
 			</div>
 		<?php
 		$i++;
-		?>
-		</div>
-	<?php
 	}
 	?>
+	</div>
+	
+	<div style="height:40px;">
+	</div>
+	
 <script type="text/javascript">
 	var lat = document.getElementById('lat').value;
 	var longi = document.getElementById('longi').value;
