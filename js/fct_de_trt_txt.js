@@ -154,3 +154,18 @@ function isEmail(adr, id){
 		photo.setAttribute("required", true);
 	}
  }
+ 
+function isTel(field,id)
+{
+	var regTel = new RegExp("^0[1-9]([-. ]?[0-9]{2}){4}$");
+
+	if(regTel.test(tel.value))
+	{
+		id.style.color='green';
+	}
+	else
+	{
+		id.style.color='red';
+		tel.value='';
+	}
+}

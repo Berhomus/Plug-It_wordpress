@@ -24,12 +24,8 @@ Name : Index.php => Plug-it
 		
 		<?php 
 		
-			$protocol = "http://";
-			$protocol_safe = "https://";
-			$current_loc = "127.0.0.1/plug-it_wordpress/";
-			
-			$link_unsafe = $protocol.$current_loc;
-			$link_safe = $protocol_safe.$current_loc;
+			$_SESSION['protocol'] = (isset($_SESSION['protocol'])) ? $_SESSION['protocol']:"http://";
+			$_SESSION['current_loc'] = "127.0.0.1/plug-it_wordpress/";
 		
 			require_once('./connexionbddplugit.class.php');
 			
@@ -73,25 +69,6 @@ Name : Index.php => Plug-it
 		<link type="text/css" rel="stylesheet" href="styles/index.css"/>
 		
 		<script src="js/jquery-1.7.1.min.js"></script>
-		
-		<script type="text/javascript" src="js/raphael-min.js"></script>
-		<script type="text/javascript" src="js/jquery.easing.js"></script>
-		
-		<script src="js/iview.js"></script>
-		
-		<script>
-			$(document).ready(function(){
-				$('#iview').iView({
-					pauseTime: 3000,
-					directionNav: false,
-					controlNav: true,
-					tooltipY: -15
-				});
-			});
-		</script>
-		
-		
-		
 	</head>
 	<body>
 		<div class="Banniere" id="head">

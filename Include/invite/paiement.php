@@ -1,23 +1,6 @@
 ﻿
 <h2>Paiement en Ligne</h2>
 <script type="text/javascript" src="js/fct_de_trt_txt.js"></script>
-<script>
-	function isTel(field,id)
-	{
-		var regTel = new RegExp("^0[1-9]([-. ]?[0-9]{2}){4}$");
-
-		if(regTel.test(tel.value))
-		{
-		id.style.color='green';
-		}
-		else
-		{
-		id.style.color='red';
-		tel.value='';
-		alert('Téléphone Invalide');
-		}
-	}
-</script>
 
 <?php
 if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
@@ -26,29 +9,10 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 	{
 		$_POST['societe'] = (!empty($_POST['societe'])) ? $_POST['societe']:"/";
 		$_POST['commentaire'] = (!empty($_POST['commentaire'])) ? $_POST['commentaire']:"/";
-		
+		$_POST['adressefact'] = (isset($_POST['type_paiement'])) ? $_POST['adressefact']:'/';
+		$_POST['adresselivr'] = (isset($_POST['type_paiement'])) ? $_POST['adresselivr']:'/';
 	?>		
 	
-	
-	<script>
-		$(function() {
-
-			  var elementID, elementNo;
-			  var liste = document.getElementsByTagName('input');
-			  for (var i = 0; i < liste.length; i++) { 
-				elementID = (liste[i].getAttribute) ? liste[i].getAttribute('id') : false;
-				if(elementID)
-				{
-					var elementPattern=new RegExp("qte([0-9]*)","g");
-					elementNo = parseInt(elementID.replace(elementPattern, '$1'));
-					if(!isNaN(elementNo))
-					{
-						$( "#qte"+elementNo ).spinner({ min: 1 });
-					}
-				}
-			  }
-			});
-		</script>
 		<h2 class="titre">Récapitulatif</h2>
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">
 			<tr>	
@@ -65,30 +29,25 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 			</tr>
 
 			<?php
-			if(isset($_POST['type_paiement']))
+			if($_POST['type_paiement'] == 'boutique')
 			{
 			?>
 				<tr>	
 					<td><b>Adresse Facturation</b></td>
-					<td><?php echo $_POST['adressefacturation']; ?></td>
+					<td><?php echo $_POST['adressefact']; ?></td>
 				</tr>
 				
 				<tr>	
 					<td><b>Adresse de Livraison</b></td>
-					<td><?php echo $_POST['adresselivraison']; ?></td>
+					<td><?php echo $_POST['adresselivr']; ?></td>
 				</tr>
 			<?php
 			}
 			?>
-
-			<tr>	
-				<td><b>Code Postal de Livraison</b></td>
-				<td><?php echo $_POST['codepostallivraison']; ?></td>
-			</tr>
 			
 			<tr>	
 				<td><b>N° de Téléphone</b></td>
-				<td><?php echo $_POST['telephone']; ?></td>
+				<td><?php echo $_POST['tel']; ?></td>
 			</tr>
 			
 			
@@ -165,7 +124,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 else // sinon il les remplis => boutique
 {
 ?>
-	<form method="post" action="index.php?page=paiement_final">
+	<form method="post" action="<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=paiement_final">
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;" width="930px">
 				<tr>
 					<td colspan="6"><hr/></td>

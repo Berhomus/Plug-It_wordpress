@@ -86,7 +86,7 @@ if(isset($_SESSION['id']))
 	
 ?>
 
-<form method="post" enctype="multipart/form-data" action="traitement/trt_boutique.php?mode=<?php echo $type; ?>">
+<form method="post" enctype="multipart/form-data" action="<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>traitement/trt_boutique.php?mode=<?php echo $type; ?>">
 	<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">				
 			<tr>
 				<td><label for="titre"><b>Nom du produit <span class="red">*</span></b><br/><small id="lim_nom">(Max 50 caractères)</small></label></td>
@@ -124,6 +124,7 @@ if(isset($_SESSION['id']))
 				<td><label for="tva" id="tva_label"><b>TVA <span class="red">*</span></b><br/><small id="lim_prix">(Chiffre en %)</small></label></td>
 				<td>
 					<select name="tva" id="tva">
+						<option value="-1">Rebut</option>
 							<?php
 								$rq = connexionbddplugit::getInstance()->query("SELECT * FROM tva");
 								$selected ="";
@@ -142,6 +143,7 @@ if(isset($_SESSION['id']))
 				<td><label for="categorie"><b>Catégorie du produit <span class="red">*</span></b><br/></label></td>
 				<td>
 					<select name="categorie" id="categorie">
+						<option value="-1">Rebut</option>
 							<?php
 								$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
 								$ar1 = $rq1->fetch();

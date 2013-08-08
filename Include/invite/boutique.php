@@ -419,7 +419,7 @@
 					
 				if(isset($_SESSION['id']))
 				{
-					echo '<br/><div style="margin-left:auto; margin-right:auto;" class="menuverti" onclick="location.href=\'index.php?page=admin_boutique\'">Ajouter un produit</div>';
+					echo '<br/><div style="margin-left:auto; margin-right:auto;" class="menuverti" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique\'">Ajouter un produit</div>';
 				}
 				
 				try
@@ -452,8 +452,8 @@
 							if(isset($_SESSION['id']))
 							{
 								echo'
-								<span style="margin-left:10%;"><a class="bt" href="index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
-								<a class="bt" href="traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span>';
+								<span style="margin-left:10%;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
+								<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span>';
 							}
 							
 							echo'

@@ -12,7 +12,7 @@ Name : Banniere.php => Plug-it
 
 ?>
 <div>
-	<div style="min-width:1350px;"><a href="index.php?page=accueil"><img src="images/logotype_plug_it(transparence).png" style="float:left; margin:13px 50px 13px 13px;"/></a>
+	<div style="min-width:1350px;"><a href="index.php?page=accueil"><img src="images/logotype_plug_it(transparence).png" style="border:none;float:left; margin:13px 50px 13px 13px;"/></a>
 	<ul id="menu">
 		<?php
 		require_once('./connexionbddplugit.class.php');
@@ -26,7 +26,7 @@ Name : Banniere.php => Plug-it
 				if($ar['active'] == true)
 				{
 					echo '
-					<li id="li_'.$ar['id'].'"><a href="'.$ar['lien'].'"';
+					<li id="li_'.$ar['id'].'"><a href="'.$_SESSION['protocol'].$_SESSION['current_loc'].$ar['lien'].'"';
 					echo '>'.$ar['nom'].'</a>';
 					
 					$sm = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar['id']."' ORDER BY position");
@@ -39,7 +39,7 @@ Name : Banniere.php => Plug-it
 						if($sm1['active'] == true)
 						{
 							echo '
-							<li id="li"><a href="'.$sm1['lien'].'"';
+							<li id="li"><a href="'.$_SESSION['protocol'].$_SESSION['current_loc'].$sm1['lien'].'"';
 							echo '>'.$sm1['nom'].'</a></li>';
 						}
 					}
