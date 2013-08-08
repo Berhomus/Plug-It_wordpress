@@ -39,7 +39,6 @@ function connect()
 			{
 				$_SESSION['id'] = $array['id'];
 				$_SESSION['login'] = $array['login'];		
-				
 				return 0;//ok
 			}
 			else

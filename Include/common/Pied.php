@@ -39,19 +39,19 @@ Name : Pied.php => Plug-it
 		
 		</td>
 		
-		<td class="boutbout" onclick="location.href='index.php?page=admin'">
+		<td class="boutbout" onclick="location.href='https://<?php echo $_SESSION['current_loc']; ?>index.php?page=admin'">
 			Administration
 		</td>
 		
-		<td class="boutbout" onclick="location.href='index.php?page=accueil&sub=mentions'" >
+		<td class="boutbout" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=accueil&sub=mentions'" >
 			MENTIONS LEGALES
 		</td>
 		
-		<td class="boutbout" onclick="location.href='index.php?page=contact'" >
+		<td class="boutbout" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=contact'" >
 			Contact
 		</td>
 		
-		<td class="boutbout" onclick="location.href='index.php?page=references'" >
+		<td class="boutbout" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=references'" >
 			Références
 		</td>
 	</tr>

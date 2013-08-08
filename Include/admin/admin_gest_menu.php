@@ -37,7 +37,7 @@ if(isset($_SESSION['id']))
 		$rq = connexionbddplugit::getInstance()->query("SELECT * FROM menu ORDER BY position");
 		$i=1;
 		
-		echo '<form action="./traitement/trt_gest_meta.php" method="POST">';
+		echo '<form action="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_gest_meta.php" method="POST">';
 		echo '<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">';
 		while ($donnees = $rq->fetch())
 		{

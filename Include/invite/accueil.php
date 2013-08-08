@@ -14,7 +14,22 @@ Name : accueil.php => Plug-it
 	{
 		case 'main':
 		
-?>
+?>	
+			<script type="text/javascript" src="js/raphael-min.js"></script>
+			<script type="text/javascript" src="js/jquery.easing.js"></script>
+			<script src="js/iview.js"></script>
+		
+			<script>
+				$(document).ready(function(){
+					$('#iview').iView({
+						pauseTime: 3000,
+						directionNav: false,
+						controlNav: true,
+						tooltipY: -15
+					});
+				});
+			</script>
+
 			<div style="background-color:#f9bd1a; height:556px; width:100%; padding-top:1%;">
 				<div id="iview">
 				<?php

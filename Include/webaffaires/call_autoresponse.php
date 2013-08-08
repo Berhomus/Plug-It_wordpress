@@ -152,7 +152,13 @@ if(isset($_POST['DATA']))
 				$Msg.= "CERTIFICAT DE LA TRANSACTION   = $payment_certificate \n\n";
 				$Msg.= "------------------------------------------------------------\n\n";
 				$Msg.= "Nom = ".$arrayCaddie[0]."\n\n";
+				$Msg.= "N°Tel = ".$arrayCaddie[8]."\n\n";
 				$Msg.= "Commande = ".$arrayCaddie[5]."\n\n";
+				if($arrayCaddie[9]=='boutique')
+				{
+					$Msg.= "Adresse Facturation = ".$arrayCaddie[6]."\n\n";
+					$Msg.= "Adresse Livraison = ".$arrayCaddie[7]."\n\n";
+				}
 
 				$Msg.= "http://www.Plug-it.com\n";
 				
@@ -161,14 +167,15 @@ if(isset($_POST['DATA']))
 				mail($customer_email , $Sujet, $Msg, 'From: shop@plug-it.com');
 				
 				//On en profite pour s'envoyer également le reçu
+				$Msg.= 'Type commande = '.$arrayCaddie[9].'\n\n';
 				mail('shop@plug-it.com' , $Sujet, $Msg, 'From: shop@plug-it.com');
 				
 				//ajout BDD
 				require_once('../../connexionbddplugit.class.php');
 				$bdd =connexionbddplugit::getInstance();
 
-				$rq = $bdd->prepare("INSERT INTO transaction VALUES ('',?,?,?,?,?,?,?,?,?)")or die("Erreur SQL");
-				$rq->execute(array($transaction_id,$arrayCaddie[0],$customer_email,$amount,$arrayCaddie[1],$arrayCaddie[5],$arrayCaddie[3],$payment_date,$bank_response_code));
+				$rq = $bdd->prepare("INSERT INTO transaction VALUES ('',?,?,?,?,?,?,?,?,?,?,?,?,?)")or die("Erreur SQL");
+				$rq->execute(array($transaction_id,$arrayCaddie[0],$arrayCaddie[9],$customer_email,$arrayCaddie[6],$arrayCaddie[7],$arrayCaddie[8],$amount,$arrayCaddie[1],$arrayCaddie[5],$arrayCaddie[3],$payment_date,$bank_response_code));
 			}
 		
 			fwrite( $fp, "#======================== Le : " . date("d/m/Y H:i:s") . " ====================#\n");

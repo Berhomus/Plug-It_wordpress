@@ -21,6 +21,10 @@ if(isset($_POST) and !empty($_POST))
 
 	$TheCaddie[] =  $_POST['montanttot'];
 	$TheCaddie[] =  $commande;
+	$TheCaddie[] =  $_POST['adressefact'];
+	$TheCaddie[] =  $_POST['adresselivr'];
+	$TheCaddie[] =  $_POST['tel'];
+	$TheCaddie[] =  $_POST['type_paiement'];
 
 	$xCaddie = base64_encode(serialize($TheCaddie));
 
@@ -74,7 +78,7 @@ if(isset($_POST) and !empty($_POST))
 			$parm="$parm customer_name=".$TheCaddie[0];
 	//		$parm="$parm customer_firstname=";
 	//		$parm="$parm customer_birthdate=";
-	//		$parm="$parm customer_phone=";
+			$parm="$parm customer_phone=".$_POST['tel'];
 	//		$parm="$parm customer_mobile_phone=";
 	//		$parm="$parm customer_nationality_country=";
 	//		$parm="$parm customer_birth_zipcode=";

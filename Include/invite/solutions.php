@@ -28,7 +28,7 @@ Name : solutions.php => Plug-it
 						
 						if(isset($_SESSION['id']))
 						{
-							echo '<br/><div style="margin-left:415px;" class="menuverti" onclick="location.href=\'index.php?page=admin_solutions\'">Ajouter une solution</div>';
+							echo '<br/><div style="margin-left:415px;" class="menuverti" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_solutions\'">Ajouter une solution</div>';
 						}
 						
 						$i=1; //délimite les colonnes
@@ -42,13 +42,13 @@ Name : solutions.php => Plug-it
 									echo '<tr>';
 								
 								echo '<td>
-								<div class="blocksolution" onclick="location.href=\'index.php?page=solutions&mode=viewone&id='.$donnees['id'].'\'">';
+								<div class="blocksolution" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=solutions&mode=viewone&id='.$donnees['id'].'\'">';
 								
 								if(isset($_SESSION['id']))
 								{
 									echo'
-									<span style="margin-left:10%;"><a class="bt" href="index.php?page=admin_solutions&mode=modifier&id='.$donnees['id'].'">Modifier</a> - 
-									<a class="bt" href="traitement/trt_solutions.php?mode=delete&id='.$donnees['id'].'">Supprimer</a></span>';
+									<span style="margin-left:10%;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_solutions&mode=modifier&id='.$donnees['id'].'">Modifier</a> - 
+									<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_solutions.php?mode=delete&id='.$donnees['id'].'">Supprimer</a></span>';
 								}
 								
 								echo'
@@ -128,7 +128,7 @@ Name : solutions.php => Plug-it
 									echo '<tr>';
 								
 								echo '<td>
-								<div class="blocklink" onclick="location.href=\'index.php?page=solutions&mode=viewone&id='.$donnees['id'].'\'">
+								<div class="blocklink" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=solutions&mode=viewone&id='.$donnees['id'].'\'">
 									<p style="text-align:center;position:relative;top:30%;">
 										<img src="images/fleche.png" style="vertical-align:middle;"/> <span style="font-size:13px;font-weight:bold;margin-left:5px;text-transform:uppercase;">'.$donnees['titre'].'</span>
 									</p>

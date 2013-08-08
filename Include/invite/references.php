@@ -25,7 +25,7 @@ Name : references.php => Plug-it
 				
 					if(isset($_SESSION['id']))
 					{
-						echo '<br/><div style="margin:auto;" class="menuverti" onclick="location.href=\'index.php?page=admin_ref\'">Ajouter une r&eacutef&eacuterence</div>';
+						echo '<br/><div style="margin:auto;" class="menuverti" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_ref\'">Ajouter une r&eacutef&eacuterence</div>';
 					}
 					
 						$i=1; //délimite les colonnes
@@ -44,8 +44,8 @@ Name : references.php => Plug-it
 								if(isset($_SESSION['id']))
 								{
 									echo'
-									<span style="margin-left:10%;"><a class="bt" href="index.php?page=admin_ref&id='.$donnees['id'].'">Modifier</a> - 
-									<a class="bt" href="traitement/trt_ref.php?mode=delete&id='.$donnees['id'].'">Supprimer</a></span>';
+									<span style="margin-left:10%;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_ref&id='.$donnees['id'].'">Modifier</a> - 
+									<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_ref.php?mode=delete&id='.$donnees['id'].'">Supprimer</a></span>';
 								}
 								
 								echo'	
