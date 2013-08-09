@@ -71,11 +71,12 @@ Name : trt_Produit.php => Plug-it
 								$corps = (!empty($_POST['corps'])) ? $_POST['corps']:$array['description'];
 								$tva = $_POST['tva'];
 								$path = (isset($path)) ? make_img_prod($path):$array['images'];
-								$ordre = $_POST['ordre'];					
+								$ordre = $_POST['ordre'];	
+								$delai = (!empty($_POST['delai'])) ? $_POST['delai']:$array['delai'];
 								
 								try{
-									$rq=$bdd->prepare("UPDATE produit SET priorite=?, categorie=?, prix=?, images=?, nom=?, description=?, tva=? WHERE id=?");
-									$rq->execute(array($ordre,$categorie,$prix,$path,$titre,$corps,$tva,$_GET['id']));
+									$rq=$bdd->prepare("UPDATE produit SET priorite=?, categorie=?, prix=?, images=?, nom=?, description=?, tva=?, delai=? WHERE id=?");
+									$rq->execute(array($ordre,$categorie,$prix,$path,$titre,$corps,$tva,$_GET['id'],$delai));
 								} catch ( Exception $e ) {
 									echo "Une erreur est survenue : ".$e->getMessage();
 								}
@@ -122,11 +123,12 @@ Name : trt_Produit.php => Plug-it
 							$corps = $_POST['corps'];
 							$ordre = $_POST['ordre'];
 							$tva = $_POST['tva'];
+							$delai = $_POST['delai'];
 							
 							//$path = make_img_prod($path);
 							try{
-								$rq=$bdd->prepare("INSERT INTO produit VALUES (Null,?,?,?,Null,?,?,?,?)");
-								$rq->execute(array($titre,$path,$corps,$prix,$categorie,$tva,$ordre));
+								$rq=$bdd->prepare("INSERT INTO produit VALUES (Null,?,?,?,Null,?,?,?,?,?)");
+								$rq->execute(array($titre,$path,$corps,$prix,$categorie,$tva,$ordre,$delai));
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
 							}
@@ -168,10 +170,19 @@ Name : trt_Produit.php => Plug-it
 	else
 		$idcateg = $_POST['categorie'];
 		
-	$rq=$bdd->prepare("SELECT nom FROM sousmenu WHERE id=?");
-	$rq->execute(array($idcateg));
-	$ar = $rq->fetch();
 	
-	echo ('<center><a href="../index.php?page=boutique&categ='.$ar['nom'].'">Retour Produit</a></center>');
+	
+	if($idcateg == -1)
+	{
+		echo ('<center><a href="../index.php?page=admin_gestionnaire_rebut>Retour Rebut</a></center>');
+	}
+	else
+	{
+		$rq=$bdd->prepare("SELECT nom FROM sousmenu WHERE id=?");
+		$rq->execute(array($idcateg));
+		$ar = $rq->fetch();
+		echo ('<center><a href="../index.php?page=boutique&categ='.$ar['nom'].'">Retour Produit</a></center>');
+	}
+	
 ?>
 </div>

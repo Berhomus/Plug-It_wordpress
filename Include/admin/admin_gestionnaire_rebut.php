@@ -73,6 +73,9 @@
 					<td>TVA</td>
 					<td>Selection</td>
 				</tr>';
+				
+			$rq = $bdd->prepare("SELECT * FROM produit WHERE categorie=? OR tva=?");
+			$rq->execute(array(-1,-1));
 			while($ar = $rq->fetch())
 			{
 				$categ = ($ar['categorie'] == -1)? '<img height="50" width="50" src="./img/xmark.png"/>':'<img height="50" width="50" src="./img/vmark.png"/>';

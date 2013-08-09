@@ -282,6 +282,21 @@ function isNumber(field,id){
 	}
 } 
 	
+function isNumber2(field,id){
+	var regNbr = new RegExp('^[0-9]*([\.,][0-9]{0,2})?$','i');
+
+	if (!regNbr.test(field.value) || field.value.length == 0) //cas où la valeur n'est pas du tout un nombre
+	{
+		field.value = ""; // la valeur devient nulle    
+		id.style.color = "red";
+	}
+	else
+	{
+		id.style.color = "green";
+	}
+} 
+		
+	
 function format_number(field)
 {
     var value = field.value.replace(",",".");
