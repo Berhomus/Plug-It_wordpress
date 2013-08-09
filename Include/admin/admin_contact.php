@@ -17,15 +17,16 @@ if(isset($_SESSION['id']))
 	$latitude=0;
 	$longitude=0;
 	$require="required";
+	$address="";
 	
 	if(isset($_POST) and !empty($_POST))
 	{
 		$id= (isset($_GET['id'])) ? $_GET['id']:0;
 		$ville=$_POST['ville'];
 		$courriel=$_POST['courriel'];
-		$corps=$_POST['corps'];
 		$latitude=$_POST['latitude'];
 		$longitude=$_POST['longitude'];
+		$address=$_POST['address'];
 	}
 	else if(isset($_GET['id']))
 	{
@@ -48,6 +49,7 @@ if(isset($_SESSION['id']))
 		$latitude=$array['latitude'];
 		$longitude=$array['longitude'];
 		$require="";
+		
 	}
 ?>
 
@@ -71,41 +73,54 @@ if(isset($_SESSION['id']))
 
 					<tr>
 						<td style="text-align:right;"><input type="submit" name="envoyer" value="Envoyer" /></td>
-					</tr>	
+					</tr>
+					
+					<form action="#" onsubmit="showAddress(this.address.value); return false">
+						<tr><td colspan="2">        
+						  <?php echo '<input type="text" size="60" name="address" value="'.$address.'" />'; ?>
+						  <input type="submit" value="Chercher" />
+						</td></tr>
+					</form>
+					<tr>
+						<td colspan="4"><table  bgcolor="#FFFFCC" width="300">
+						<tr>
+						  <td><b>Latitude</b></td>
+						  <td><b>Longitude</b></td>
+						</tr>
+						<tr>
+						<?php
+						echo '
+						  <td id="lat" >'.$latitude.'</td>
+						  <td id="lng" >'.$longitude.'</td>';
+						?>
+						</tr>
+					  </table></td>
+					</tr>
+					<tr>
+					  <td colspan="4"><div align="center" id="map" style="width: 700px; height: 500px; margin:auto;"></div></td>
+					</tr>
+					<?php
+					echo '
+					<input type="hidden" id="latitude" name="latitude" value="'.$latitude.'" />
+					<input type="hidden" id="longitude" name="longitude" value="'.$longitude.'" />';
+					?>
 			</table>
 		</form>
-			
-		<form action="#" onsubmit="showAddress(this.address.value); return false">
-		<center><p>        
-		  <input type="text" size="60" name="address" value="36 bis, rue Saint-Fuscien 80000 Amiens" />
-		  <input type="submit" value="Chercher" />
-		</p></center>
-		</form>
-		<center>
-		  <table  bgcolor="#FFFFCC" width="300">
-			<tr>
-			  <td><b>Latitude</b></td>
-			  <td><b>Longitude</b></td>
-			</tr>
-			<tr>
-			  <td id="lat"></td>
-			  <td id="lng"></td>
-			</tr>
-		  </table>
-		</center>
-		<br/>
-		  <div align="center" id="map" style="width: 700px; height: 500px; margin:auto;"><br/></div>
-
+		
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAgrj58PbXr2YriiRDqbnL1RSqrCjdkglBijPNIIYrqkVvD1R4QxRl47Yh2D_0C1l5KXQJGrbkSDvXFA"
       type="text/javascript"></script>
     <script type="text/javascript">
-load();
+	load();
  function load() {
       if (GBrowserIsCompatible()) {
+		
         var map = new GMap2(document.getElementById("map"));
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
-        var center = new GLatLng(49.8853893, 2.3037014);
+		var lati = document.getElementById('lat').innerHTML;
+		var lngi = document.getElementById('lng').innerHTML;
+
+        var center = new GLatLng(lati, lngi);
         map.setCenter(center, 15);
         geocoder = new GClientGeocoder();
         var marker = new GMarker(center, {draggable: true});  
@@ -202,6 +217,7 @@ var gs_p = (("https:" == document.location.protocol) ? "https://" : "http://");
 document.write(unescape("%3Cscript src='" + gs_p + "s.gstat.orange.fr/lib/gs.js?"+gs_r+"' type='text/javascript'%3E%3C/script%3E"));
 //]]>
 </script>
+
 <div style="height:40px;">
 </div>
 <?php

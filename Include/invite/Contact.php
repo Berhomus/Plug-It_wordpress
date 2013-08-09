@@ -51,8 +51,8 @@ Name : Contact.php => Plug-it
 			$error_contact = 1;
 	}
 
-	echo '<div id="tabs">
-			<ul>';
+	echo '<div id="tabs">';
+			echo '<ul>';
 	
 	$i=1;	
 	while($ar = $rq->fetch())
@@ -79,6 +79,14 @@ Name : Contact.php => Plug-it
 				<div style="overflow:hidden;">
 
 					<div style="width:62%;float:left;">
+					<?php
+						if(isset($_SESSION['id']))
+								{
+									echo'
+									<span style="margin-left:40px;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_contact&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
+									<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_contact.php?mode=delete&id='.$ar['id'].'">Supprimer</a></span>';
+								}
+					?>
 
 						<h2 class="titre" style="margin-top:40px;">Contactez-nous</h2>
 
