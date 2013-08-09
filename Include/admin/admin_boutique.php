@@ -8,6 +8,8 @@ function titre()
 	document.execCommand('FontSize', false, '3');
 	document.getElementById('ortf').focus(); 
 }
+
+
 </script>
 
 <?php
@@ -29,6 +31,7 @@ if(isset($_SESSION['id']))
 	$ordre=0;
 	$categorie = 0;
 	$tva = 0;
+	$delai = 0;
 	
 	$rq = $bdd->prepare("SELECT valeur FROM tva WHERE id='1'");
 	$rq->execute();
@@ -44,6 +47,7 @@ if(isset($_SESSION['id']))
 		$ordre=$_POST['ordre'];
 		$categorie = $_POST['categorie'];
 		$tva = $_POST['tva'];
+		$delai = $_POST['delai'];
 	}
 	else if(isset($_GET['id']))
 	{		
@@ -63,6 +67,7 @@ if(isset($_SESSION['id']))
 			$ordre=$array['priorite'];
 			$categorie = $array['categorie'];
 			$tva = $array['tva'];
+			$delai = $array['delai'];
 		}
 		else
 		{
@@ -159,6 +164,11 @@ if(isset($_SESSION['id']))
 							?>
 					</select>
 				</td>
+			</tr>
+			
+			<tr>
+				<td><label for="delai"><b>Delai Livraison <span class="red">*</span></b><br/><small id="lim_delay">(En Heure)</small></label></td>
+				<td><input size="10" type="text" name="delai" id="delai" value="<?php echo $delai; ?>" <?php echo $require; ?> style="text-align:right;" onblur="isNumber2(delai,lim_delay);"/></td>
 			</tr>
 			
 			<tr>

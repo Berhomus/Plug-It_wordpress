@@ -80,7 +80,7 @@ Name : Index.php => Plug-it
 		<div class="Corps" id="content"
 		<?php
 			if((isset($_GET['page']) and $_GET['page'] != 'accueil')or(isset($_GET['sub']) and $_GET['sub'] != 'main'))
-				echo 'style="padding-top:5%;width:1000px;margin:auto;"';
+				echo 'style="padding-top:5%;width:1000px;margin:auto;padding-bottom:3%;"';
 			else
 				echo 'style="min-width:1350px; width:100%;"';
 		?>

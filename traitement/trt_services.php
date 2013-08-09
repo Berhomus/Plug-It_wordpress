@@ -101,7 +101,7 @@ Name : trt_services.php => Plug-it
 							
 							if($ordre!=$array['ordre'])
 								update_ordre($array['ordre']-$pas,$ordre,$pas,'services');
-							try{);
+							try{;
 								$rq = $bdd->prepare("UPDATE services SET ordre=?, image=?, titre=?, subtitre=?, corps=? WHERE id=?");
 								$rq->execute(array($ordre,$path,$titre,$soustitre,$corps,$_GET['id']));
 							} catch ( Exception $e ) {
@@ -149,7 +149,7 @@ Name : trt_services.php => Plug-it
 						update_ordre($ordre,0,1,'services');
 						try{
 							$rq = $bdd->prepare("INSERT INTO services VALUES (Null,?,?,?,?,Null,?)");
-							$rq->execute(array($titre,$corps,$$path,$soustitre,$ordre));
+							$rq->execute(array($titre,$corps,$path,$soustitre,$ordre));
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}

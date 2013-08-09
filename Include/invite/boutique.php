@@ -182,32 +182,6 @@
 			return xhr;
 		}
 		
-		function viderPanier(){
-			var Conteneur = document.getElementById('contenu');
-			if(Conteneur)
-			  {
-				var elementID, elementNo;
-				
-				if(Conteneur.childNodes.length > 0)
-				{
-				  for(var i = 0; i < Conteneur.childNodes.length; i++)
-				  {
-					// Ici, on vérifie qu'on peut récupérer les attributs, si ce n'est pas possible, on renvoit false, sinon l'attribut
-					elementID = (Conteneur.childNodes[i].getAttribute) ? Conteneur.childNodes[i].getAttribute('id') : false;
-					if(elementID)
-					{
-						var elementPattern=new RegExp("panier_elem_([0-9]*)","g");
-						elementNo = parseInt(elementID.replace(elementPattern, '$1'));
-						if(!isNaN(elementNo))
-						{
-							suppElem(elementNo);
-						}
-					}
-				  }
-				}
-			  }
-			document.getElementById('prix_tt_panier').innerHTML = '0.00';
-		}
 		
 		function checkpanier(link){
 			if(parseFloat(document.getElementById('prix_tt_panier').innerHTML) <= 0.009)
@@ -389,8 +363,6 @@
 							€</span>
 							
 							<div style="float:right; margin-right:5px;">
-								<span class="bt" onclick="viderPanier();" style="cursor:pointer;">Vider</span>
-								-
 								<a class="bt" onclick="checkpanier(this);" href="index.php?page=paiement_final">Payer</a>
 							</div>
 						</div>
