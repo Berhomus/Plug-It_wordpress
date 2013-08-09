@@ -117,7 +117,7 @@
 					document.getElementById('qte'+idprod).value = qte;
 					
 					nouvelem.setAttribute('id','panier_elem_'+idprod);
-					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='+idprod+'">'+nom.substr(0,13)+'</a></td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
+					nouvelem.innerHTML = '<table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'+idprod+'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='+idprod+'">'+nom.substr(0,13)+'</a></td><td style="width:40px;" id="panier_elem_qte_'+idprod+'">x'+qte+'</td><td style="width:75px;float:right;" id="panier_elem_prix_'+idprod+'">'+prix+'€</td><td onclick="suppElem('+idprod+');" style="color:red;cursor: pointer;" id="panier_elem_supp_'+idprod+'">X</td></tr></table>';
 					
 					cont.appendChild(nouvelem);
 					
