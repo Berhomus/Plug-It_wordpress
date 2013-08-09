@@ -35,7 +35,7 @@ Name : Contact.php => Plug-it
 	}
 ?>
 
-<<<<<<< HEAD
+<?php
 	echo '<div id="tabs">';
 			echo '<ul>';
 	
@@ -74,9 +74,6 @@ Name : Contact.php => Plug-it
 					?>
 
 						<h2 class="titre" style="margin-top:40px;">Contactez-nous</h2>
-=======
-<div style="overflow:hidden;">
->>>>>>> 5502a031ca6ff7b36645924bf387e57121316b22
 
 <div style="width:60%;float:left;">
 
