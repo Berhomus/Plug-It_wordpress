@@ -39,7 +39,7 @@ Name : Pied.php => Plug-it
 		
 		</td>
 		
-		<td class="boutbout" onclick="location.href='https://<?php echo $_SESSION['current_loc']; ?>index.php?page=admin'">
+		<td class="boutbout" onclick="location.href='http://<?php echo $_SESSION['current_loc']; ?>index.php?page=admin'">
 			Administration
 		</td>
 		
