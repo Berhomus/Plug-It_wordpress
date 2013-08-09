@@ -420,23 +420,32 @@
 							
 							echo '<td>
 							<div class="blockproduit" onclick="location.href=\'index.php?page=boutique&mode=viewone&id='.$ar['id'].'\'"> '; 
-							
+							echo '<table style="margin-left:4px; margin-right:4px;">';
 							if(isset($_SESSION['id']))
 							{
 								echo'
-								<span style="margin-left:10%;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
-								<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span>';
+								<tr>
+								<td style="width:325px;"><span style="margin-left:18px;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
+								<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span></td>
+								<td style="width:325px;"><span style="text-decoration:underline; font-weight:bold;">'.substr($ar['nom'],0,30).'</span></td>
+								</tr>';
 							}
 							
 							echo'
-								<img src="'.$ar['images'].'" style="margin-left:5%;width:90%;" width="280" height="170"/>
-							<p style="margin-top:10px;font-weight:bold;font-size:13px;position:relative;">
-							<span style="margin-left:18px;float:left;">'.substr($ar['nom'],0,50).'</span><br/>
-							<span style="margin-right:18px;"><center style="bottom:1px;"><b>| HT : '.(round($ar['prix']*100)/100).'€ | TVA ('.round($tva['valeur']*100)/100 .'%) : '.(round($ar['prix']*($tva['valeur']/100)*100)/100).' € |<br/>| TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'</span> € |</b></center></span>
-							</p>
+							<tr>
+								<td style="width:325px; height:210px;"><img src="'.$ar['images'].'" style="margin-left:18px; max-height:100%; width:auto; max-width:210px;"/></td>
+								<td style="width:325px; height:210px;">'.substr($ar['description'],0,300).' ...</td>
+							</tr>
+							
+							<tr>
+								<td style="width:325px;"><span style="margin-left:18px;">Livraison sous '.$ar['delai'].' heures</span></td>
+								<td style="width:325px;"><b>| HT : <span style="color:#a10e08;">'.(round($ar['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'</span> € |</b></td>
+							</tr>
+							
+							</table>
 							</div>
-							<span id="'.$ar['id'].'" class="style" style="float:left; width:211px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
-							<span class="style" style="float:left; width:86px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
+							<span id="'.$ar['id'].'" class="style" style="float:left; width:450px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
+							<span class="style" style="float:left; width:172px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
 							
 							echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
 							<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'"/>';
@@ -444,7 +453,7 @@
 							echo '</td>';
 							
 							$i++;
-							if($i > 2)
+							if($i > 1)
 							{
 								$i=1;
 								$j++;
@@ -467,6 +476,11 @@
 		break;
 		
 		case 'viewone' :
+		
+		$rqtva = $bdd->prepare("SELECT * FROM tva WHERE id=?");
+		$rqtva->execute(array($ar['tva']));
+		$artva=$rqtva->fetch();
+		
 		if(isset($_GET['id']))
 			{
 				try{
@@ -490,8 +504,9 @@
 					echo '<h2 class="grdtitre" style="margin-bottom:20px;">'.$donnees['nom'].'</h2>
 							<div style="margin:auto; padding-top:15px; padding-bottom:15px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; padding-bottom:15px;">
 								<div style="margin:auto;width:70%;">
-								<img src="'.$donnees['images'].'" style="float:right;" width="280" height="170" />
+								<img src="'.$donnees['images'].'" style="float:right; margin-left:18px; max-height:100%; width:auto; max-width:250px;" />
 								'.nl2br($donnees['description']);
+								echo '<b>| HT : <span style="color:#a10e08;">'.(round($donnees['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'</span> € |</b>';
 							
 								$j=mb_substr_count(nl2br($donnees['description']),'<br />');
 
@@ -502,6 +517,7 @@
 					
 					
 							echo '</div>
+							<a href="javascript:history.back()" class="style" style="width:200px; margin:auto;">Retour</a>
 							</div>';
 					
 				}
