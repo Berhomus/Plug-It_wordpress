@@ -35,7 +35,45 @@ Name : Contact.php => Plug-it
 	}
 ?>
 
-<div style="overflow:hidden;">
+<?php
+	echo '<div id="tabs">';
+			echo '<ul>';
+	
+	$i=1;	
+	while($ar = $rq->fetch())
+	{
+		echo '<li><a href="#tabs-'.$i.'">'.$ar['ville'].'</a></li>';
+		$i++;
+	}
+	echo '</ul>';
+	$i=1;
+	
+	$rq = $bdd->prepare("SELECT * FROM contact");
+	$rq->execute(array());
+	
+	while($ar = $rq->fetch())
+	{
+	echo '
+			<div id="tabs-'.$i.'">
+				<input type="hidden" id="mail" name="mail" value="'.$ar['courriel'].'"/>
+				<input type="hidden" id="lat" name="lat" value="'.$ar['latitude'].'"/>
+				<input type="hidden" id="longi" name="longi" value="'.$ar['longitude'].'"/>';
+
+				?>
+
+				<div style="overflow:hidden;">
+
+					<div style="width:62%;float:left;">
+					<?php
+						if(isset($_SESSION['id']))
+								{
+									echo'
+									<span style="margin-left:40px;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_contact&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
+									<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_contact.php?mode=delete&id='.$ar['id'].'">Supprimer</a></span>';
+								}
+					?>
+
+						<h2 class="titre" style="margin-top:40px;">Contactez-nous</h2>
 
 <div style="width:60%;float:left;">
 
