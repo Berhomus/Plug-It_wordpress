@@ -20,13 +20,13 @@ D_LOGO!include/webaffaires/logo/!
 #  Fichiers parametres lies a l'api webaffaires paiement
 # --------------------------------------------------------------------------
 # fichier des  parametres webaffaires
-F_DEFAULT!C:/wamp/www/Plug-It/include/webaffaires/param/parmcom.webaffaires!
+F_DEFAULT!/homez.527/plugit/www/include/webaffaires/param/parmcom.webaffaires!
 #
 # fichier parametre commercant
-F_PARAM!C:/wamp/www/Plug-It/include/webaffaires/param/parmcom!
+F_PARAM!/homez.527/plugit/www/include/webaffaires/param/parmcom!
 #
 # certificat du commercant
-F_CERTIFICATE!C:/wamp/www/Plug-It/include/webaffaires/param/certif!
+F_CERTIFICATE!/homez.527/plugit/www/include/webaffaires/param/certif!
 F_CTYPE!php!
 
 # --------------------------------------------------------------------------

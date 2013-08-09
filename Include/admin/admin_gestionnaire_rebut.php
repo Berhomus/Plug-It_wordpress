@@ -16,7 +16,7 @@
 
 <h2 >Gestion Article Rebut</h2>
 <div style="margin-top:10px;">
-<form method="POST" action="<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>traitement/trt_rebut.php">
+<form method="POST" action="<?php echo $_SESSION['protocol'].$_SESSION['current_location']; ?>traitement/trt_rebut.php">
 <?php
 	require_once('./connexionbddplugit.class.php');
 	

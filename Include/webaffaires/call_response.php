@@ -23,7 +23,7 @@ if(isset($_POST['DATA']))
     //    -> Windows : $pathfile="pathfile=c:/repertoire/pathfile";
     //    -> Unix    : $pathfile="pathfile=/home/repertoire/pathfile";
    
-   $pathfile="pathfile=C:/wamp/www/Plug-It/include/webaffaires/param/pathfile";
+   $pathfile="pathfile=/homez.527/plugit/www/include/webaffaires/param/pathfile";
 
 	// Initialisation du chemin de l'executable response (à modifier)
 	// ex :
@@ -31,7 +31,7 @@ if(isset($_POST['DATA']))
 	// -> Unix    : $path_bin = "/home/repertoire/bin/response";
 	//
 
-	$path_bin = "C:/wamp/www/Plug-It/include/webaffaires/bin/response.exe";
+	$path_bin = "/homez.527/plugit/www/include/webaffaires/bin/static/response";
 
 	// Appel du binaire response
   	$message = escapeshellcmd($message);

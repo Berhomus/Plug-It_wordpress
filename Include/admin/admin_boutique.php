@@ -86,7 +86,7 @@ if(isset($_SESSION['id']))
 	
 ?>
 
-<form method="post" enctype="multipart/form-data" action="<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>traitement/trt_boutique.php?mode=<?php echo $type; ?>">
+<form method="post" enctype="multipart/form-data" action="<?php echo $_SESSION['protocol'].$_SESSION['current_location']; ?>traitement/trt_boutique.php?mode=<?php echo $type; ?>">
 	<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">				
 			<tr>
 				<td><label for="titre"><b>Nom du produit <span class="red">*</span></b><br/><small id="lim_nom">(Max 50 caractères)</small></label></td>

@@ -23,7 +23,7 @@ if(isset($_POST['DATA']))
 			//    -> Windows : $pathfile="pathfile=c:/repertoire/pathfile"
 			//    -> Unix    : $pathfile="pathfile=/home/repertoire/pathfile"
 			
-		$pathfile="pathfile=C:/wamp/www/Plug-It/include/webaffaires/param/pathfile";
+		$pathfile="pathfile=/homez.527/plugit/www/include/webaffaires/param/pathfile";
 
 		//Initialisation du chemin de l'executable response (à modifier)
 		//ex :
@@ -31,7 +31,7 @@ if(isset($_POST['DATA']))
 		//-> Unix    : $path_bin = "/home/repertoire/bin/response"
 		//
 
-		$path_bin = "C:/wamp/www/Plug-It/include/webaffaires/bin/static/response";
+		$path_bin = "/homez.527/plugit/www/include/webaffaires/bin/static/response";
 
 		// Appel du binaire response
 		$message = escapeshellcmd($message);
@@ -96,7 +96,7 @@ if(isset($_POST['DATA']))
 		//    -> Unix    : $logfile="/home/repertoire/log/logfile.txt";
 		//
 
-		$logfile="C:/wamp/www/Plug-It/log_paiement.txt";
+		$logfile="/homez.527/plugit/www/log_paiement.txt";
 		$fp=fopen($logfile,'a');
 		
 		//  analyse du code retour
@@ -173,9 +173,12 @@ if(isset($_POST['DATA']))
 				//ajout BDD
 				require_once('../../connexionbddplugit.class.php');
 				$bdd =connexionbddplugit::getInstance();
-
-				$rq = $bdd->prepare("INSERT INTO transaction VALUES ('',?,?,?,?,?,?,?,?,?,?,?,?,?)")or die("Erreur SQL");
-				$rq->execute(array($transaction_id,$arrayCaddie[0],$arrayCaddie[9],$customer_email,$arrayCaddie[6],$arrayCaddie[7],$arrayCaddie[8],$amount,$arrayCaddie[1],$arrayCaddie[5],$arrayCaddie[3],$payment_date,$bank_response_code));
+				try{
+					$rq = $bdd->prepare("INSERT INTO transaction VALUES ('',?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					$rq->execute(array($transaction_id,$arrayCaddie[9],$arrayCaddie[0],$customer_email,$arrayCaddie[6],$arrayCaddie[7],$arrayCaddie[8],$amount,$arrayCaddie[1],$arrayCaddie[5],$arrayCaddie[3],$payment_date,$bank_response_code));
+				}catch(Exception $e){
+					echo $e->getMessage();
+				}
 			}
 		
 			fwrite( $fp, "#======================== Le : " . date("d/m/Y H:i:s") . " ====================#\n");

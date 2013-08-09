@@ -1,4 +1,4 @@
-<!--********************************************************
+﻿<!--********************************************************
 Made by : AS Amiens - Bovin Antoine/Bensaid Borhane/Villain Benoit
 Last Update : 12/07/2013
 Name : admin.php => Plug-it
@@ -73,7 +73,7 @@ else
 		<!--<li class="menuverti" onclick="location.href='<?php //echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=gestionnaire_img'">Gestionnaire d'images</li>-->
 		<!--<li class="menuverti" onclick="location.href='<?php //echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=mass_mailing'">E-Mail de Masse</li>-->
 		<!--<li class="menuverti" onclick="location.href='<?php //echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_menu'">Edition Menu</li>-->
-		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_gest_menu'">Référencement</li>
+		<li class="menuverti" onclick="location.href='index.php?page=admin_gest_menu'">Référencement</li>
 		<!--<li class="menuverti" onclick="location.href='<?php //echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=backup'">Gestionnaire de backup</li>-->
 		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_article'">Nouvel Article</li>
 		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_categ_tva'">Catégorie Boutique & TVA</li>

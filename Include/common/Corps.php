@@ -12,13 +12,16 @@ Name : Corps.php => Plug-it
 
 <?php	
 
-	function checkUp($nom){
+	function checkUp($nom,$nbdd){
 		require_once('./connexionbddplugit.class.php');
 		$bdd=connexionbddplugit::getInstance();
 
 		try{
-			$rq = $bdd->prepare("SELECT * FROM menu WHERE baseName = ?");
-			$rq->execute(array($nom));
+			if($nbdd == 'menu')
+				$rq = $bdd->prepare("SELECT * FROM menu WHERE upper(baseName) = ?");
+			else
+				$rq = $bdd->prepare("SELECT * FROM sousmenu WHERE upper(nom) = ?");
+			$rq->execute(array(strtoupper($nom)));
 			$ar= $rq->fetch();
 		} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
@@ -30,14 +33,14 @@ Name : Corps.php => Plug-it
 	switch ($_GET['page'])
 	{	
 		case 'accueil':
-		if(checkUp('accueil'))
+		if(checkUp('accueil','menu'))
 			INCLUDE("include/invite/accueil.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'solutions':
-		if(checkUp('solutions'))
+		if(checkUp('solutions','sousmenu'))
 			INCLUDE("include/invite/solutions.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
@@ -52,43 +55,50 @@ Name : Corps.php => Plug-it
 		break;
 		
 		case 'support':
-		if(checkUp('support'))
+		if(checkUp('support','menu'))
 			INCLUDE("include/invite/support.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'reglement':
-		if(checkUp('reglement'))
+		if(checkUp('reglement','menu'))
 			INCLUDE("include/invite/reglement.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'boutique':
-		if(checkUp('boutique'))
+		if(checkUp('boutique','menu'))
 			INCLUDE("include/invite/boutique.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'cloud':
-		if(checkUp('cloud'))
-			INCLUDE("include/invite/cloud.php");
+		if(checkUp('cloud','menu'))
+			INCLUDE("include/invite/construction.php");
+		else
+			echo '<h2>Page Inaccessible</h2>';
+		break;
+
+		case 'photocopieur':
+		if(checkUp('photocopieur','menu'))
+			INCLUDE("include/invite/construction.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'webapps':
-		if(checkUp('webapps'))
-			INCLUDE("include/invite/webapps.php");
+		if(checkUp('webapps','menu'))
+			INCLUDE("include/invite/construction.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'telephonie':
-		if(checkUp('telephonie'))
-			INCLUDE("include/invite/telephonie.php");
+		if(checkUp('telephonie','menu'))
+			INCLUDE("include/invite/construction.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
@@ -123,6 +133,15 @@ Name : Corps.php => Plug-it
 		if(isset($_SESSION['id']))
 		{
 			INCLUDE("include/admin/admin_solutions.php");
+		}
+		else
+			echo '<h2>Access Forbidden</h2>';
+		break;
+
+		case 'admin_reporting':
+		if(isset($_SESSION['id']))
+		{
+			INCLUDE("include/admin/admin_report.php");
 		}
 		else
 			echo '<h2>Access Forbidden</h2>';
