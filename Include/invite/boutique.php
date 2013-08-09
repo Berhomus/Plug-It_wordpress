@@ -517,6 +517,7 @@
 					
 					
 							echo '</div>
+							<a href="javascript:history.back()" class="style" style="width:200px; margin:auto;">Retour</a>
 							</div>';
 					
 				}
