@@ -13,7 +13,7 @@
 //Amélio => évité calcul montant total via parcour=> récupérer var session ?
 	
 		function scroll () {
-			document.getElementById('accordeon').style.marginTop=50+window.pageYOffset+"px";	
+			document.getElementById('accordeon').style.marginTop=25+window.pageYOffset+"px";	
 		}
 		
 		
@@ -369,19 +369,7 @@
 					</div>
 				</div>
 				
-				 <script>
-					//calTotal();
-					$(function(){
-						$('#accordeon').accordion(); // appel du plugin	
-						$('#accordeon').accordion({
-							event : 'click',
-							collapsible : true,
-							active : 1
-						});
-					});
-		
-					window.onscroll = scroll;
-				 </script>
+				 
 			<?php
 				
 				$i=1; //délimite les colonnes
@@ -473,6 +461,9 @@
 			{
 				echo '<h1>Catégorie Inexistante</h1>';
 			}
+		?>
+
+		<?php
 		break;
 		
 		case 'viewone' :
@@ -502,9 +493,118 @@
 					}
 			
 					echo '<h2 class="grdtitre" style="margin-bottom:20px;">'.$donnees['nom'].'</h2>
-							<div style="margin:auto; padding-top:15px; padding-bottom:15px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; padding-bottom:15px;">
-								<div style="margin:auto;width:70%;">
-								<img src="'.$donnees['images'].'" style="float:right; margin-left:18px; max-height:100%; width:auto; max-width:250px;" />
+						<div style="margin:auto; padding-top:15px; padding-bottom:15px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">';
+							?>
+								<div id="accordeon" style=""> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
+									<h3><img src="./images/e_commerce_caddie.gif" style="width:20px; height:20px; vertical-align:-18%;"/>Panier</h3>
+									<div id="contenu">
+										<div id="top_panier"><table style="width:100%"><tr><td style="width:110px;">Nom</td><td style="float:left; width:40px;">Qté</td><td style="float:right; width:90px;">Prix Unitaire</td></tr></table></div>
+										<div id="div_panier"><hr/></div>
+										<?php
+										
+										if(isset($_SESSION['caddie']))
+										{
+											$articlechange = 0;
+											foreach($_SESSION['caddie'] as $article)
+											{
+											
+												try{
+													$rq = $bdd->prepare("SELECT * FROM produit WHERE id=?");
+													$rq->execute(array($article['id']));
+													$ar=$rq->fetch();
+													
+													
+													if($rq->rowCount() == 1)
+													{
+														if($ar['tva'] == -1 or $ar['categorie'] == -1)//si rebut
+														{
+															$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+															unset($_SESSION['caddie'][$article['id']]);
+															$articlechange = 2;
+														}
+														else
+														{
+															$rqtva = $bdd->prepare("SELECT * FROM tva WHERE id=?");
+															$rqtva->execute(array($ar['tva']));
+															$artva=$rqtva->fetch();
+															if(abs($article['prix']-(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100)) > 0.009)//si prix changé
+															{
+																echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='.$article['id'].'">'.substr($article['nom'],0,13).'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;color:red;font-weight:bold;" id="panier_elem_prix_'.$article['id'].'" >'.(round($ar['prix']*(($artva['valeur']/100)+1)*100)/100) .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+																
+																//redef panier
+																$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+																$_SESSION['caddie'][$article['id']]['prix'] = (round($ar['prix']*(($artva['valeur']/100)+1)*100)/100);
+																$_SESSION['caddieTot'] += $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+																
+																
+																if($articlechange == 2)
+																	$articlechange = 3;
+																else if($articlechange == 0)
+																	$articlechange = 1;
+															}
+															else
+															{
+																echo '<div id="panier_elem_'.$article['id'].'"><table style="width:100%"><tr><td style="width:110px;" id="panier_elem_nom_'.$article['id'].'"><a class="bt" href="index.php?page=boutique&mode=viewone&id='.$article['id'].'">'.substr($article['nom'],0,13).'</a></td><td style="float:left; width:40px;" id="panier_elem_qte_'.$article['id'].'">x'.$article['qte'].'</td><td style="float:right; width:75px;" id="panier_elem_prix_'.$article['id'].'" >'.round($article['prix']*100)/100 .'€</td><td onclick="suppElem('.$article['id'].');" style="color:red;cursor: pointer;" id="panier_elem_supp_'.$article['id'].'">X</td></tr></table></div>';
+															}
+														}
+													}	
+													else//si article inexistant
+													{
+														//enlever panier
+														$_SESSION['caddieTot'] -= $_SESSION['caddie'][$article['id']]['prix']*$_SESSION['caddie'][$article['id']]['qte'];
+														unset($_SESSION['caddie'][$article['id']]);
+														
+														if($articlechange == 1)
+															$articlechange = 3;
+														else if($articlechange == 0)
+															$articlechange = 2;
+													}
+												} catch ( Exception $e ) 
+												{
+													echo "Une erreur est survenue : ".$e->getMessage();
+												}
+																		
+											}
+											
+											if($articlechange == 1)
+											{
+												echo '<script>
+														alert("Attention le prix de certains articles ont changé !");
+													</script>';
+											}
+											else if($articlechange == 2)
+											{
+												echo '<script>
+														alert("Attention certains articles ne sont pas disponible !");
+													</script>';
+											}
+											else if($articlechange == 3)
+											{
+												echo '<script>
+														alert("Attention certains articles n\'existe plus et d\'autres ont changé de prix !");
+													</script>';
+											}
+										}	
+										
+										?>
+										<div id="foot_panier"><span style="float:left; margin-left:5px;">Montant total : 
+											<span id="prix_tt_panier">
+												<?php
+													$tot = (isset($_SESSION['caddieTot'])) ? $_SESSION['caddieTot']:'0.00';	
+													echo round($tot*100)/100;
+												?>
+												</span>
+											€</span>
+											
+											<div style="float:right; margin-right:5px;">
+												<a class="bt" onclick="checkpanier(this);" href="index.php?page=paiement_final">Payer</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							<div style="margin:auto;width:70%;">
+							<?php
+								echo '<img src="'.$donnees['images'].'" style="float:right; margin-left:18px; max-height:100%; width:auto; max-width:250px;" />
 								'.nl2br($donnees['description']);
 								echo '<b>| HT : <span style="color:#a10e08;">'.(round($donnees['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'</span> € |</b>';
 							
@@ -514,12 +614,11 @@
 								{
 									echo '<br/>';
 								}
-					
-					
-							echo '</div>
+								?>				
+							</div>
 							<a href="javascript:history.back()" class="style" style="width:200px; margin:auto;">Retour</a>
-							</div>';
-					
+						</div>
+				<?php	
 				}
 				else
 					echo '<p>Erreur</p>';
@@ -534,7 +633,16 @@
 	}
 	
 ?>
-
 <script>
-	 
+	//calTotal();
+	$(function(){
+		$('#accordeon').accordion(); // appel du plugin	
+		$('#accordeon').accordion({
+			event : 'click',
+			collapsible : true,
+			active : 1
+		});
+	});
+
+	window.onscroll = scroll;
 </script>
