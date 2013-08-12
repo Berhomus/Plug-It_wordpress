@@ -21,6 +21,9 @@ if(isset($_SESSION['id']))
 	//TO DO
 	//Ecart quand ouverture menu
 	//pb deslection ap drop
+	//valider ++ trt
+	//modfier avec rechargement 
+	//upload
 ?>
  
 <style>
@@ -188,7 +191,7 @@ if(isset($_SESSION['id']))
 			array = ""
 		}
 		
-		xhr.open("POST", "requete_article.php", true);
+		xhr.open("POST", "./include/admin/requete_article.php", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send("rq="+rq+"&type=getposi&array="+array);
 	}
@@ -328,6 +331,40 @@ if(isset($_SESSION['id']))
 			img.style.display = "block";
 		}
 		plan.style.display="block";
+	}
+	
+	function valider(){
+		var contain = document.getElementById("contain");
+		var html = document.createElement('div');
+		var main = document.createElement('div');
+		main.setAttribute("style","background-color:"+$("#contain").css("background-color")+";");
+		html.appendChild(main);
+		
+		var node;
+		
+		if(contain)
+		{
+			var elementID, elementNo;
+			if(contain.childNodes.length > 0)
+			{
+			  for(var i = 0; i < contain.childNodes.length; i++)
+			  {
+				// Ici, on vérifie qu'on peut récupérer les attributs, si ce n'est pas possible, on renvoit false, sinon l'attribut
+				elementID = (contain.childNodes[i].getAttribute) ? contain.childNodes[i].getAttribute('id') : false;
+				if(elementID)
+				{
+					var elementPattern=new RegExp("block_[0-9]*","g");
+					if(elementPattern.test(elementID))
+					{
+						node = contain.childNodes[i].cloneNode(true);
+						node.setAttribute("class","");
+						main.appendChild(node);
+					}
+				}
+			  }
+			  alert(html.innerHTML);
+			}
+		}
 	}
 	
 </script>
@@ -478,7 +515,7 @@ if(isset($_SESSION['id']))
 			<li><a onClick="$('#ajout_elem_dialog').dialog('open');">Ajouter</a></li>
 			<li><a onClick="$('#ajout_elem_dialog').dialog('open');">Modifier</a></li>
 			<li><a onClick="deleteBlock();">Supprimer</a></li>
-			<li><a>Valider</a></li>
+			<li><a onClick="valider();">Valider</a></li>
 		</ul>
 	</div>
 

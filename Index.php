@@ -67,6 +67,7 @@ Name : Index.php => Plug-it
 		<link rel="stylesheet" href="css/skin 1/style.css" />
 		<link rel="stylesheet" href="css/styles.css" />
 		<link type="text/css" rel="stylesheet" href="styles/index.css"/>
+		<link type="text/css" rel="stylesheet" href="styles/normalize.css"/>
 		
 		<script src="js/jquery-1.7.1.min.js"></script>
 	</head>
