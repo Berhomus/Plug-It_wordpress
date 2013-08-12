@@ -18,10 +18,19 @@ Name : Index.php => Plug-it
 	<head>	
 		<link rel="icon" type="image/png" href="./images/favicon.png">
 		<link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
+<<<<<<< HEAD
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+=======
+>>>>>>> 15ab148b7ffb0af4015c86b7862db531f0077cb9
 		
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+		<meta name="viewport"  content="initial-scale=1, width=device-width">
+
 		<?php 
 		
 			$_SESSION['protocol'] = (isset($_SESSION['protocol'])) ? $_SESSION['protocol']:"http://";
@@ -67,8 +76,10 @@ Name : Index.php => Plug-it
 		<link rel="stylesheet" href="css/skin 1/style.css" />
 		<link rel="stylesheet" href="css/styles.css" />
 		<link type="text/css" rel="stylesheet" href="styles/index.css"/>
+		<link type="text/css" rel="stylesheet" href="styles/normalize.css"/>
 		
 		<script src="js/jquery-1.7.1.min.js"></script>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	</head>
 	<body>
 		<div class="Banniere" id="head">
