@@ -339,8 +339,8 @@ if(isset($_SESSION['id']))
 <!--Catégorie-->
 <div style="margin-top:5px;width:491px; height:250px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; float:left;">
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-top:20px;">				
-				<tr>
-					<td><label for="categorie"><b>Catégorie des produits </b></label></td>
+				<tr style="height:40px;">
+					<td style="width:150px;"><label for="categorie"><b>Catégorie des produits </b></label></td>
 					<td>
 						<select name="categorie" id="categorie" onChange="selection_update_categ(this,'categ','visible')">
 							<option value="" selected>Ajouter une catégorie</option>
@@ -362,17 +362,17 @@ if(isset($_SESSION['id']))
 					</td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="categ"><b>Nom de la catégorie</b><br/><small id="lim_desc">(Max 50 caractères)</small></label></td>
 					<td><input size="22" type="text" name="categ" id="categ"  onblur="textLimit(this, 50,lim_desc);"/></td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="visible"><b>Visible</b></label></td>
 					<td><input type="checkbox" name="visible" id="visible"/></td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodifcateg('categorie')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimecateg('categorie')"/></td>
 					<td id="result_categ"></td>
 				</tr>
@@ -383,8 +383,8 @@ if(isset($_SESSION['id']))
 <div style="margin-top:5px;width:491px; height:250px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC; float:left;">
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-top:20px;">				
 		
-				<tr>
-					<td><label for="reftva"><b>Référence de la TVA</b><br/></label></td>
+				<tr style="height:40px;">
+					<td style="width:170px;"><label for="reftva"><b>Référence de la TVA</b><br/></label></td>
 					<td>
 						<select name="reftva" id="reftva" onChange="selection_update_tva(this,'tva','ref');">
 							<option value="" selected>Ajouter une TVA</option>
@@ -401,18 +401,18 @@ if(isset($_SESSION['id']))
 					</td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="ref"><b>Nom de la référence TVA</b><br/><small id="lim_desc">(Max 50 caractères)</small></label></td>
 					<td><input size="22" type="text" name="ref" id="ref"  onblur="textLimit(this, 50,lim_desc);"/></td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="tva"><b>Taux de la TVA (en %)</b><br/><small id="lim_desctva">(Exemple : 19.6)</small></label></td>
 					<td><input size="22" type="text" name="tva" id="tva" onblur="isNumber(this,lim_desctva);"/></td>
 				</tr>
 				
 				
-				<tr>
+				<tr style="height:40px;">
 					<td style="text-align:right;"><input type="button" name="valider" value="Valider" onClick="ajoutmodiftva('reftva')"/><input type="button" name="supprimer" value="Supprimer" onClick="supprimetva('reftva')"/></td>
 					<td id="result_tva"></td>
 				</tr>		

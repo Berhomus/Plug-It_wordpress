@@ -100,16 +100,16 @@ Name : Index.css => Plug-it
 
 .boutbout:hover
 	{
-	background-color:#f9bd1a;
+	background-color:#F9BD1A;
 	border-color:#696969 #DCDCDC #DCDCDC #696969;
 	color:white;
-	background: #f9bd1a;
-	background: -moz-linear-gradient(#444, #f9bd1a);
-	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #f9bd1a),color-stop(1, #444));
-	background: -webkit-linear-gradient(#444, #f9bd1a);
-	background: -o-linear-gradient(#444, #f9bd1a);
-	background: -ms-linear-gradient(#444, #f9bd1a);
-	background: linear-gradient(#444, #f9bd1a);
+	background: #F9BD1A;
+	background: -moz-linear-gradient(#444, #F9BD1A);
+	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #F9BD1A),color-stop(1, #444));
+	background: -webkit-linear-gradient(#444, #F9BD1A);
+	background: -o-linear-gradient(#444, #F9BD1A);
+	background: -ms-linear-gradient(#444, #F9BD1A);
+	background: linear-gradient(#444, #F9BD1A);
 	}
 	
 	
@@ -154,16 +154,15 @@ Name : Index.css => Plug-it
 	}
 .menuverti:hover
 	{
-	 background-color:#f9bd1a;
-	 color:black;
-	 border-color:#696969 #DCDCDC #DCDCDC #696969;
-	 background: #0186ba;
-	background: -moz-linear-gradient(#f9bd1a,  #f9bd1a);
-	background: -webkit-gradient(linear, left top, left bottom, from(#f9bd1a), to(#f9bd1a));
-	background: -webkit-linear-gradient(#f9bd1a,  #f9bd1a);
-	background: -o-linear-gradient(#f9bd1a,  #f9bd1a);
-	background: -ms-linear-gradient(#f9bd1a,  #f9bd1a);
-	background: linear-gradient(#f9bd1a,  #f9bd1a);
+	background-color:#F9BD1A;
+	color:black;
+	border-color:#696969 #DCDCDC #DCDCDC #696969;
+	background: -moz-linear-gradient(#F9BD1A,  #F9BD1A);
+	background: -webkit-gradient(linear, left top, left bottom, from(#F9BD1A), to(#F9BD1A));
+	background: -webkit-linear-gradient(#F9BD1A,  #F9BD1A);
+	background: -o-linear-gradient(#F9BD1A,  #F9BD1A);
+	background: -ms-linear-gradient(#F9BD1A,  #F9BD1A);
+	background: linear-gradient(#F9BD1A,  #F9BD1A);
 	}
 	
 .croixred
@@ -200,6 +199,17 @@ Name : Index.css => Plug-it
 	}
 	
 /*####FORMULAIRE PAIEMENT####*/
+
+.titrereglement
+	{
+		width:930px;
+		height:40px;
+		line-height:40px;
+		border:1px solid;
+		display:inline-block;
+		vertical-align:middle;
+		text-align:center;
+	}
 	
 /*#######PARAMETRES#######*/
 
@@ -231,7 +241,7 @@ Name : Index.css => Plug-it
 	
 .style:hover
 	{
-	background:#f9bd1a;
+	background:#F9BD1A;
 	color:black;
 	border-color:#696969 #DCDCDC #DCDCDC #696969;
 	}
@@ -281,8 +291,8 @@ Name : Index.css => Plug-it
 	border:0px solid;
 	text-decoration:none;
 	text-align:center;
-	background-color:#f9bd1a;
-	border-color:#f9bd1a;
+	background-color:#F9BD1A;
+	border-color:#F9BD1A;
 	width:50%;
 	}
 	
@@ -335,11 +345,14 @@ Name : Index.css => Plug-it
 	border-radius:20px;
 	cursor: pointer;
 	padding:10px;
+	margin-right:10px;
+	margin-left:10px;
+	margin-top:20px;
 }
 
 .blocksolution:hover
 {
-	background-color:#f9bd1a;
+	background-color:#F9BD1A;
 }
 
 
@@ -351,11 +364,14 @@ Name : Index.css => Plug-it
 	background-color:#e0e0e0;
 	border-radius:20px;
 	cursor: pointer;
+	margin-right:10px;
+	margin-left:10px;
+	margin-top:20px;
 }
 
 .blockservice:hover
 {
-	background-color:#f9bd1a;
+	background-color:#F9BD1A;
 }
 
 /*##########PANIER#########*/
@@ -376,7 +392,7 @@ Name : Index.css => Plug-it
 	}
 .boutpanier:hover
 	{
-	 background-color:#f9bd1a;
+	 background-color:#F9BD1A;
 	 color:black;
 	 border-color:#696969 #DCDCDC #DCDCDC #696969;
 	}
@@ -391,11 +407,14 @@ Name : Index.css => Plug-it
 	cursor: pointer;
 	border-radius: 15px 15px 0px 0px;
 	padding-top:15px;
+	margin-top:20px;
+	margin-left:10px;
+	margin-right:10px;
 }
 
 .blockproduit:hover
 {
-	background-color:#f9bd1a;
+	background-color:#F9BD1A;
 }
 
 .boutprod
@@ -414,7 +433,7 @@ Name : Index.css => Plug-it
 	}
 .boutprod:hover
 	{
-	 background-color:#f9bd1a;
+	 background-color:#F9BD1A;
 	 color:black;
 	 border-color:#696969 #DCDCDC #DCDCDC #696969;
 	}
@@ -435,7 +454,7 @@ Name : Index.css => Plug-it
 	}
 .boutprod2:hover
 	{
-	 background-color:#f9bd1a;
+	 background-color:#F9BD1A;
 	 color:black;
 	 border-color:#696969 #DCDCDC #DCDCDC #696969;
 	}
@@ -445,7 +464,7 @@ Name : Index.css => Plug-it
 /*#menuder
 	{
 		border-radius:5px;
-		background-color:#f9bd1a;
+		background-color:#F9BD1A;
 		width:250px;
 		float:right;
 		margin-right:14%;
@@ -526,10 +545,12 @@ Name : Index.css => Plug-it
 
 #menu li:hover > a{
         color: #fafafa;
+		text-decoration:none;
 }
 
 *html #menu li a:hover{ /* IE6 */
         color: #fafafa;
+		text-decoration:none;
 }
 
 #menu li:hover > ul{
@@ -597,13 +618,13 @@ Name : Index.css => Plug-it
 }
 
 #menu ul a:hover{
-        background: #0186ba;
-        background: -moz-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: -webkit-gradient(linear, left top, left bottom, from(#f9bd1a), to(#f9bd1a));
-        background: -webkit-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: -o-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: -ms-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: linear-gradient(#f9bd1a,  #f9bd1a);
+        background:#F9BD1A;
+        background: -moz-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: -webkit-gradient(linear, left top, left bottom, from(#F9BD1A), to(#F9BD1A));
+        background: -webkit-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: -o-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: -ms-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: linear-gradient(#F9BD1A,  #F9BD1A);
 }
 
 #menu ul li:first-child a{
@@ -625,7 +646,7 @@ Name : Index.css => Plug-it
 }
 
 #menu ul li:first-child a:hover:after{
-    border-bottom-color: #f9bd1a;
+    border-bottom-color: #F9BD1A;
 }
 
 #menu ul li:last-child a{
@@ -675,7 +696,7 @@ Name : Index.css => Plug-it
 #accordeon
 	{
 		border-radius: 5px;
-		background-color:#f9bd1a;
+		background-color:#F9BD1A;
 		width:250px;
 		float:right;
 		margin-right:30px;
@@ -762,7 +783,7 @@ Name : Index.css => Plug-it
 }
 
 #panier li:hover > .paniersuite{
-        color: #f9bd1a;
+        color: #F9BD1A;
 }
 
 *html #panier li .paniersuite:hover{ /* IE6 */
@@ -832,13 +853,13 @@ Name : Index.css => Plug-it
 }
 
 #panier ul .paniersuite:hover{
-        background: #f9bd1a;
-        background: -moz-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: -webkit-gradient(linear, left top, left bottom, from(#f9bd1a), to(#f9bd1a));
-        background: -webkit-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: -o-linear-gradient(#f9bd1a,  #f9bd1a);
-        background: -ms-linear-gradient(#f9bd1a, #f9bd1a);
-        background: linear-gradient(#f9bd1a,  #f9bd1a);
+        background: #F9BD1A;
+        background: -moz-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: -webkit-gradient(linear, left top, left bottom, from(#F9BD1A), to(#F9BD1A));
+        background: -webkit-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: -o-linear-gradient(#F9BD1A,  #F9BD1A);
+        background: -ms-linear-gradient(#F9BD1A, #F9BD1A);
+        background: linear-gradient(#F9BD1A,  #F9BD1A);
 }
 
 #panier ul li:first-child .paniersuite{
@@ -887,6 +908,8 @@ Name : Index.css => Plug-it
 {
 	width:200px;
 	height: 250px;
+	margin-right:10px;
+	margin-left:10px;
 }
 
 .blocklink
@@ -895,11 +918,13 @@ Name : Index.css => Plug-it
 	height: 50px;
 	background-color:#e0e0e0;
 	cursor: pointer;
+	margin-right:10px;
+	margin-bottom:10px;
 }
 	
 .blocklink:hover
 {
-	background-color:#f9bd1a;
+	background-color:#F9BD1A;
 	color: white;
 }
 

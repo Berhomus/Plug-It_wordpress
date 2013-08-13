@@ -27,7 +27,7 @@ if(isset($_SESSION['id']))
 <h2 class="grdtitre">Gestion du référencement</h2>
 <br/>
 <div style="margin-bottom:20px;width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">
-	<p><a href="javascript:popup()" style="margin:auto;" class="menuverti">Conseils</a></p>
+	<p><a href="javascript:popup()" style="margin:auto; margin-top:30px;" class="menuverti">Conseils</a></p>
 
 <?php
 
@@ -38,10 +38,12 @@ if(isset($_SESSION['id']))
 		$i=1;
 		
 		echo '<form action="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_gest_meta.php" method="POST">';
-		echo '<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">';
+		echo '<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-top:30px; margin-bottom:30px;">';
 		while ($donnees = $rq->fetch())
 		{
-			echo '<tr><td style="display:block;
+			echo '<tr style="height:87px;">
+					<td style="
+							display:block;
 							width:200px;
 							background-color:#333333;
 							color:white;
@@ -61,8 +63,12 @@ if(isset($_SESSION['id']))
 							-moz-border-radius: 50px;
 							-moz-box-shadow: 0 2px 1px #9c9c9c;
 							-webkit-box-shadow: 0 2px 1px #9c9c9c;
-	box-shadow: 0 2px 1px #9c9c9c;">La description pour <b>'.$donnees['nom'].'</b></td>';
-			echo '<td><textarea name="meta'.$i.'" rows="4" cols="60" style="resize:none">'.$donnees['meta'].'</textarea></td></tr>';
+							box-shadow: 0 2px 1px #9c9c9c;"
+					>La description pour <b>'.$donnees['nom'].'</b></td>';
+			echo '<td><textarea name="meta'.$i.'" rows="4" cols="60" style="resize:none">'.$donnees['meta'].'</textarea></td>
+				</tr>
+				<tr style="height:20px;">
+				</tr>';
 			$i++;
 		}
 		echo '<tr><td><input type="submit" value="Valider"/></td></tr>';

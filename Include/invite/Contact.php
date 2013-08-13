@@ -95,7 +95,7 @@ Name : Contact.php => Plug-it
 
 		<form method="post" action="#">
 			<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-right:150px;">
-				<tr>
+				<tr style="height:40px;">
 					<td><b>Civilité <span class="red">*</span></b></td>
 					<td><select name="liste" required>
 							<option></option>
@@ -105,27 +105,27 @@ Name : Contact.php => Plug-it
 					</td>
 				</tr>
 
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="nom"><b>Nom <span class="red">*</span></b></label></td>
 					<td><input type="text" name="nom" id="nom" required/></td>
 				</tr>
 
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="prenom"><b>Prénom <span class="red">*</span></b></label></td>
 					<td><input type="text" name="prenom" id="prenom" required/></td>
 				</tr>
 
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="societe"><b>Société </b></label></td>
 					<td><input type="text" name="societe" id="societe" /></td>
 				</tr>
 
-				<tr>
+				<tr style="height:40px;">
 					<td><label for="courriel" id="email"><b>Courriel <span class="red">*</span></b></label></td>
 					<td><input type="text" name="courriel" id="courriel" onblur="isEmail(this,email);" required/></td>
 				</tr>
 
-				<tr>	
+				<tr style="height:40px;">	
 					<td><label for="objet"><b>Objet </b></label></td>
 					<td><input type="text" name="objet" id="objet" /></td>
 				</tr>
@@ -135,7 +135,7 @@ Name : Contact.php => Plug-it
 					<td><textarea name="message" id="message" rows="15" cols="40" style="resize:none;" required></textarea></td>
 				</tr>
 
-				<tr>
+				<tr style="height:40px;">
 					<td>
 					<?php
 						if($error_contact != 0)

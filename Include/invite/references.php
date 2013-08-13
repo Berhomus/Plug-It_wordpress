@@ -31,7 +31,7 @@ Name : references.php => Plug-it
 						$i=1; //délimite les colonnes
 						$j=1; //délimite les lignes
 						
-						echo '<table cellspacing="20" callpadding="0">';
+						echo '<table cellspacing="20" callpadding="0" style="margin:auto; margin-top:30px;">';
 						while ($donnees = $retour->fetch())
 							{
 							

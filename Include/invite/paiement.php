@@ -15,15 +15,15 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 	
 		<h2 class="titre">Récapitulatif</h2>
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;">
-			<tr>	
-				<td><b>Nom du client</b></td>
-				<td><?php echo $_POST['nom']; ?></td>
+			<tr style="height:40px;">	
+				<td style="width:150px;"><b>Nom du client</b></td>
+				<td style="width:150px;"><?php echo $_POST['nom']; ?></td>
 			</tr>
-			<tr>	
+			<tr style="height:40px;">	
 				<td><b>Société</b></td>
 				<td><?php echo $_POST['societe']; ?></td>
 			</tr>
-			<tr>	
+			<tr style="height:40px;">	
 				<td><b>Courriel</b></td>
 				<td><?php echo $_POST['courriel']; ?></td>
 			</tr>
@@ -32,12 +32,12 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 			if($_POST['type_paiement'] == 'boutique')
 			{
 			?>
-				<tr>	
+				<tr style="height:40px;">	
 					<td><b>Adresse Facturation</b></td>
 					<td><?php echo $_POST['adressefact']; ?></td>
 				</tr>
 				
-				<tr>	
+				<tr style="height:40px;">	
 					<td><b>Adresse de Livraison</b></td>
 					<td><?php echo $_POST['adresselivr']; ?></td>
 				</tr>
@@ -45,7 +45,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 			}
 			?>
 			
-			<tr>	
+			<tr style="height:40px;">	
 				<td><b>N° de Téléphone</b></td>
 				<td><?php echo $_POST['tel']; ?></td>
 			</tr>
@@ -55,7 +55,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 				$commande = '';
 				if($_POST['type_paiement'] == 'boutique')
 				{
-					echo '<tr>	
+					echo '<tr style="height:40px;">	
 							<td><b>Reférence</b></td>
 							<td><b>Nom</b></td>
 							<td><b>Quantité</b></td>
@@ -65,7 +65,7 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 					foreach($_SESSION['caddie'] as $article)
 					{
 						echo '
-						<tr>	
+						<tr style="height:40px;">	
 							<td>'.$article['id'].'</td>
 							<td>'.$article['nom'].'</td>
 							<td>x'.$article['qte'].'</td>
@@ -77,16 +77,16 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 				}
 				else
 				{
-					echo '<tr>	
-							<td><b>N°Facture</b></td>
-							<td><b>Date</b></td>
-							<td><b>Montant</b></td>
+					echo '<tr style="height:40px;">	
+							<td style="width:150px;"><b>N°Facture</b></td>
+							<td style="width:150px;"><b>Date</b></td>
+							<td style="width:150px;"><b>Montant</b></td>
 						</tr>';
 						
 					for($i=1;$i<=$_POST['nbr_fac'];$i++)
 					{
 						echo '
-							<tr>	
+							<tr style="height:40px;">	
 								<td>'.$_POST['num'.$i].'</td>
 								<td>'.$_POST['date'.$i].'</td>
 								<td>'.$_POST['montant'.$i].'€</td>
@@ -98,13 +98,13 @@ if(isset($_POST) and !empty($_POST))//si info client déjà connu => facture
 				}
 				$montant = round(($_POST['type_paiement'] == 'boutique') ? $_SESSION['caddieTot']:$_POST['montanttot']*100)/100;
 			?>
-			<tr>
+			<tr style="height:40px;">
 				<td colspan="3"><b>Montant Total</b></td>
 				<td></td>
 				<td><?php echo $montant  ?>€</td>
 			</tr>
 			
-			<tr>	
+			<tr style="height:40px;">	
 				<td><b>Commentaire</b></td>
 				<td><?php echo $_POST['commentaire']; ?></td>
 			</tr>
@@ -125,45 +125,45 @@ else // sinon il les remplis => boutique
 ?>
 	<form method="post" action="<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=paiement_final">
 		<table border="0" cellspacing="20" cellpadding="5" style="margin:auto;" width="930px">
-				<tr>
+				<tr style="height:20px;">
 					<td colspan="6"><hr/></td>
 				</tr>
-				<tr>
+				<tr style="height:40px;">
 					<td style="text-align:center;" colspan="6"><b>Vos coordonnées</b></td>
 				</tr>
-				<tr>
+				<tr style="height:20px;">
 					<td colspan="6"><hr/></td>
 				</tr>
 
-				<tr>
+				<tr style="height:40px;">
 					<td width="150px"><label class="lab" for="nom"><b>Nom du client <span class="red">* </span></b><br/><small id="lim_nom">(Max 50 caractères)</small></label></td>
 					<td><input class="lab" style="text-align:right;"type="text" name="nom" id="nom" onblur="textLimit(this,50, lim_nom);" required/></td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td><label class="lab" for="societe"><b>Société </b><br/><small id="lim_soc">(Max 50 caractères)</small></label></td>
 					<td><input class="lab" style="text-align:right;" type="text" name="societe" id="societe" onblur="textLimit(this,50, lim_soc);" /></td>
 				</tr>
-				<tr>
+				<tr style="height:40px;">
 					<td><label class="lab" for="courriel" id="email"><b>Courriel <span class="red">* </span></b></label>
 					<td><input class="lab" style="text-align:right;" type="text" name="courriel" id="courriel" onblur="isEmail(this,email);" required/>
 				</tr>
-				<tr>	
+				<tr style="height:40px;">	
 					<td><label class="lab" for="adressefact" id="email"><b>Adresse Facturation <span class="red">* </span></b><br/><small>(N° - Voie - Code Postal - Ville)</small></label></td>
 					<td><input class="lab" style="text-align:right;" size="40" type="text" name="adressefact" id="adressefact" required/></td>
 				</tr>
 				
-				<tr>	
+				<tr style="height:40px;">	
 					<td><label class="lab" for="adresselivr" id="email"><b>Adresse de Livraison <span class="red">* </span></b><br/><small>Uniquement en France Métropolitaine</small></label></td>
 					<td><input class="lab" style="text-align:right;" size="40" type="text" name="adresselivr" id="adresselivr" required/></td>
 				</tr>
 				
-				<tr>	
+				<tr style="height:40px;">	
 					<td><label class="lab" for="tel" id="email"><b id="numtel">N° de Téléphone <span class="red">* </span></b></label></td>
 					<td><input class="lab" style="text-align:right;" type="text" name="tel" id="tel" onblur="isTel(this,numtel);" required/></td>
 				</tr>
 				
-				<tr>
+				<tr style="height:40px;">
 					<td><b>Commentaire </b><br/><small>(facultatif)</small></td>
 					<td><label class="lab" for="commentaire"><textarea class="lab" name="commentaire" id="commentaire" rows="10" cols="40" style="resize:none" ></textarea></label></td>
 				</tr>

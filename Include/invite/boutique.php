@@ -398,7 +398,6 @@
 					echo '<table id="liste_article" cellspacing="20">';
 					while($ar=$rq->fetch())
 					{
-						
 						$rq2 = $bdd->prepare("SELECT valeur FROM tva WHERE id=?");
 						$rq2->execute(array($ar['tva']));
 						$tva = $rq2->fetch();
@@ -406,16 +405,19 @@
 						if($i == 1)
 							echo '<tr>';
 							
-							echo '<td>
+							echo '<td style="padding-bottom:10px;">
 							<div class="blockproduit" onclick="location.href=\'index.php?page=boutique&mode=viewone&id='.$ar['id'].'\'"> '; 
-							echo '<table style="margin-left:4px; margin-right:4px;">';
+							echo '<table style="margin-left:4px; margin-right:4px;">
+									<tr>
+										<td style="width:325px;"></td>
+										<td style="width:325px;"><span style="text-decoration:underline; font-weight:bold;">'.substr($ar['nom'],0,35).'</span></td>
+									</tr>';
 							if(isset($_SESSION['id']))
 							{
 								echo'
 								<tr>
-								<td style="width:325px;"><span style="margin-left:18px;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
-								<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span></td>
-								<td style="width:325px;"><span style="text-decoration:underline; font-weight:bold;">'.substr($ar['nom'],0,35).'</span></td>
+									<td style="width:325px;"><span style="margin-left:18px;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
+									<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span></td>
 								</tr>';
 							}
 							
@@ -438,8 +440,11 @@
 							
 							</table>
 							</div>
-							<span id="'.$ar['id'].'" class="style" style="float:left; width:450px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
-							<span class="style" style="float:left; width:172px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/>';
+							
+							<div style="margin-left:10px;">
+								<span id="'.$ar['id'].'" class="style" style="float:left; width:450px; border-radius: 0px 0px 0px 50px;" onclick="ajoutpanier('.$ar['id'].');">Ajouter au panier </span>
+								<span class="style" style="float:left; width:172px; border-radius: 0px 0px 50px 0px;"><input size="2" name="qte'.$ar['id'].'" id="qte'.$ar['id'].'" value="1"/></span>
+							</div>';
 							
 							echo '<input type="hidden" id="name'.$ar['id'].'" value="'.$ar['nom'].'"/>
 							<input type="hidden" id="prix'.$ar['id'].'" value="'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'"/>';
@@ -610,7 +615,10 @@
 								</div>
 							<div style="margin:auto;width:90%;">
 							<?php
-								echo '<table style="margin-bottom:40px;">
+							$rqtva = $bdd->prepare("SELECT * FROM tva WHERE id=?");
+							$rqtva->execute(array($donnees['tva']));
+							$artva=$rqtva->fetch();
+								echo '<table>
 										<tr>
 											<td style="width:250px;"><img src="'.$donnees['images'].'" style="max-height:100%; width:auto; max-width:250px;" /></td>
 											<td style="width:15px;"></td>
@@ -622,13 +630,18 @@
 										<td style="width:15px;"></td>';
 								echo '	<td><b>| HT : <span style="color:#a10e08;">'.(round($donnees['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'</span> € |</b></td>
 									</tr>';
-								echo '</table>';
 								?>								
-							</div>
 							<?php
-							echo '<span style="margin:auto; width=420px;"><span id="'.$donnees['id'].'" class="style" style=" width:200px;" onclick="ajoutpanier('.$donnees['id'].');">Ajouter au panier </span>
-							<a href="javascript:history.back()" class="style" style="width:200px;">Retour</a></span>';
+							echo '<tr style="height:80px;">
+									<td><span id="'.$donnees['id'].'" class="style" onclick="ajoutpanier('.$donnees['id'].');">Ajouter au panier </span></td>
+									<td><span class="style" style="width:70px;"><input size="1" name="qte'.$donnees['id'].'" id="qte'.$donnees['id'].'" value="1"/></span></td>
+									<td><a href="javascript:history.back()" class="style" style="width:200px;">Retour</a></td>
+								</tr>';
+							echo '</table>';
+							echo '<input type="hidden" id="name'.$donnees['id'].'" value="'.$donnees['nom'].'"/>
+							<input type="hidden" id="prix'.$donnees['id'].'" value="'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'"/>';
 							?>
+							</div>
 						</div>
 				<?php	
 				}
@@ -655,6 +668,8 @@
 			active : 1
 		});
 	});
+	
+
 
 	window.onscroll = scroll;
 </script>
