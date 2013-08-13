@@ -32,6 +32,7 @@ Name : Contact.php => Plug-it
 	{
 		if(preg_match("`[a-zA-Z1-9.-_]*@[a-zA-Z]*.[a-zA-Z]*`",$_POST['courriel']))
 		{
+			var_dump($_POST);
 			$message = "";
 			$societe = (isset($_POST['societe'])) ? $_POST['societe']:"";
 			$objet = (isset($_POST['objet'])) ? $_POST['objet']:"";
@@ -221,7 +222,8 @@ Name : Contact.php => Plug-it
 	}
 	// init lorsque la page est chargée
 	google.maps.event.addDomListener( window, 'load', initCarte);
-
+</script>
+<script type="text/javascript">
 	/*####ONGLETS####*/
 	$(function() {
 	$( "#tabs" ).tabs();
