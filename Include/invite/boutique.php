@@ -258,7 +258,7 @@
 				}
 
 			
-				echo '<p class="grdtitre" style="margin-bottom:10px;"><marquee><span style="margin-left:20px;font:bold 12px;color:white;">'.strtoupper($_GET['categ']).'</span></marquee></p>'
+				echo '<p class="grdtitre" style="margin-bottom:10px;"><marquee><span style="margin-left:20px;font:bold 12px;color:white;">'.$ar3['nom'].'</span></marquee></p>'
 
 			?>
 				<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
@@ -415,18 +415,24 @@
 								<tr>
 								<td style="width:325px;"><span style="margin-left:18px;"><a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=admin_boutique&mode=modifier&id='.$ar['id'].'">Modifier</a> - 
 								<a class="bt" href="'.$_SESSION['protocol'].$_SESSION['current_loc'].'traitement/trt_boutique.php?mode=delete&id='.$ar['id'].'&categ='.$idcateg.'">Supprimer</a></span></td>
-								<td style="width:325px;"><span style="text-decoration:underline; font-weight:bold;">'.substr($ar['nom'],0,30).'</span></td>
+								<td style="width:325px;"><span style="text-decoration:underline; font-weight:bold;">'.substr($ar['nom'],0,35).'</span></td>
 								</tr>';
+							}
+							
+							$lls="";
+							if(strlen($ar['description']) > 300)
+							{
+								$lls="<br/>...Lire La Suite...";
 							}
 							
 							echo'
 							<tr>
 								<td style="width:325px; height:210px;"><img src="'.$ar['images'].'" style="margin-left:18px; max-height:100%; width:auto; max-width:210px;"/></td>
-								<td style="width:325px; height:210px;">'.substr($ar['description'],0,300).' ...</td>
+								<td style="width:325px; height:210px;">'.substr($ar['description'],0,300).' '.$lls.'</td>
 							</tr>
 							
 							<tr>
-								<td style="width:325px;"><span style="margin-left:18px;">Livraison sous '.$ar['delai'].' heures</span></td>
+								<td style="width:325px;"><span style="margin-left:18px;"><b>Livraison sous <span style="color:green;">'.$ar['delai'].' heures</span></b></span></td>
 								<td style="width:325px;"><b>| HT : <span style="color:#a10e08;">'.(round($ar['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'</span> € |</b></td>
 							</tr>
 							
@@ -602,21 +608,27 @@
 										</div>
 									</div>
 								</div>
-							<div style="margin:auto;width:70%;">
+							<div style="margin:auto;width:90%;">
 							<?php
-								echo '<img src="'.$donnees['images'].'" style="float:right; margin-left:18px; max-height:100%; width:auto; max-width:250px;" />
-								'.nl2br($donnees['description']);
-								echo '<b>| HT : <span style="color:#a10e08;">'.(round($donnees['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'</span> € |</b>';
-							
-								$j=mb_substr_count(nl2br($donnees['description']),'<br />');
-
-								for($i=15-$j;$i>0;$i--)
-								{
-									echo '<br/>';
-								}
-								?>				
+								echo '<table style="margin-bottom:40px;">
+										<tr>
+											<td style="width:250px;"><img src="'.$donnees['images'].'" style="max-height:100%; width:auto; max-width:250px;" /></td>
+											<td style="width:15px;"></td>
+											<td>'.nl2br($donnees['description']).'</td>
+										</tr>';
+								echo '
+									<tr>
+										<td style="width:250px;"><b>Livraison sous <span style="color:green;">'.$donnees['delai'].' heures</span></b></td>
+										<td style="width:15px;"></td>';
+								echo '	<td><b>| HT : <span style="color:#a10e08;">'.(round($donnees['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'</span> € |</b></td>
+									</tr>';
+								echo '</table>';
+								?>								
 							</div>
-							<a href="javascript:history.back()" class="style" style="width:200px; margin:auto;">Retour</a>
+							<?php
+							echo '<span style="margin:auto; width=420px;"><span id="'.$donnees['id'].'" class="style" style=" width:200px;" onclick="ajoutpanier('.$donnees['id'].');">Ajouter au panier </span>
+							<a href="javascript:history.back()" class="style" style="width:200px;">Retour</a></span>';
+							?>
 						</div>
 				<?php	
 				}

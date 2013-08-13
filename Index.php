@@ -15,9 +15,15 @@ Name : Index.php => Plug-it
 
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
+	<head>	
 		<link rel="icon" type="image/png" href="./images/favicon.png">
 		<link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
+<<<<<<< HEAD
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+=======
+>>>>>>> 15ab148b7ffb0af4015c86b7862db531f0077cb9
 		
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 

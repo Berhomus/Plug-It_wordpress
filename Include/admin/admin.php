@@ -77,7 +77,7 @@ else
 		<!--<li class="menuverti" onclick="location.href='<?php //echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=backup'">Gestionnaire de backup</li>-->
 		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_article'">Nouvel Article</li>
 		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_categ_tva'">Catégorie Boutique & TVA</li>
-		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_gestionnaire_rebut'">Gestionnaire des produits mis au rebut</li>
+		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_gestionnaire_rebut'">Gestionnaire des rebuts</li>
 		<li class="menuverti" onclick="location.href='<?php echo $_SESSION['protocol'].$_SESSION['current_loc']; ?>index.php?page=admin_contact'">Gestion des pages contact</li>
 	</ul>
 </center>
