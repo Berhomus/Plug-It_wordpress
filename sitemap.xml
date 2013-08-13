@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>http://www.plug-it.com/</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=accueil</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=accueil&amp;sub=main</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=cloud</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=webapps</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=view</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=viewone&amp;id=3</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=viewone&amp;id=4</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=viewone&amp;id=2</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=viewone&amp;id=5</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=viewone&amp;id=6</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=services&amp;mode=viewone&amp;id=7</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=solutions&amp;mode=view</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=telephonie</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=photocopieur</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=tablettes</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=smartphones</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=notesbook</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=disques%20durs%20externes</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=Modems%20et%20Routeurs%20Wifi</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=accessoires</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;categ=téléphonie%20ip</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=reglement</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=support</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=boutique&amp;mode=viewone&amp;id='+idprod+'</loc>
+</url>
+<url>
+  <loc>http://www.plug-it.com/index.php?page=paiement_final</loc>
+</url>
+</urlset>
