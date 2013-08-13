@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mar 13 Août 2013 à 14:26
+-- Généré le: Mar 13 Août 2013 à 14:50
 -- Version du serveur: 5.5.24-log
 -- Version de PHP: 5.3.13
 
@@ -118,6 +118,7 @@ CREATE TABLE IF NOT EXISTS `produit` (
   `categorie` int(11) NOT NULL,
   `tva` int(11) NOT NULL,
   `priorite` int(11) NOT NULL,
+  `delai` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
@@ -125,12 +126,12 @@ CREATE TABLE IF NOT EXISTS `produit` (
 -- Contenu de la table `produit`
 --
 
-INSERT INTO `produit` (`id`, `nom`, `images`, `description`, `date`, `prix`, `categorie`, `tva`, `priorite`) VALUES
-(2, 'fuqfdgf qufgqd fqgudgf q qf ggfq f qfdqgdqfi', 'images/logo-plug-it.png', '<img src="images/fleche.png">\r\n										', '2013-08-06 13:23:13', 84460.2, 11, 2, 1),
-(4, 'Produit Ausu Pro 2004/NB Patate', 'images/cadena.jpg', '', '2013-08-06 12:18:32', 0, 11, 1, 1),
-(5, 'GNE AHSGDYEILDKCNBQKSHDBEVD fufhsudhfusfhsudf sdhf', 'images/ecoute-conseil.png', '<img src="images/fleche.png"> esfsfs\r\n										', '2013-08-06 12:23:22', 44884.1, 11, 1, 5),
-(6, 'fuqfdgf qufgqd fqgudgf q qf ggfq f qfdqgdqfi', 'images/about-img1.jpg', '', '2013-08-06 12:24:13', 50, 11, 2, 1),
-(7, 'Test', 'images/about-img1.jpg', '', '2013-08-06 12:24:33', 4884.15, 11, 1, 1);
+INSERT INTO `produit` (`id`, `nom`, `images`, `description`, `date`, `prix`, `categorie`, `tva`, `priorite`, `delai`) VALUES
+(2, 'fuqfdgf qufgqd fqgudgf q qf ggfq f qfdqgdqfi', 'images/logo-plug-it.png', '<img src="images/fleche.png">\r\n										', '2013-08-13 14:49:47', 84460.2, 11, 2, 1, 14),
+(4, 'Produit Ausu Pro 2004/NB Patate', 'images/cadena.jpg', '', '2013-08-13 14:49:47', 0, 11, 1, 1, 56),
+(5, 'GNE AHSGDYEILDKCNBQKSHDBEVD fufhsudhfusfhsudf sdhf', 'images/ecoute-conseil.png', '<img src="images/fleche.png"> esfsfs\r\n										', '2013-08-13 14:49:47', 44884.1, 11, 1, 5, 57),
+(6, 'fuqfdgf qufgqd fqgudgf q qf ggfq f qfdqgdqfi', 'images/about-img1.jpg', '', '2013-08-13 14:49:47', 50, 11, 2, 1, 2),
+(7, 'Test', 'images/about-img1.jpg', '', '2013-08-13 14:49:47', 4884.15, 11, 1, 1, 7);
 
 -- --------------------------------------------------------
 

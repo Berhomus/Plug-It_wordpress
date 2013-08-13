@@ -32,7 +32,6 @@ Name : Contact.php => Plug-it
 	{
 		if(preg_match("`[a-zA-Z1-9.-_]*@[a-zA-Z]*.[a-zA-Z]*`",$_POST['courriel']))
 		{
-			var_dump($_POST);
 			$message = "";
 			$societe = (isset($_POST['societe'])) ? $_POST['societe']:"";
 			$objet = (isset($_POST['objet'])) ? $_POST['objet']:"";
