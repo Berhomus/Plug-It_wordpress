@@ -38,7 +38,8 @@ function connect()
 			if(MD5($_POST['pass']) == $array['mdp_md5'])//verification password
 			{
 				$_SESSION['id'] = $array['id'];
-				$_SESSION['login'] = $array['login'];		
+				$_SESSION['login'] = $array['login'];	
+				// $_SESSION['protocol'] = "https://";				
 				return 0;//ok
 			}
 			else

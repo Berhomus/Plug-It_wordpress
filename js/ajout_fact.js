@@ -194,7 +194,6 @@ var nbr_fac = 0;
 							
 							document.getElementById('num'+elementNo).setAttribute('name','num'+n);
 							document.getElementById('num'+elementNo).setAttribute('id','num'+n);
-							document.getElementById('lim_num'+elementNo).setAttribute('id','lim_num'+n);
 							
 							
 							document.getElementById('label_date'+elementNo).setAttribute('for','date'+n);
