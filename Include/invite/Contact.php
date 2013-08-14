@@ -75,6 +75,7 @@ Name : Contact.php => Plug-it
 			<input type="hidden" id="mail" name="mail" value="'.$ar['courriel'].'"/>
 			<input type="hidden" id="lat_'.$i.'" name="lat" value="'.$ar['latitude'].'"/>
 			<input type="hidden" id="longi_'.$i.'" name="longi" value="'.$ar['longitude'].'"/>';
+			
 
 ?>
 
@@ -179,7 +180,7 @@ Name : Contact.php => Plug-it
 
 			 // echo '<div id="div_carte'.$i.'"></div>';
 			
-			echo '<iframe width="300" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=12+bis+rue+raymond+joly+levignen&amp;aq=&amp;sll='.$ar['latitude'].','.$ar['longitude'].'&amp;t=m&amp;ie=UTF8&amp;hq=&amp;&amp;z=17&amp;output=embed"></iframe><br /><small><a href="https://maps.google.fr/maps?f=q&amp;source=embed&amp;hl=fr&amp;geocode=&amp;q=12+bis+rue+raymond+joly+levignen&amp;aq=&amp;sll=49.968972,2.291351&amp;sspn=0.860327,2.688904&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=12+Rue+Raymond+Joly,+60800+L%C3%A9vignen,+Oise,+Picardie&amp;z=14&amp;ll=49.195012,2.912469" style="color:#0000FF;text-align:left">Agrandir le plan</a></small>';
+			echo '<iframe width="300" height="300" frameborder="0" scrolling="no" marginheight="auto" marginwidth="auto" src="https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=12+bis+rue+raymond+joly+levignen&amp;aq=&amp;sll='.$ar['latitude'].','.$ar['longitude'].'&amp;t=m&amp;ie=UTF8&amp;hq=&amp;&amp;z=17&amp;output=embed"></iframe><br /><small><a href="https://maps.google.fr/maps?f=q&amp;source=embed&amp;hl=fr&amp;geocode=&amp;q=12+bis+rue+raymond+joly+levignen&amp;aq=&amp;sll=49.968972,2.291351&amp;sspn=0.860327,2.688904&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=12+Rue+Raymond+Joly,+60800+L%C3%A9vignen,+Oise,+Picardie&amp;z=14&amp;ll=49.195012,2.912469" style="color:#0000FF;text-align:left">Agrandir le plan</a></small>';
 
 			echo '</div>';
 		?>

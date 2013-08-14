@@ -82,13 +82,13 @@ Name : Index.css => Plug-it
 	text-transform:uppercase;
 	font-size:10px;
 	color:white;
-	background: #111;
-	background: -moz-linear-gradient(#444, #111);
+	background: #333333;
+	/*background: -moz-linear-gradient(#444, #111);
 	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
 	background: -webkit-linear-gradient(#444, #111);
 	background: -o-linear-gradient(#444, #111);
 	background: -ms-linear-gradient(#444, #111);
-	background: linear-gradient(#444, #111);
+	background: linear-gradient(#444, #111);*/
 	}
 	
 .boutbout
@@ -104,12 +104,12 @@ Name : Index.css => Plug-it
 	border-color:#696969 #DCDCDC #DCDCDC #696969;
 	color:white;
 	background: #F9BD1A;
-	background: -moz-linear-gradient(#444, #F9BD1A);
+	/*background: -moz-linear-gradient(#444, #F9BD1A);
 	background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #F9BD1A),color-stop(1, #444));
 	background: -webkit-linear-gradient(#444, #F9BD1A);
 	background: -o-linear-gradient(#444, #F9BD1A);
 	background: -ms-linear-gradient(#444, #F9BD1A);
-	background: linear-gradient(#444, #F9BD1A);
+	background: linear-gradient(#444, #F9BD1A);*/
 	}
 	
 	
@@ -511,35 +511,43 @@ Name : Index.css => Plug-it
         margin: 0 0 0 100px;
         padding: 0px 0px 0px 0px;
         list-style: none;
-        background: #111;
-        background: -moz-linear-gradient(#444, #111);
+        background: #333333;
+        /*background: -moz-linear-gradient(#444, #111);
         background: -webkit-gradient(linear,left bottom,left top,color-stop(0, #111),color-stop(1, #444));
         background: -webkit-linear-gradient(#444, #111);
         background: -o-linear-gradient(#444, #111);
         background: -ms-linear-gradient(#444, #111);
-        background: linear-gradient(#444, #111);
-        -moz-border-radius: 50px;
+        background: linear-gradient(#444, #111);*/
+        /*-moz-border-radius: 50px;
         border-radius: 50px 0px 0px 50px;
         -moz-box-shadow: 0 2px 1px #9c9c9c;
         -webkit-box-shadow: 0 2px 1px #9c9c9c;
-        box-shadow: 0px 2px 1px #9c9c9c;
+        box-shadow: 0px 2px 1px #9c9c9c;*/
 }
 
 #menu li{
         float: left;
         padding: 30px 15px 30px 15px;
         position: relative;
+		height:30px;
+}
+
+#menu li:hover{
+	color:#333333;
+	text-decoration:none;
+	background:#F9BD1A;
 }
 
 #menu a{
         float: left;
         height: 25px;
+		display:block;
         padding:0px 10px 0px 10px;
-        color: #999;
+        color: #333333;
         text-transform: uppercase;
         font: bold 12px/25px Arial, Helvetica;
         text-decoration: none;
-        text-shadow: 10px 10px 10px #000;
+        /*text-shadow: 10px 10px 10px #000;*/
 		color:white;
 }
 

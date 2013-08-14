@@ -12,7 +12,7 @@ Name : Banniere.php => Plug-it
 
 ?>
 <div>
-	<div style="min-width:1350px;"><a href="index.php?page=accueil"><img src="images/logotype_plug_it(transparence).png" style="border:none;float:left; margin:13px 50px 13px 13px;"/></a>
+	<div style="min-width:1350px;"><a href="index.php?page=accueil"><img src="images/logotype_plug_it.png" style="border:none;float:left; margin:13px 50px 13px 13px;"/></a>
 	<ul id="menu">
 		<?php
 		require_once('./connexionbddplugit.class.php');

@@ -1,5 +1,3 @@
-<h2 class="grdtitre">Boutique en Ligne</h2>
-
 <!--<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 
@@ -224,7 +222,7 @@
 	switch($_GET['mode'])
 	{	
 		case 'view' :
-		
+			echo '<h2>Boutique en Ligne</h2>';
 			$rq1 = connexionbddplugit::getInstance()->query("SELECT id FROM menu WHERE baseName='boutique'");
 			$ar1 = $rq1->fetch();
 			
@@ -258,7 +256,7 @@
 				}
 
 			
-				echo '<p class="grdtitre" style="margin-bottom:10px;"><marquee><span style="margin-left:20px;font:bold 12px;color:white;">'.$ar3['nom'].'</span></marquee></p>'
+				echo '<p style="margin-bottom:10px; margin-top:10px; font-weight:bold; text-align:center;">'.$ar3['nom'].'</p>'
 
 			?>
 				<div id="accordeon"> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
@@ -435,7 +433,7 @@
 							
 							<tr>
 								<td style="width:325px;"><span style="margin-left:18px;"><b>Livraison sous <span style="color:green;">'.$ar['delai'].' heures</span></b></span></td>
-								<td style="width:325px;"><b>| HT : <span style="color:#a10e08;">'.(round($ar['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($ar['prix']*(($tva['valeur']/100)+1)*100)/100).'</span> € |</b></td>
+								<td style="width:325px;"><b> Hors Taxes : <span style="color:#111;">'.(round($ar['prix']*100)/100).'</span> € </b></td>
 							</tr>
 							
 							</table>
@@ -503,7 +501,7 @@
 						echo "Une erreur est survenue : ".$e->getMessage();
 					}
 			
-					echo '<h2 class="grdtitre" style="margin-bottom:20px;">'.$donnees['nom'].'</h2>
+					echo '<p class="grdtitre" style="width:990px; height:30px; font-weight:bold; text-align:center; line-height:30px; margin-bottom:20px; border-radius:40px;">'.$donnees['nom'].'</p>
 						<div style="margin:auto; padding-top:15px; padding-bottom:15px; width:990px; border:4px solid;border-radius:15px; border-color:#DCDCDC #696969 #696969 #DCDCDC;">';
 							?>
 								<div id="accordeon" style=""> <!-- Bloc principal, sur lequel nous appellerons le plugin PANIER-->
@@ -628,7 +626,7 @@
 									<tr>
 										<td style="width:250px;"><b>Livraison sous <span style="color:green;">'.$donnees['delai'].' heures</span></b></td>
 										<td style="width:15px;"></td>';
-								echo '	<td><b>| HT : <span style="color:#a10e08;">'.(round($donnees['prix']*100)/100).'</span> € || TTC : <span style="color:#a10e08;">'.(round($donnees['prix']*(($artva['valeur']/100)+1)*100)/100).'</span> € |</b></td>
+								echo '	<td><b> Hors Taxes : <span style="color:#111;">'.(round($donnees['prix']*100)/100).'</span> € </b></td>
 									</tr>';
 								?>								
 							<?php
