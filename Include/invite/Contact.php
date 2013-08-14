@@ -197,7 +197,37 @@ Name : Contact.php => Plug-it
 </div>
 
 <script type="text/javascript">
-	
+
+	// var lat = document.getElementById('lat').value;
+	// var longi = document.getElementById('longi').value;
+
+	// var pos = new google.maps.LatLng(lat, longi);
+	function initCarte()
+	{
+		// création de la carte
+		var oMap = new google.maps.Map( document.getElementById( 'div_carte'),
+		{
+		'center' : pos,
+		'zoom' : 17,
+		'mapTypeId' : google.maps.MapTypeId.ROADMAP
+		});
+
+		var myMarker = new google.maps.Marker({
+		// Coordonnées du site
+		position: pos,
+		map: oMap,
+		title: "Plug-it"
+		});
+
+		var myWindowOptions = {
+		content:
+		'<h6>Plug-it</h6>'
+		};
+		var myInfoWindow = new google.maps.InfoWindow(myWindowOptions);
+	}
+	// init lorsque la page est chargée
+	// google.maps.event.addDomListener( window, 'load', initCarte);
+
 	/*####ONGLETS####*/
 	$(function() {
 	$( "#tabs" ).tabs();

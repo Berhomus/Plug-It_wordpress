@@ -30,7 +30,7 @@ Name : accueil.php => Plug-it
 				});
 			</script>
 
-			<div style="background-color:#f9bd1a; height:556px; width:100%; padding-top:1%;">
+			<div style="background-color:#f9bd1a; height:603px; width:100%; padding-top:1%;">
 				<div id="iview">
 				<?php
 				
