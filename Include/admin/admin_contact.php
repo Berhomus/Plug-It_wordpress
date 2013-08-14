@@ -18,17 +18,9 @@ if(isset($_SESSION['id']))
 	$longitude=0;
 	$require="required";
 	$address="";
-	if(isset($_POST) && !empty($_POST))
-	{
-		$id= (isset($_GET['id'])) ? $_GET['id']:0;
-		$ville=$_POST['ville'];
-		$courriel=$_POST['courriel'];
-		$latitude=$_POST['latitude'];
-		$longitude=$_POST['longitude'];
-		$coordonnees=$_POST['coordonnees'];
-		var_dump($_POST);
-	}
-	else if(isset($_GET['id']))
+	$modif = "create";
+	
+	if(isset($_GET['id']))
 	{
 		require_once('./connexionbddplugit.class.php');
 		$bdd = connexionbddplugit::getInstance();
@@ -38,23 +30,22 @@ if(isset($_SESSION['id']))
 			$rq = $bdd->prepare("SELECT * FROM contact WHERE id=?");
 			$rq->execute(array($_GET['id']));
 			$array=$rq->fetch();
+			$id=$array['id'];
+			$ville=$array['ville'];
+			$courriel=$array['courriel'];
+			$coordonnees=$array['coordonnees'];
+			$latitude=$array['latitude'];
+			$longitude=$array['longitude'];
+			$require="";
+			$modif = "modif&id=".$id;
 		} catch ( Exception $e ) {
 			echo "Une erreur est survenue : ".$e->getMessage();
-		}
-		
-		$id=$array['id'];
-		$ville=$array['ville'];
-		$courriel=$array['courriel'];
-		$coordonnees=$array['coordonnees'];
-		$latitude=$array['latitude'];
-		$longitude=$array['longitude'];
-		$require="";
-		
+		}	
 	}
 ?>
 
 	<div style="padding-bottom:30px;">
-		<form method="post" action="#" onSubmit="document.getElementById('latitude').value = document.getElementById('lat').innerHTML; document.getElementById('longitude').value = document.getElementById('lng').innerHTML;">
+		<form method="post" action="traitement/trt_contact.php?mode=<?php echo $modif; ?>" onSubmit="document.getElementById('latitude').value = document.getElementById('lat').innerHTML; document.getElementById('longitude').value = document.getElementById('lng').innerHTML;">
 			<table border="0" cellspacing="20" cellpadding="5" style="width:450px; margin-top:30px; float:left;">				
 					<tr style="height:40px;">
 						<td><label for="ville"><b>Ville <span class="red">*</span></b><br/><small id="lim_ville">(Max 40 caractères)</small></label></td>
@@ -68,7 +59,7 @@ if(isset($_SESSION['id']))
 						
 					<tr style="height:40px;">
 						<td><label for="coordonnees"><b>Coordonnées <span class="red">*</span></b><br/></label></td>
-						<td><textarea col="20" rows="4" style="height: 200px; width:300px; overflow:scroll; margin-top:20px; resize:none;" name="coordonnees" id="coordonnees" <?php echo $require; ?>><?php echo nl2br($coordonnees); ?></textarea></td>
+						<td><textarea col="20" rows="4" style="height: 200px; width:300px; overflow:scroll; margin-top:20px; resize:none;" name="coordonnees" id="coordonnees" <?php echo $require; ?>><?php echo $coordonnees; ?></textarea></td>
 					</tr>
 
 					<tr style="height:40px;">

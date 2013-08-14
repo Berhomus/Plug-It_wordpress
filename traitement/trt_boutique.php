@@ -76,7 +76,7 @@ Name : trt_Produit.php => Plug-it
 								
 								try{
 									$rq=$bdd->prepare("UPDATE produit SET priorite=?, categorie=?, prix=?, images=?, nom=?, description=?, tva=?, delai=? WHERE id=?");
-									$rq->execute(array($ordre,$categorie,$prix,$path,$titre,$corps,$tva,$_GET['id'],$delai));
+									$rq->execute(array($ordre,$categorie,$prix,$path,$titre,$corps,$tva,$delai,$_GET['id']));
 								} catch ( Exception $e ) {
 									echo "Une erreur est survenue : ".$e->getMessage();
 								}
