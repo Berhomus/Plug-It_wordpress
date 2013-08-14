@@ -177,10 +177,10 @@ Name : Contact.php => Plug-it
 
 			/*Carte google API*/
 
-			// echo '<div id="div_carte'.$i.'"></div>';
+			 // echo '<div id="div_carte'.$i.'"></div>';
 			
 			echo '<iframe width="300" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q=12+bis+rue+raymond+joly+levignen&amp;aq=&amp;sll='.$ar['latitude'].','.$ar['longitude'].'&amp;t=m&amp;ie=UTF8&amp;hq=&amp;&amp;z=17&amp;output=embed"></iframe><br /><small><a href="https://maps.google.fr/maps?f=q&amp;source=embed&amp;hl=fr&amp;geocode=&amp;q=12+bis+rue+raymond+joly+levignen&amp;aq=&amp;sll=49.968972,2.291351&amp;sspn=0.860327,2.688904&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=12+Rue+Raymond+Joly,+60800+L%C3%A9vignen,+Oise,+Picardie&amp;z=14&amp;ll=49.195012,2.912469" style="color:#0000FF;text-align:left">Agrandir le plan</a></small>';
-			
+
 			echo '</div>';
 		?>
 	</div>
@@ -198,35 +198,35 @@ Name : Contact.php => Plug-it
 
 <script type="text/javascript">
 
-	// var lat = document.getElementById('lat').value;
-	// var longi = document.getElementById('longi').value;
+	 // var lat = document.getElementById('lat_0').value;
+	 // var longi = document.getElementById('longi_0').value;
 
-	// var pos = new google.maps.LatLng(lat, longi);
-	function initCarte()
-	{
+	 // var pos = new google.maps.LatLng(lat, longi);
+	// function initCarte()
+	// {
 		// création de la carte
-		var oMap = new google.maps.Map( document.getElementById( 'div_carte'),
-		{
-		'center' : pos,
-		'zoom' : 17,
-		'mapTypeId' : google.maps.MapTypeId.ROADMAP
-		});
+		// var oMap = new google.maps.Map( document.getElementById( 'div_carte0'),
+		// {
+		// 'center' : pos,
+		// 'zoom' : 17,
+		// 'mapTypeId' : google.maps.MapTypeId.ROADMAP
+		// });
 
-		var myMarker = new google.maps.Marker({
+		// var myMarker = new google.maps.Marker({
 		// Coordonnées du site
-		position: pos,
-		map: oMap,
-		title: "Plug-it"
-		});
+		// position: pos,
+		// map: oMap,
+		// title: "Plug-it"
+		// });
 
-		var myWindowOptions = {
-		content:
-		'<h6>Plug-it</h6>'
-		};
-		var myInfoWindow = new google.maps.InfoWindow(myWindowOptions);
-	}
+		// var myWindowOptions = {
+		// content:
+		// '<h6>Plug-it</h6>'
+		// };
+		// var myInfoWindow = new google.maps.InfoWindow(myWindowOptions);
+	// }
 	// init lorsque la page est chargée
-	// google.maps.event.addDomListener( window, 'load', initCarte);
+	 // google.maps.event.addDomListener( window, 'load', initCarte);
 
 	/*####ONGLETS####*/
 	$(function() {
