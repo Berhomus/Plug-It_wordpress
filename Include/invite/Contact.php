@@ -36,7 +36,7 @@ Name : Contact.php => Plug-it
 
 			$message = $_POST['liste'] ." ". $_POST['nom'] ." ". $_POST['prenom'] ."\n".$societe."-".$_POST['courriel']."\n".$_POST['message'];
 
-			if(mail($_POST['courriel'], $objet,$message))
+			if(mail($_POST['mail'], $objet,$message))
 			{
 				$error_contact = 2;
 			}
@@ -64,7 +64,6 @@ Name : Contact.php => Plug-it
 		$ar = $rq->fetch();
 		
 		echo '
-			<input type="hidden" id="mail" name="mail" value="'.$ar['courriel'].'"/>
 			<input type="hidden" id="lat" name="lat" value="'.$ar['latitude'].'"/>
 			<input type="hidden" id="longi" name="longi" value="'.$ar['longitude'].'"/>';
 			
@@ -86,6 +85,7 @@ Name : Contact.php => Plug-it
 		<h2 class="titre">Contactez-nous</h2>
 
 		<form method="post" action="#">
+			<input type="hidden" id="mail" name="mail" value="<?php echo $ar['courriel']; ?>"/>
 			<table border="0" cellspacing="20" cellpadding="5" style="margin:auto; margin-right:150px;">
 				<tr style="height:40px;">
 					<td><b>Civilité <span class="red">*</span></b></td>
