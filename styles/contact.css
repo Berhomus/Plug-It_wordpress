@@ -608,7 +608,7 @@ button.ui-button::-moz-focus-inner {
 	background-position: 0 0;
 }
 
-/* For IE8 - See #6727 */
+/* Pour IE8 - Voir #6727 */
 .ui-slider.ui-state-disabled .ui-slider-handle,
 .ui-slider.ui-state-disabled .ui-slider-range {
 	filter: inherit;
@@ -687,7 +687,7 @@ button.ui-button::-moz-focus-inner {
 	border-bottom: none;
 	border-right: none;
 }
-/* vertical centre icon */
+/* Centrage Vertical des Icones */
 .ui-spinner .ui-icon {
 	position: absolute;
 	margin-top: -8px;
@@ -707,7 +707,7 @@ button.ui-button::-moz-focus-inner {
 	background-position: -65px -16px;
 }
 .ui-tabs {
-	position: relative;/* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+	position: relative;/* position: relative prévient du bug de scroll IE (element avec position: relative dans un conteneur avec overflow: auto apparaît comme "fixed") */
 	padding: .2em;
 }
 .ui-tabs .ui-tabs-nav {
@@ -890,10 +890,10 @@ body .ui-tooltip {
 	background-image: none;
 }
 .ui-state-disabled .ui-icon {
-	filter:Alpha(Opacity=35); /* For IE8 - See #6059 */
+	filter:Alpha(Opacity=35); /* Pour IE8 - Voir #6059 */
 }
 
-/* positioning */
+/* Positionement */
 .ui-icon-blank { background-position: 16px 16px; }
 .ui-icon-carat-1-n { background-position: 0 0; }
 .ui-icon-carat-1-ne { background-position: -16px 0; }
