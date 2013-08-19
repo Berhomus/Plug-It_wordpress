@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Mar 13 Août 2013 à 14:50
+-- Généré le: Lun 19 Août 2013 à 07:50
 -- Version du serveur: 5.5.24-log
 -- Version de PHP: 5.3.13
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `contact`
@@ -64,7 +64,9 @@ CREATE TABLE IF NOT EXISTS `contact` (
 
 INSERT INTO `contact` (`id`, `ville`, `courriel`, `coordonnees`, `latitude`, `longitude`) VALUES
 (1, 'Amiens', 'contact@plug-it.com', 'Plug-It\n36 bis, rue Saint-Fuscien\n80000 Amiens\n\nTél. : 03 22 22 10 90\nFax : 03 22 80 76 52', 49.8853893, 2.3037014),
-(2, 'Ville', 'courriel@courriel.fr', 'Societe\r\nVille\r\nCourriel\r\nTel', 40, 2);
+(2, 'Ville', 'courriel@courriel.fr', 'Societe\r\nVille\r\nCourriel\r\nTel', 49.8738967, 2.3601525),
+(3, 'Longueau', 'courriel@courriel.fr', 'Test\r\nContact fdsgd f sfsuf s f sf s fs fs\r\nretrsed', 24, 4),
+(4, 'Amiense', 'client@client.fr', 'rue', 49.8931432, 2.2938935);
 
 -- --------------------------------------------------------
 
@@ -98,8 +100,8 @@ INSERT INTO `menu` (`id`, `interne`, `active`, `nom`, `baseName`, `position`, `l
 (7, 1, 1, 'Boutique', 'boutique', 7, 'Index.php?page=boutique', 'Vous êtes client de plug-it et vous souhaitez régler vos factures, cette page vous permet de payer en ligne en toute sécurité.'),
 (9, 1, 1, 'Services', 'services', 4, 'Index.php?page=services&mode=view', 'Découvrez les services innovants de Plug-it, comme le cloud computing'),
 (10, 1, 1, 'CloudPrivé', 'cloud', 2, 'Index.php?page=cloud', ''),
-(11, 1, 1, 'WebApps', 'webapps', 3, 'Index.php?page=webapps', ''),
-(12, 1, 1, 'Téléphonie', 'telephonie', 5, 'Index.php?page=telephonie', ''),
+(11, 1, 0, 'WebApps', 'webapps', 3, 'Index.php?page=webapps', ''),
+(12, 1, 0, 'Téléphonie', 'telephonie', 5, 'Index.php?page=telephonie', ''),
 (13, 1, 1, 'Photocopieur', 'photocopieur', 9, '', '');
 
 -- --------------------------------------------------------
