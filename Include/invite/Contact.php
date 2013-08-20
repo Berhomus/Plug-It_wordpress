@@ -64,7 +64,6 @@ Name : Contact.php => Plug-it
 			<input type="hidden" id="mail" name="mail" value="'.$ar['courriel'].'"/>
 			<input type="hidden" id="lat" name="lat" value="'.$ar['latitude'].'"/>
 			<input type="hidden" id="longi" name="longi" value="'.$ar['longitude'].'"/>';
-			
 ?>
 
 <div style="overflow:hidden;">
@@ -170,7 +169,6 @@ Name : Contact.php => Plug-it
 			echo '</div>';
 		?>
 	</div>
-
 </div>
 <?php
 }
