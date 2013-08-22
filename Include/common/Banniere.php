@@ -26,7 +26,7 @@ Name : Banniere.php => Plug-it
 				if($ar['active'] == true)
 				{
 					echo '
-					<li id="li_'.$ar['id'].'"><a href="'.$_SESSION['protocol'].$_SESSION['current_loc'].$ar['lien'].'"';
+					<li id="li_'.$ar['id'].'" style="cursor:pointer;" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].$ar['lien'].'\'" ><a href="'.$_SESSION['protocol'].$_SESSION['current_loc'].$ar['lien'].'"';
 					echo '>'.$ar['nom'].'</a>';
 					
 					$sm = connexionbddplugit::getInstance()->query("SELECT * FROM sousmenu WHERE menu='".$ar['id']."' ORDER BY position");

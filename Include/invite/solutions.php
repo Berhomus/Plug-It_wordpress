@@ -128,7 +128,7 @@ Name : solutions.php => Plug-it
 									echo '<tr>';
 								
 								echo '<td>
-								<div class="blocklink" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=solutions&mode=viewone&id='.$donnees['id'].'\'">
+								<div class="blocklink" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page='.$_GET['page'].'&mode=viewone&id='.$donnees['id'].'\'">
 									<p style="text-align:center;position:relative;top:30%;">
 										<img src="images/fleche.png" style="vertical-align:middle;"/> <span style="font-size:13px;font-weight:bold;margin-left:5px;text-transform:uppercase;">'.$donnees['titre'].'</span>
 									</p>
