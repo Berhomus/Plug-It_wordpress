@@ -94,9 +94,8 @@ Name : solutions.php => Plug-it
 					} catch ( Exception $e ) {
 						echo "Une erreur est survenue : ".$e->getMessage();
 					}
-					
-					echo '<div style="margin:auto;width:70%;background-color: #'.$donnees['couleur'].'">
-							<img src="'.$donnees['image_sol'].'" style="float:right;" width="280" height="170" />
+					echo '<h2>'.$donnees['titre'].'</h2><hr/><br/>';
+					echo '<div style="width:100%;"><div style="margin:auto; float:left; width:65%;background-color: #'.$donnees['couleur'].'">
 							'.nl2br($donnees['corps']);
 							
 					$j=mb_substr_count(nl2br($donnees['corps']),'<br />');
@@ -108,6 +107,8 @@ Name : solutions.php => Plug-it
 					
 					
 					echo '</div>';
+					
+					echo '<img src="'.$donnees['image_sol'].'" style="float:right;" width="280" height="170" /></div>';
 						
 					
 					//affichage autres liens

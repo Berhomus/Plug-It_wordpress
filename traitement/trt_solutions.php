@@ -184,7 +184,7 @@ Name : trt_solutions.php => Plug-it
 							try{
 								$rq = $bdd->prepare("INSERT INTO solutions VALUES (Null,?,?,?,?,?,Null,?,?,?)");
 								$rq->execute(array($titre,$corps,$path2,$path,$desc,$ordre,$couleur,$menu));
-								$rq = $bdd->prepare("SELECT id,menu FROM solutions ORDER BY id LIMIT 0,1");
+								$rq = $bdd->prepare("SELECT id,menu FROM solutions ORDER BY id DESC LIMIT 0,1");
 								$rq->execute();
 								$ar = $rq->fetch();		
 								
