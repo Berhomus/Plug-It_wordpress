@@ -179,12 +179,12 @@ if(isset($_SESSION['id']))
 		</tr>
 		
 		<tr style="height:80px;">		
-			<td><label for="logosolu"><b>Logo de la solution <span class="red">*</span></b><br/><small>(Max 100Ko et uniquement jpg, png, gif et bmp<br/>(Taille conseillée 280x170)</small></label></td>		
+			<td><label for="logosolu"><b>Logo de la solution <span class="red">*</span></b><br/><small>(Uniquement jpg, png, gif et bmp<br/>(Taille conseillée 280x170)</small></label></td>		
 			<td><input size="50" type="file" name="logosolu" id="logosolu" <?php echo $require; ?>/></td>
 		</tr>
 		
 		<tr style="height:80px;">		
-			<td><label for="grandeimg" id="grdimg"><b>Contenu pour l'accueil <span class="red">*</span></b><br/><small>(Uniquement jpg, png, gif, bmp)<br/>(Max 300Ko Taille conseillée 940x387)</small></label></td>			
+			<td><label for="grandeimg" id="grdimg"><b>Contenu pour l'accueil <span class="red">*</span></b><br/><small>(Uniquement jpg, png, gif, bmp)<br/>(Taille conseillée 940x387)</small></label></td>			
 			<td><input size="50" type="file" name="grandeimg" id="grandeimg"  <?php echo $require; ?>/></td>	
 		</tr>
 		

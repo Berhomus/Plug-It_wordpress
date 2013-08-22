@@ -114,8 +114,8 @@ Name : solutions.php => Plug-it
 					//affichage autres liens
 					try{	
 						$bdd = connexionbddplugit::getInstance();
-						$retour = $bdd->prepare("SELECT * FROM solutions WHERE id<>? ORDER BY ordre LIMIT 10"); 
-						$retour->execute(array($_GET['id']));
+						$retour = $bdd->prepare("SELECT * FROM solutions WHERE id<>? AND menu=? ORDER BY ordre LIMIT 10"); 
+						$retour->execute(array($_GET['id'],$_GET['page']));
 						
 						$i=1; //délimite les colonnes
 						$j=1; //délimite les lignes
