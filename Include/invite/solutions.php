@@ -95,7 +95,7 @@ Name : solutions.php => Plug-it
 						echo "Une erreur est survenue : ".$e->getMessage();
 					}
 					echo '<h2>'.$donnees['titre'].'</h2><hr/><br/>';
-					echo '<div style="width:100%;"><div style="margin:auto; float:left; width:65%;background-color: #'.$donnees['couleur'].'">
+					echo '<div style="width:100%; overflow:hidden;"><div style="margin:auto; float:left; width:65%;background-color: #'.$donnees['couleur'].'">
 							'.nl2br($donnees['corps']);
 							
 					$j=mb_substr_count(nl2br($donnees['corps']),'<br />');

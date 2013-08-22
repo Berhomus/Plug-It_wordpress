@@ -192,8 +192,6 @@ Name : trt_solutions.php => Plug-it
 								$rq2->execute(array($ar['menu']));
 								$ar2 = $rq2->fetch();	
 								
-								echo $ar['menu'];
-								
 								$lien = "index.php?page=".$ar['menu']."&mode=viewone&id=".$ar['id'];
 																
 								$rq = $bdd->prepare("INSERT INTO sousmenu VALUES (Null,?,?,?,?,?,?)");
