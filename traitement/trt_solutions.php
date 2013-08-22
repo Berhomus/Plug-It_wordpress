@@ -79,10 +79,10 @@ Name : trt_solutions.php => Plug-it
 
 					if($array['cpt'])
 					{
-						if(empty($_FILES['logosolu']['name'])or ($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logosolu')) != '')
+						if(empty($_FILES['logosolu']['name'])or ($path = upload('../images/',1024*1024*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logosolu')) != '')
 						{
 						
-							if(empty($_FILES['grandeimg']['name'])or ($path2 = upload('../images/',300*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'grandeimg')) != '')
+							if(empty($_FILES['grandeimg']['name'])or ($path2 = upload('../images/',1024*1024*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'grandeimg')) != '')
 							{
 								try{
 									$rq=$bdd->prepare("SELECT * FROM solutions WHERE id=?");
@@ -167,9 +167,9 @@ Name : trt_solutions.php => Plug-it
 				if(isset($_POST) and !empty($_POST))
 				{	
 					
-					if(($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logosolu')) != '')
+					if(($path = upload('../images/',1024*1024*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logosolu')) != '')
 					{
-						if(($path2 = upload('../images/',300*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp','.avi','.mp4'),'grandeimg')) != '')
+						if(($path2 = upload('../images/',1024*1024*1024,array('.png', '.gif', '.jpg', '.jpeg','.bmp','.avi','.mp4'),'grandeimg')) != '')
 						{
 							$ordre = $_POST['ordre'];
 							$titre = $_POST['nomsolu'];
@@ -184,13 +184,15 @@ Name : trt_solutions.php => Plug-it
 							try{
 								$rq = $bdd->prepare("INSERT INTO solutions VALUES (Null,?,?,?,?,?,Null,?,?,?)");
 								$rq->execute(array($titre,$corps,$path2,$path,$desc,$ordre,$couleur,$menu));
-								$rq = $bdd->prepare("SELECT id,menu FROM solutions ORDER BY id LIMIT 0,1");
+								$rq = $bdd->prepare("SELECT id,menu FROM solutions ORDER BY id DESC LIMIT 0,1");
 								$rq->execute();
 								$ar = $rq->fetch();		
 								
 								$rq2 = $bdd->prepare("SELECT id FROM menu WHERE baseName=?");
 								$rq2->execute(array($ar['menu']));
 								$ar2 = $rq2->fetch();	
+								
+								echo $ar['menu'];
 								
 								$lien = "index.php?page=".$ar['menu']."&mode=viewone&id=".$ar['id'];
 																
