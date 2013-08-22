@@ -14,6 +14,10 @@ Name : trt_Produit.php => Plug-it
 	
 	$bdd = connexionbddplugit::getInstance();
 	
+	function br2nl($foo) {
+		return preg_replace("/\<br\s*\/?\>/i", "\n", $foo);
+	}
+	
 	if(isset($_GET['mode']))
 	{
 		switch($_GET['mode'])
@@ -68,7 +72,7 @@ Name : trt_Produit.php => Plug-it
 								$prix = (!empty($_POST['prix'])) ? round($_POST['prix']*100)/100:$array['prix'];
 								$categorie = $_POST['categorie'];
 								$titre = (!empty($_POST['titre'])) ? $_POST['titre']:$array['nom'];
-								$corps = (!empty($_POST['corps'])) ? $_POST['corps']:$array['description'];
+								$corps = (!empty($_POST['corps'])) ? br2nl($_POST['corps']):$array['description'];
 								$tva = $_POST['tva'];
 								$path = (isset($path)) ? make_img_prod($path):$array['images'];
 								$ordre = $_POST['ordre'];	
@@ -120,7 +124,7 @@ Name : trt_Produit.php => Plug-it
 							$prix = round($_POST['prix']*100)/100;
 							$categorie = $_POST['categorie'];
 		
-							$corps = $_POST['corps'];
+							$corps = br2nl($_POST['corps']);
 							$ordre = $_POST['ordre'];
 							$tva = $_POST['tva'];
 							$delai = $_POST['delai'];

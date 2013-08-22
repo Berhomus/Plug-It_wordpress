@@ -20,11 +20,11 @@ Name : solutions.php => Plug-it
 	
 		case 'view':
 			echo'
-				<h2>Découvrez toutes nos solutions innovantes pour vous satisfaire</h2>';
+				<h2>'.strtoupper($_GET['page']).'</h2>';
 					try{
 						$bdd = connexionbddplugit::getInstance();
-						$rq = $bdd->prepare('SELECT * FROM solutions ORDER BY ordre');
-						$rq->execute();
+						$rq = $bdd->prepare('SELECT * FROM solutions WHERE menu=? ORDER BY ordre');
+						$rq->execute(array($_GET['page']));
 						
 						if(isset($_SESSION['id']))
 						{
@@ -42,8 +42,8 @@ Name : solutions.php => Plug-it
 									echo '<tr>';
 								
 								echo '<td>
-								<div class="blocksolution" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page=solutions&mode=viewone&id='.$donnees['id'].'\'">';
-								
+								<div class="blocksolution" style="background-color : #'.$donnees['couleur'].'" onclick="location.href=\''.$_SESSION['protocol'].$_SESSION['current_loc'].'index.php?page='.$_GET['page'].'&mode=viewone&id='.$donnees['id'].'\'">';
+
 								if(isset($_SESSION['id']))
 								{
 									echo'
@@ -95,7 +95,7 @@ Name : solutions.php => Plug-it
 						echo "Une erreur est survenue : ".$e->getMessage();
 					}
 					
-					echo '<div style="margin:auto;width:70%;">
+					echo '<div style="margin:auto;width:70%;background-color: #'.$donnees['couleur'].'">
 							<img src="'.$donnees['image_sol'].'" style="float:right;" width="280" height="170" />
 							'.nl2br($donnees['corps']);
 							

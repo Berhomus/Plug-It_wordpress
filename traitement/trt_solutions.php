@@ -40,14 +40,19 @@ Name : trt_solutions.php => Plug-it
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
-						update_ordre($ar['ordre'],0,-1,'solutions');
 						try{
 							$rq = $bdd->prepare("DELETE FROM solutions WHERE id=?");
 							$rq->execute(array($_GET['id']));
+							
+							$rq = $bdd->prepare("DELETE FROM sousmenu WHERE ref=?");
+							$rq->execute(array($_GET['id']));
+									
+							echo ('<h2 style="color:green;">Solution Supprimée !</h2>');
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
+							echo ('<h2 style="color:red;">Solution Non-Supprimée !</h2>');
 						}
-						echo ('<h2 style="color:green;">Solution Supprimée !</h2>');
+						
 					}
 					else
 					{
@@ -92,27 +97,29 @@ Name : trt_solutions.php => Plug-it
 								$corps = (!empty($_POST['corps'])) ? $_POST['corps']:$array['corps'];
 								$path = (isset($path)) ? make_limg($path):$array['image_sol'];
 								$path2 = (isset($path2)) ? make_img($path2,$titre,$desc):$array['image_car'];
-								$ordre = $_POST['ordre'];						
-								
-								if($ordre>$array['ordre'])
-								{
-									$pas=-1;
-								}
-								else
-								{
-									$pas=1;
-								}
-								
-								if($ordre!=$array['ordre'])
-									update_ordre($array['ordre']-$pas,$ordre,$pas,'solutions');
+								$ordre = (!empty($_POST['ordre'])) ? $_POST['ordre']:$array['ordre'];	
+								$menu = $_POST['menu_c'];
+								$couleur = $_POST['color'];
 								
 								try{
-									$rq = $bdd->prepare("UPDATE solutions SET ordre=?, image_sol=?, image_car=?, titre=?, description=?, corps=? WHERE id=?");
-									$rq->execute(array($ordre,$path,$path2,$titre,$desc,$corps,$_GET['id']));
+									$rq = $bdd->prepare("UPDATE solutions SET ordre=?, image_sol=?, image_car=?, titre=?, description=?, corps=?,couleur=?,menu=? WHERE id=?");
+									$rq->execute(array($ordre,$path,$path2,$titre,$desc,$corps,$couleur,$menu,$_GET['id']));
+									
+									$rq2 = $bdd->prepare("SELECT id FROM menu WHERE baseName=?");//id MENU via basename
+									$rq2->execute(array($menu));
+									$ar2 = $rq2->fetch();	
+									
+									$lien = "index.php?page=".$menu."&mode=viewone&id=".$_GET['id'];
+									
+									$rq = $bdd->prepare("UPDATE sousmenu SET nom=?,position=?,menu=? WHERE ref=?");
+									$rq->execute(array($titre,$ordre,$ar2['id'],$_GET['id']));
+									
+									echo ('<h2 style="color:green;">Solution Modifiée !</h2>');
 								} catch ( Exception $e ) {
 									echo "Une erreur est survenue : ".$e->getMessage();
+									echo ('<h2 style="color:red;">Solution Non-Modifiée !</h2>');
 								}
-								echo ('<h2 style="color:green;">Solution Modifiée !</h2>');
+								
 							}
 							else
 							{
@@ -123,6 +130,7 @@ Name : trt_solutions.php => Plug-it
 										<input type="hidden" name="desc" value="<?php echo htmlspecialchars($_POST['desc']);?>"/>
 										<input type="hidden" name="corps" value="<?php echo htmlspecialchars($_POST['corps']);?>"/>
 										<input type="hidden" name="ordre" value="<?php echo $_POST['ordre'];?>"/>
+										<input type="hidden" name="couleur" value="<?php echo $_POST['color'];?>"/>
 										<input type="submit" value="Retour Formulaire"/>
 									</form>
 							<?php
@@ -136,6 +144,7 @@ Name : trt_solutions.php => Plug-it
 										<input type="hidden" name="nomsolu" value="<?php echo htmlspecialchars($_POST['nomsolu']);?>"/>
 										<input type="hidden" name="desc" value="<?php echo htmlspecialchars($_POST['desc']);?>"/>
 										<input type="hidden" name="corps" value="<?php echo htmlspecialchars($_POST['corps']);?>"/>
+										<input type="hidden" name="couleur" value="<?php echo $_POST['color'];?>"/>
 										<input type="hidden" name="ordre" value="<?php echo $_POST['ordre'];?>"/>
 										<input type="submit" value="Retour Formulaire"/>
 									</form>
@@ -166,17 +175,33 @@ Name : trt_solutions.php => Plug-it
 							$titre = $_POST['nomsolu'];
 							$corps = $_POST['corps'];
 							$desc = $_POST['desc'];
-							update_ordre($ordre,0,1,'solutions');
+							
 							$path2 = make_img($path2,$titre,$desc);
 							$path = make_limg($path);
+							$menu = $_POST['menu_c'];
+							$couleur = $_POST['color'];
 							
 							try{
-								$rq = $bdd->prepare("INSERT INTO solutions VALUES (Null,?,?,?,?,?,Null,?)");
-								$rq->execute(array($titre,$corps,$path2,$path,$desc,$ordre));
+								$rq = $bdd->prepare("INSERT INTO solutions VALUES (Null,?,?,?,?,?,Null,?,?,?)");
+								$rq->execute(array($titre,$corps,$path2,$path,$desc,$ordre,$couleur,$menu));
+								$rq = $bdd->prepare("SELECT id,menu FROM solutions ORDER BY id LIMIT 0,1");
+								$rq->execute();
+								$ar = $rq->fetch();		
+								
+								$rq2 = $bdd->prepare("SELECT id FROM menu WHERE baseName=?");
+								$rq2->execute(array($ar['menu']));
+								$ar2 = $rq2->fetch();	
+								
+								$lien = "index.php?page=".$ar['menu']."&mode=viewone&id=".$ar['id'];
+																
+								$rq = $bdd->prepare("INSERT INTO sousmenu VALUES (Null,?,?,?,?,?,?)");
+								$rq->execute(array($titre,1,$lien,$ordre,$ar2['id'],$ar['id']));
+								echo ('<h2 style="color:green;">Solution Créé !</h2>');
 							} catch ( Exception $e ) {
+								$error = 1;
 								echo "Une erreur est survenue : ".$e->getMessage();
+								echo ('<h2 style="color:red;">Solution Non-Créé !</h2>');
 							}
-							echo ('<h2 style="color:green;">Solution Créée !</h2>');
 						}
 						else
 						{
@@ -185,6 +210,7 @@ Name : trt_solutions.php => Plug-it
 									<input type="hidden" name="nomsolu" value="<?php echo htmlspecialchars($_POST['nomsolu']);?>"/>
 									<input type="hidden" name="desc" value="<?php echo htmlspecialchars($_POST['desc']);?>"/>
 									<input type="hidden" name="corps" value="<?php echo htmlspecialchars($_POST['corps']);?>"/>
+									<input type="hidden" name="couleur" value="<?php echo $_POST['color'];?>"/>
 									<input type="submit" value="Retour Formulaire"/>
 								</form>
 							<?php
@@ -197,6 +223,7 @@ Name : trt_solutions.php => Plug-it
 								<input type="hidden" name="nomsolu" value="<?php echo htmlspecialchars($_POST['nomsolu']);?>"/>
 								<input type="hidden" name="desc" value="<?php echo htmlspecialchars($_POST['desc']);?>"/>
 								<input type="hidden" name="corps" value="<?php echo htmlspecialchars($_POST['corps']);?>"/>
+								<input type="hidden" name="couleur" value="<?php echo $_POST['color'];?>"/>
 								<input type="submit" value="Retour Formulaire"/>
 							</form>
 						<?php
@@ -220,6 +247,6 @@ Name : trt_solutions.php => Plug-it
 	
 	
 	
-	echo ('<center><a href="../index.php?page=solutions">Retour Solution</a></center>');
+	echo ('<center><a href="../index.php?page=accueil">Retour</a></center>');
 ?>
 </div>

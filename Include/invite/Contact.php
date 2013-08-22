@@ -24,7 +24,6 @@ Name : Contact.php => Plug-it
 	$rq = $bdd->prepare("SELECT * FROM contact WHERE upper(ville)=?");
 	$rq->execute(array($_GET['ville']));
 
-
 	$error_contact = 0;
 	if(isset($_POST) && !empty($_POST))
 	{
@@ -50,8 +49,6 @@ Name : Contact.php => Plug-it
 		else
 			$error_contact = 1;
 	}
-
-
 	
 	if($rq->rowCount() == 1)
 	{
@@ -147,12 +144,12 @@ Name : Contact.php => Plug-it
 								break;
 							}	
 						}
-					?>
-					</td>
-					<td style="text-align:right;"><input type="submit" name="envoyer" value="Envoyer" /></td>
-				</tr>		
-			</table>
-		</form>	
+						?>
+						</td>
+						<td style="text-align:right;"><input type="submit" name="envoyer" value="Envoyer" /></td>
+					</tr>		
+				</table>
+			</form>	
 		</div>
 
 		<div style="float:left;">

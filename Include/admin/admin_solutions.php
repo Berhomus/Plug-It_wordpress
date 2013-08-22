@@ -4,6 +4,7 @@ Made by : AS Amiens - Bovin Antoine/Bensaid Borhane/Villain Benoit
 Last Update : 12/07/2013
 Name : admin_solutions.php => Plug-it
 *********************************************************-->
+<script type="text/javascript" src="./js/jscolor/jscolor.js"></script>
 <script>
 /*####FONCTION PERMETTANT DE FAIRE DES REQUETES HTTP POUR RECUPERER DONNEES AU FORMAT XML####*/
 	
@@ -75,6 +76,20 @@ function getXMLHttpRequest()
 	//xhr.send("desc=" + desc);
 	
 }*/
+
+function isNumber3(field,id){
+	var regNbr = new RegExp('^[0-9]{0,3}$','i');
+
+	if (!regNbr.test(field.value) || field.value.length == 0) //cas où la valeur n'est pas du tout un nombre
+	{
+		field.value = ""; // la valeur devient nulle    
+		id.style.color = "red";
+	}
+	else
+	{
+		id.style.color = "green";
+	}
+} 
 </script>
 
 <?php
@@ -93,6 +108,7 @@ if(isset($_SESSION['id']))
 	$desc="";
 	$desc_origin="";
 	$ordre=0;
+	$couleur = "";
 	
 	if(isset($_POST) and !empty($_POST))	
 	{		
@@ -102,6 +118,7 @@ if(isset($_SESSION['id']))
 		$corps=$_POST['corps'];
 		$ordre=$_POST['ordre'];
 		$desc_origin=$_POST['desc'];
+		$couleur = $_POST['couleur'];
 	}	
 	else if(isset($_GET['id']))
 	{
@@ -131,6 +148,7 @@ if(isset($_SESSION['id']))
 			$desc=$array['description'];	
 			$grandeimg=$array['image_car'];
 			$ordre=$array['ordre'];
+			$couleur = $array['couleur'];
 			$desc_origin=$array['description'];	
 		}		
 		else	
@@ -181,32 +199,24 @@ if(isset($_SESSION['id']))
 		</tr>
 		
 		<tr style="height:60px;">
-			<td><label for="ordre"><b>Position</b><br/><small>(1ere position par défaut)</small></label></td>
+			<td><label for="ordre" id="lim_ordre"><b>Position</b></label></td>
 			<td>
-				<select name="ordre" id="ordre">
-					<?php
-						
-						try{
-							$rq=connexionbddplugit::getInstance()->query("SELECT COUNT(id) AS nombre FROM solutions");
-							$rq=$rq->fetch();
-						} catch ( Exception $e ) {
-							echo "Une erreur est survenue : ".$e->getMessage();
-						}
-						
-						$var=($type=='create') ? $rq['nombre']+1 : $rq['nombre'];
-						for($i=1;$i<=$var;$i++)
-						{
-							if(($ordre==0 && $i==1)|| $ordre==$i)
-							{
-								echo '<option value="'.$i.'" Selected="">'.$i.'</option>';
-							}
-							else
-							{
-								echo '<option value="'.$i.'">'.$i.'</option>';
-							}
-						}
-						
-					?>
+			<input type="text" name="ordre" id="ordre" <?php echo $require; ?> onblur="isNumber3(this,lim_ordre);" value="<?php echo $ordre; ?>"/>
+		</tr>
+		
+		<tr>
+			<td><label for="color">Couleur </label></td>
+			<td><input type="text" class="color" id="color" name="color" value="<?php echo $couleur; ?>"/></td>
+		</tr>
+		
+		<tr>
+			<td><label for="menu_c">Menu associé</label></td>
+			<td>
+				<select name="menu_c" id="menu_c">
+					<option value="webapps">WebApps</option>
+					<option value="telephonie">Telephonie</option>
+					<option value="photocopieur">Photocopieur</option>
+					<option value="cloud">Cloud</option>
 				</select>
 			</td>
 		</tr>

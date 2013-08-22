@@ -212,6 +212,27 @@
 		});
 	</script>
 <?php
+	function lignelimit($text, $nbre)
+	 {
+	  $text = nl2br($text);
+	  $nbre_ligne = preg_split("<<br */?>>",$text );
+	  
+	   if(count($nbre_ligne)>$nbre)
+	   {
+		  $n="";
+		  $i;
+		  for($i=0;$i<$nbre;$i++)
+		  {
+		   $n.=($nbre_ligne[$i]."<br/>");
+		  }
+		  
+		   return ($n." ...Lire La Suite...");
+	   }
+		else
+			return $text;
+	 }
+
+
 	if(!isset($_GET['mode']))
 	{
 		$_GET['mode'] = 'view';
@@ -419,16 +440,10 @@
 								</tr>';
 							}
 							
-							$lls="";
-							if(strlen($ar['description']) > 300)
-							{
-								$lls="<br/>...Lire La Suite...";
-							}
-							
 							echo'
 							<tr>
 								<td style="width:325px; height:210px;"><img src="'.$ar['images'].'" style="margin-left:18px; max-height:100%; width:auto; max-width:210px;"/></td>
-								<td style="width:325px; height:210px;">'.substr($ar['description'],0,300).' '.$lls.'</td>
+								<td style="width:325px; height:210px;">'.lignelimit($ar['description'],10).'</td>
 							</tr>
 							
 							<tr>

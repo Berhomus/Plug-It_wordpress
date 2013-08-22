@@ -294,7 +294,7 @@ function isNumber2(field,id){
 		id.style.color = "green";
 	}
 } 
-		
+	
 	
 function format_number(field)
 {

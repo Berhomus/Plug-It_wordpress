@@ -97,9 +97,9 @@ function make_img($src,$title,$desc){
 			$name = array();
 			$name = preg_split("/[\.]+/",$src);
 
-			imagejpeg($d,"../".$name[0]."_make.".$name[1]);
+			imagejpeg($d,"../".$name[0]."_makeg.".$name[1]);
 			
-			return ($name[0]."_make.".$name[1]);
+			return ($name[0]."_makeg.".$name[1]);
 		}
 		else
 			echo "Pas d'incrustation (Video) !";
@@ -148,9 +148,9 @@ function make_limg($src){
 		$name = array();
 		$name = preg_split("/[\.]+/",$src);
 
-		imagejpeg($d,"../".$name[0]."_make.".$name[1]);
+		imagejpeg($d,"../".$name[0]."_makem.".$name[1]);
 		
-		return ($name[0]."_make.".$name[1]);
+		return ($name[0]."_makem.".$name[1]);
 	}
 	else
 		return "Echec Création Image !";

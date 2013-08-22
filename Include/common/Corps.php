@@ -39,21 +39,6 @@ Name : Corps.php => Plug-it
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
-		case 'solutions':
-		if(checkUp('solutions','sousmenu'))
-			INCLUDE("include/invite/solutions.php");
-		else
-			echo '<h2>Page Inaccessible</h2>';
-		break;
-		
-		case 'references':
-			INCLUDE("include/invite/references.php");
-		break;
-		
-		case 'contact':
-			INCLUDE("include/invite/contact.php");
-		break;
-		
 		case 'support':
 		if(checkUp('support','menu'))
 			INCLUDE("include/invite/support.php");
@@ -77,36 +62,46 @@ Name : Corps.php => Plug-it
 		
 		case 'cloud':
 		if(checkUp('cloud','menu'))
-			INCLUDE("include/invite/construction.php");
+			INCLUDE("include/invite/solutions.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 
 		case 'photocopieur':
 		if(checkUp('photocopieur','menu'))
-			INCLUDE("include/invite/construction.php");
+			INCLUDE("include/invite/solutions.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'webapps':
 		if(checkUp('webapps','menu'))
-			INCLUDE("include/invite/construction.php");
+			INCLUDE("include/invite/solutions.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'telephonie':
 		if(checkUp('telephonie','menu'))
-			INCLUDE("include/invite/construction.php");
+			INCLUDE("include/invite/solutions.php");
 		else
 			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
+		case 'references':
+			INCLUDE("include/invite/references.php");
+		break;
+		
+		case 'contact':
+			INCLUDE("include/invite/contact.php");
+		break;		
 		
 		//autre
 		case 'services':
-		INCLUDE("include/invite/services.php");
+		if(checkUp('services','menu'))
+			INCLUDE("include/invite/services.php");
+		else
+			echo '<h2>Page Inaccessible</h2>';
 		break;
 		
 		case 'paiement_final':
