@@ -44,10 +44,14 @@ Name : trt_services.php => Plug-it
 						try{
 							$rq=$bdd->prepare("DELETE FROM services WHERE id=?");
 							$rq->execute(array($_GET['id']));
+							
+							$rq2 = $bdd->prepare("DELETE FROM sousmenu WHERE ref=?");
+							$rq2->execute(array($_GET['id']));
+							
+							echo ('<h2 style="color:green;">Service Supprimé !</h2>');
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
-						echo ('<h2 style="color:green;">Service Supprimé !</h2>');
 					}
 					else
 					{
@@ -101,13 +105,17 @@ Name : trt_services.php => Plug-it
 							
 							if($ordre!=$array['ordre'])
 								update_ordre($array['ordre']-$pas,$ordre,$pas,'services');
-							try{;
+							try{
 								$rq = $bdd->prepare("UPDATE services SET ordre=?, image=?, titre=?, subtitre=?, corps=? WHERE id=?");
 								$rq->execute(array($ordre,$path,$titre,$soustitre,$corps,$_GET['id']));
+								
+								$rq2 = $bdd->prepare("UPDATE sousmenu SET nom = ? WHERE ref=?");
+								$rq2->execute(array($titre,$_GET['id']));
+								
+								echo ('<h2 style="color:green;">Service Modifié !</h2>');
 							} catch ( Exception $e ) {
 								echo "Une erreur est survenue : ".$e->getMessage();
 							}
-							echo ('<h2 style="color:green;">Service Modifié !</h2>');
 						}
 						else
 						{	
@@ -137,7 +145,7 @@ Name : trt_services.php => Plug-it
 				echo ('<h2>Création Service</h2>');
 				if(isset($_POST) and !empty($_POST))
 				{	
-					
+				
 					if(($path = upload('../images/',100000,array('.png', '.gif', '.jpg', '.jpeg','.bmp'),'logoserv')) != '')
 					{
 						$titre = $_POST['nomserv'];
@@ -153,7 +161,24 @@ Name : trt_services.php => Plug-it
 						} catch ( Exception $e ) {
 							echo "Une erreur est survenue : ".$e->getMessage();
 						}
-						echo ('<h2 style="color:green;">Service Créé !</h2>');
+						
+						try{
+								$rq3=$bdd->prepare("SELECT * FROM services ORDER BY id DESC LIMIT 0,1");
+								$rq3->execute(array());
+								$array3=$rq3->fetch();
+							} catch ( Exception $e ) {
+								echo "Une erreur est survenue : ".$e->getMessage();
+							}
+						
+						$lien = 'index.php?page=services&mode=viewone&id='.$array3['id'];
+						try{
+							$rq2 = $bdd->prepare("INSERT INTO sousmenu VALUES (Null,?,1,?,?,9,?)");
+							$rq2->execute(array($titre,$lien,$ordre,$array3['id']));
+							
+							echo ('<h2 style="color:green;">Service Créé !</h2>');
+						} catch ( Exception $e ) {
+							echo "Une erreur est survenue : ".$e->getMessage();
+						}
 					}
 					else
 					{

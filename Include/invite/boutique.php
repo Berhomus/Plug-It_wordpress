@@ -232,7 +232,6 @@
 			return $text;
 	 }
 
-
 	if(!isset($_GET['mode']))
 	{
 		$_GET['mode'] = 'view';
@@ -443,7 +442,11 @@
 							echo'
 							<tr>
 								<td style="width:325px; height:210px;"><img src="'.$ar['images'].'" style="margin-left:18px; max-height:100%; width:auto; max-width:210px;"/></td>
+<<<<<<< HEAD
 								<td style="width:325px; height:210px;">'.lignelimit($ar['description'],10).'</td>
+=======
+								<td style="width:325px; height:210px;">'.(lignelimit($ar['description'],10)).'</td>
+>>>>>>> de6999dc023f47faf7e2ccec258a7e72f260035a
 							</tr>
 							
 							<tr>

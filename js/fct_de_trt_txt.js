@@ -62,7 +62,7 @@ function textLimit2(field, maxlen, idlimite) {
 
 function textLimit3(field, idlimite) 
 {
-	var nbr_ligne = field.innerHTML.split("<br>" ).length 
+	var nbr_ligne = field.innerHTML.split("<br>" ).length; 
 	var n = "";
    if (nbr_ligne > 3)
    {
@@ -79,7 +79,6 @@ function textLimit3(field, idlimite)
 	  setTimeout(function(){idlimite.style.color='green';},2000);
    }
 }
-
 
 /*####FONCTION LIEN####*/
 
